@@ -1,0 +1,2976 @@
+{% extends 'base.html' %}
+
+{% block title %}Anamnesis {% endblock %}
+
+{% block sidebar %}
+{% include 'componentes/sidebar.html' %}
+{% endblock %}
+
+
+
+
+{% block content %}
+
+{% load tailwind_filters %}
+
+<body class="bg-gradient-to-r from-sky-900 to-cyan-700">
+
+  <header class="pb-3 text-center text-white p-3 border-r px-4 py-3 white:border
+  bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-amber-900 to-yellow-600" >
+    <h2 class="text-xs">Ley 20.201 – Decreto 170/2009</h2> 
+    <h2 class="text-xs">Evaluación Diagnóstica Integral de Necesidades Educativas Especiales</h2>
+    <h1 class="text-xl">ENTREVISTA A LA FAMILIA / ANAMNESIS</h1>
+    <h2 class="text-xs italic">Síntesis de los antecedentes de salud, escolares y sociales del estudiante</h2>
+  </header>
+
+  <form action="" method="post" class="AnamnesisForm ml-72" id="AnamnesisForm" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div>
+      <h1 class="text-white">1. IDENTIFICACIÓN DEL ESTUDIANTE</h1>
+
+      <div class="flex flex-col">
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 sm:px-2 lg:px-8">
+            <div class="overflow-hidden">
+              <table class="table-auto border text-center text-sm font-light white:border">
+
+                <tbody>
+                  <tr class="border-b white:border">
+                    <td class="text-start whitespace-nowrap  px-2 py-2 font-medium white:border text-white">
+                      Nombres:
+                    </td>
+                    <td colspan="3" class="whitespace-nowrap border-r px-2 py-2 white:border w-96">
+                      <input type="text" name="{{ form.nombre.name }}" id="{{ form.nombre.id_for_label }}"
+                        class="border-purple-500 rounded-md w-full h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                    <td class="text-start whitespace-nowrap px-2 py-2 font-medium white:border text-white ">
+                      Sexo:
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2  white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.sexo.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.sexo.1 }}
+                      </label>
+                    </td>
+                    <!-- FILA 2 -->
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td class="text-start whitespace-nowrap px-2 py-2 font-medium white:border text-white">
+                      Fecha de nacimiento:
+                    </td>
+                    <td class="whitespace-nowrap border-r px-2 py-2 white:border w-12">
+                      <input type="date" name="{{ form.fecha_nacimiento.name }}"
+                        id="{{ form.fecha_nacimiento.id_for_label }}"
+                        class="border-purple-500 rounded-md w-36 h-8  text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                    <td class="w-2/8 text-start whitespace-nowrap  px-2 py-2 font-medium white:border text-white">
+                      Edad actual:
+                    </td>
+                    <td class="px-0 py-2 w-8">
+                      <label class="text-white" for="">Años:</label> <br>
+                      <input type="number" min="1" max="100" name="{{ form.años.name }}" id="{{ form.años.id_for_label }}"
+                        class="border-purple-500 rounded-md w-16 h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+
+                    <td class=" px-2 py-2 w-8">
+                      <label class="text-white" for="">Meses:</label> <br>
+                      <input type="number" min="1" max="12" name="{{ form.meses.name }}"
+                        id="{{ form.meses.id_for_label }}"
+                        class="border-purple-500 rounded-md w-16 h-8  text-blackleading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                    <td colspan="2" class="border-l px-2 py-2 ">
+                      <label class="text-white" for="">Pais natal:</label> <br>
+                      <input type="text" name="{{ form.pais.name }}" id="{{ form.pais.id_for_label }}"
+                        class="border-purple-500 rounded-md h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                  </tr>
+
+                  <!-- FILA 3 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Domicilio Actual:
+                    </td>
+                    <td colspan="3" class="whitespace-nowrap border-r px-2 py-2 white:border">
+                      <input type="text" name="{{ form.domicilio.name }}" id="{{ form.domicilio.id_for_label }}"
+                        class="border-purple-500 rounded-md w-full h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Telefono:
+                    </td>
+                    <td colspan="2" class="whitespace-nowrap border-r px-2 py-2 white:border">
+                      <input type="number " maxlength="8" name="{{ form.telefono.name }}" id="{{ form.telefono.id_for_label }}"
+                        placeholder="55555555"
+                        class="border-purple-500 rounded-md w-full h-8 text-sm text-black leading-tight focus:shadow-outline-purple focus:border-purple-500 text-right pr-4">
+                    </td>
+                  </tr>
+
+                  <!-- FILA 4 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Lengua Materna:
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap border-r px-2 py-2 white:border">
+                      <select name="{{ form.lengua_materna.html_name }}" id="{{ form.lengua_materna.id_for_label }}"
+                        class="block w-full h-8 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 border border-purple-500 rounded-md">
+                        {% for value, label in form.lengua_materna.field.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Grado Dominio:
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap px-2 py-2 white:border">
+                      <label class="text-white" for="">Comprende</label> <br>
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.comprende_materna }}
+                      </label>
+                    </td>
+                    <td colspan="1" class=" px-2 py-2 white:border w-16">
+                      <label class="text-white" for="">Habla:</label> <br>
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.habla_materna }}
+                      </label>
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap px-2 py-2 white:border">
+                      <label class="text-white" for="">Lee:</label> <br>
+                      <h1
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.lee_materna }}
+                      </h1>
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap border-r px-2 py-2 white:border">
+                      <label class="text-white" for="">Escribe:</label> <br>
+                      {{ form.escribe_materna }}
+                    </td>
+
+                    <!-- FILA 5 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Lengua Uso:
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap border-r px-2 py-2 white:border">
+                      <select name="{{ form.lengua_uso.html_name }}" id="{{ form.lengua_uso.id_for_label }}"
+                        class="block w-full h-8 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 border border-purple-500 rounded-md">
+                        {% for value, label in form.lengua_uso.field.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Grado Dominio:
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap px-2 py-2 white:border">
+                      <label class="text-white" for="">Comprende</label> <br>
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.comprende_uso }}
+                      </label>
+                    </td>
+                    <td colspan="1" class=" px-2 py-2 white:border w-16">
+                      <label class="text-white" for="">Habla:</label> <br>
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.habla_uso }}
+                      </label>
+                    </td>
+                    <td colspan="1" class="whitespace-nowrappx-2 py-2 white:border">
+                      <label class="text-white" for="">Lee:</label> <br>
+                      <h1
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.lee_uso }}
+                      </h1>
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap border-r px-2 py-2 white:border">
+                      <label class="text-white" for="">Escribe:</label> <br>
+                      {{ form.escribe_uso }}
+                    </td>
+
+                    <!-- FILA 6 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Escolaridad Actual:
+                    </td>
+                    <td colspan="2" class="whitespace-nowrap border-r px-2 py-2 white:border">
+                      <input type="text" name="{{ form.escolaridad_actual.name }}"
+                        id="{{ form.escolaridad_actual.id_for_label }}"
+                        class="border-purple-500 rounded-md w-full h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap px-2 py-4 font-medium white:border">
+                      Establecimiento:
+                    </td>
+                    <td colspan="3" class="whitespace-nowrap  px-2 py-2 white:border">
+                      <input type="text" name="{{ form.establecimiento.name }}"
+                        id="{{ form.establecimiento.id_for_label }}"
+                        class="border-purple-500 rounded-md w-full h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500 text-right pr-4">
+                    </td>
+                  </tr>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- -----------------TABLA 2----------------- -->
+    <div class="mt-7">
+      <h1 class="text-white">2. IDENTIFICACIÓN DEL O LOS INFORMANTES</h1>
+
+      <div class="flex flex-col">
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 sm:px-2 lg:px-8">
+            <div class="overflow-hidden">
+              <table class="table-auto border text-center text-sm font-light white:border">
+
+                <tbody>
+                  <tr class="border-b white:border">
+                    <td class="text-start whitespace-nowrap px-2 py-2 font-medium white:border text-white">
+                      1. Fecha de la entrevista:
+                    </td>
+                    <td class="whitespace-nowrap border-r px-2 py-2 white:border w-12">
+                      <input type="date" name="{{ form.fecha_entrevista_1.name }}"
+                        id="{{ form.fecha_entrevista_1.id_for_label }}"
+                        class="border-purple-500 rounded-md w-42 h-8 mr-12 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                    <td colspan="" class="text-start whitespace-nowrap px-2 py-2 font-medium white:border text-white">
+                      2. Fecha de la entrevista:
+                    </td>
+                    <td class="whitespace-nowrap border-r px-2 py-2 white:border w-12">
+                      <input type="date" name="{{ form.fecha_entrevista_2.name }}"
+                        id="{{ form.fecha_entrevista_2.id_for_label }}"
+                        class="border-purple-500 rounded-md w-42 h-8 mr-12 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+
+                  </tr>
+
+                  <!-- FILA 2 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Nombre:
+                    </td>
+                    <td class="whitespace-nowrap border-r px-2 py-2 white:border w-52">
+                      <input type="text" name="{{ form.nombres_entrevista_1.name }}"
+                        id="{{ form.nombres_entrevista_1.id_for_label }}"
+                        class="border-purple-500 rounded-md w-52 h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap px-2 py-4 font-medium white:border">
+                      Nombre:
+                    </td>
+                    <td class="whitespace-nowrap  px-2 py-2 white:border w-52">
+                      <input type="text" name="{{ form.nombres_entrevista_2.name }}"
+                        id="{{ form.nombres_entrevista_2.id_for_label }}"
+                        class="border-purple-500 rounded-md w-52 h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500 text-right pr-4">
+                    </td>
+                  </tr>
+                  <!-- FILA 3 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Relación con el/la estudiante:
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap border-r px-2 py-2 white:border">
+                      <select name="{{ form.relacion_estudiante_1.html_name }}"
+                        id="{{ form.relacion_estudiante_1.id_for_label }}"
+                        class="block w-40 h-8 mt-1 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 border border-purple-500 rounded-md">
+                        {% for value, label in form.relacion_estudiante_1.field.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Relación con el/la estudiante:
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap border-r px-2 py-2 white:border">
+                      <select name="{{ form.relacion_estudiante_2.html_name }}"
+                        id="{{ form.relacion_estudiante_2.id_for_label }}"
+                        class="block w-40 h-8 mt-1 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 border border-purple-500 rounded-md">
+                        {% for value, label in form.relacion_estudiante_2.field.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+                  </tr>
+                  <!-- FILA 4 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      En presencia de <br>(miembro de la familia, intérprete, otro/a)
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap border-r px-2 py-2 white:border">
+                      <select name="{{ form.en_presencia_de_1.html_name }}"
+                        id="{{ form.en_presencia_de_1.id_for_label }}"
+                        class="block w-40 h-8 mt-1 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 border border-purple-500 rounded-md">
+                        {% for value, label in form.en_presencia_de_1.field.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      En presencia de <br>(miembro de la familia, intérprete, otro/a)
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap border-r px-2 py-2 white:border">
+                      <select name="{{ form.en_presencia_de_2.html_name }}"
+                        id="{{ form.en_presencia_de_2.id_for_label }}"
+                        class="block w-40 h-8 mt-1 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 border border-purple-500 rounded-md">
+                        {% for value, label in form.en_presencia_de_2.field.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+                  </tr>
+
+                  <!-- ------------------------------------------------------------------------------------------- -->
+                  <tr class="border-b white:border">
+                    <td class="text-start whitespace-nowrap px-2 py-2 font-medium white:border text-white">
+                      3. Fecha de la entrevista:
+                    </td>
+                    <td class="whitespace-nowrap border-r px-2 py-2 white:border w-12">
+                      <input type="date" name="{{ form.fecha_entrevista_3.name }}"
+                        id="{{ form.fecha_entrevista_3.id_for_label }}"
+                        class="border-purple-500 rounded-md w-42 h-8  text-black mr-12 leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                    <td colspan="" class="text-start whitespace-nowrap px-2 py-2 font-medium white:border text-white">
+                      4. Fecha de la entrevista:
+                    </td>
+                    <td class="whitespace-nowrap border-r px-2 py-2 white:border w-12">
+                      <input type="date" name="{{ form.fecha_entrevista_4.name }}"
+                        id="{{ form.fecha_entrevista_4.id_for_label }}"
+                        class="border-purple-500 rounded-md w-42 h-8  text-black mr-12 leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+
+                  </tr>
+
+                  <!-- FILA 2 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Nombre:
+                    </td>
+                    <td class="whitespace-nowrap border-r px-2 py-2 white:border w-52">
+                      <input type="text" name="{{ form.nombres_entrevista_3.name }}"
+                        id="{{ form.nombres_entrevista_3.id_for_label }}"
+                        class="border-purple-500 rounded-md w-52 h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap px-2 py-4 font-medium white:border">
+                      Nombre:
+                    </td>
+                    <td class="whitespace-nowrap  px-2 py-2 white:border w-52">
+                      <input type="text" name="{{ form.nombres_entrevista_4.name }}"
+                        id="{{ form.nombres_entrevista_4.id_for_label }}"
+                        class="border-purple-500 rounded-md w-52 h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500 text-right pr-4">
+                    </td>
+                  </tr>
+                  <!-- FILA 3 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Relación con el/la estudiante:
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap border-r px-2 py-2 white:border">
+                      <select name="{{ form.relacion_estudiante_3.html_name }}"
+                        id="{{ form.relacion_estudiante_3.id_for_label }}"
+                        class="block w-40 h-8 mt-1 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 border border-purple-500 rounded-md">
+                        {% for value, label in form.relacion_estudiante_3.field.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Relación con el/la estudiante:
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap border-r px-2 py-2 white:border">
+                      <select name="{{ form.relacion_estudiante_4.html_name }}"
+                        id="{{ form.relacion_estudiante_4.id_for_label }}"
+                        class="block w-40 h-8 mt-1 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 border border-purple-500 rounded-md">
+                        {% for value, label in form.relacion_estudiante_4.field.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+                  </tr>
+                  <!-- FILA 6 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      En presencia de <br>(miembro de la familia, intérprete, otro/a) 
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap border-r px-2 py-2 white:border">
+                      <select name="{{ form.en_presencia_de_3.html_name }}"
+                        id="{{ form.en_presencia_de_3.id_for_label }}"
+                        class="block w-40 h-8 mt-1 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 border border-purple-500 rounded-md">
+                        {% for value, label in form.en_presencia_de_3.field.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      En presencia de <br>(miembro de la familia, intérprete, otro/a)
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap border-r px-2 py-2 white:border">
+                      <select name="{{ form.en_presencia_de_4.html_name }}"
+                        id="{{ form.en_presencia_de_4.id_for_label }}"
+                        class="block w-40 h-8 mt-1 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 border border-purple-500 rounded-md">
+                        {% for value, label in form.en_presencia_de_4.field.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+                  </tr>
+
+                  
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- -------------------------------------------------------------------------------------------------------- -->
+
+
+    <!-- -----------------TABLA 3----------------- -->
+    <div class="mt-7">
+      <h1 class="text-white">3. IDENTIFICACIÓN DEL O LOS ENTREVISTADORES</h1>
+
+      <div class="flex flex-col">
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 sm:px-2 lg:px-8">
+            <div class="overflow-hidden">
+              <table class="table-auto border text-center text-sm font-light white:border">
+
+                <tbody>
+                  <tr class="border-b white:border">
+                    <td class="text-start whitespace-nowrap px-2 py-2 font-medium white:border text-white">
+                      1. Fecha de la entrevista:
+                    </td>
+                    <td class="whitespace-nowrap border-r px-2 py-2 white:border w-56">
+                      <input type="date" name="{{ form.fecha_entrevistador.name }}"
+                        id="{{ form.fecha_entrevistador.id_for_label }}"
+                        class="border-purple-500 rounded-md w-40 h-8 mr-8  text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                    <td colspan="" class="text-start whitespace-nowrap px-2 py-2 font-medium white:border text-white">
+                      2. Fecha de la entrevista:
+                    </td>
+                    <td class="whitespace-nowrap border-r px-2 py-2 white:border w-56">
+                      <input type="date" name="{{ form.fecha_entrevistador_2.name }}"
+                        id="{{ form.fecha_entrevistador_2.id_for_label }}"
+                        class="border-purple-500 rounded-md w-40 h-8 mr-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                  </tr>
+
+                  <!-- FILA 2 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Nombre:
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap border-r px-4 py-2 white:border">
+                      <select name="{{ form.nombreApellidos.html_name }}" id="{{ form.nombreApellidos.id_for_label }}"
+                        class="block w-48 h-8 ml-0 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 border border-purple-500 rounded-md">
+                        {% for value, label in form.nombreApellidos.field.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Nombre:
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap border-r px-4 py-2 white:border">
+                      <select name="{{ form.nombreApellidos_2.html_name }}"
+                        id="{{ form.nombreApellidos_2.id_for_label }}"
+                        class="block w-48 h-8 ml-0 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 border border-purple-500 rounded-md">
+                        {% for value, label in form.nombreApellidos_2.field.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+                  </tr>
+                  <!-- FILA 3 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Rol/Cargo:
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap border-r px-4 py-2 white:border">
+                      <select name="{{ form.rol.html_name }}" id="{{ form.rol.id_for_label }}"
+                        class="block w-48 h-8 ml-0 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 border border-purple-500 rounded-md">
+                        {% for value, label in form.rol.field.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Rol/Cargo:
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap border-r px-4 py-2 white:border">
+                      <select name="{{ form.rol_2.html_name }}" id="{{ form.rol_2.id_for_label }}"
+                        class="block w-48 h-8 ml-0 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 border border-purple-500 rounded-md">
+                        {% for value, label in form.rol_2.field.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+                  </tr>
+
+                  <!-- ------------------------------------------------------------------------------------------- -->
+                  <tr class="border-b white:border">
+                    <td class="text-start whitespace-nowrap px-2 py-2 font-medium white:border text-white">
+                      3. Fecha de la entrevista:
+                    </td>
+                    <td class="whitespace-nowrap border-r px-2 py-2 white:border w-56">
+                      <input type="date" name="{{ form.fecha_entrevistador_3.name }}"
+                        id="{{ form.fecha_entrevistador_3.id_for_label }}"
+                        class="border-purple-500 rounded-md ww-40 h-8 mr-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                    <td colspan="" class="text-start whitespace-nowrap px-2 py-2 font-medium white:border text-white">
+                      4. Fecha de la entrevista:
+                    </td>
+                    <td class="whitespace-nowrap border-r px-2 py-2 white:border w-56">
+                      <input type="date" name="{{ form.fecha_entrevistador_4.name }}"
+                        id="{{ form.fecha_entrevistador_4.id_for_label }}"
+                        class="border-purple-500 rounded-md w-48 h-8  text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                  </tr>
+
+                  <!-- FILA 4 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Nombre:
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap border-r px-4 py-2 white:border">
+                      <select name="{{ form.nombreApellidos_3.html_name }}"
+                        id="{{ form.nombreApellidos_3.id_for_label }}"
+                        class="block w-48 h-8 ml-0 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 border border-purple-500 rounded-md">
+                        {% for value, label in form.nombreApellidos_3.field.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Nombre:
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap border-r px-4 py-2 white:border">
+                      <select name="{{ form.nombreApellidos_4.html_name }}"
+                        id="{{ form.nombreApellidos_4.id_for_label }}"
+                        class="block w-48 h-8 ml-0 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 border border-purple-500 rounded-md">
+                        {% for value, label in form.nombreApellidos_4.field.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+                  </tr>
+                  <!-- FILA 5 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Rol/Cargo:
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap border-r px-4 py-2 white:border">
+                      <select name="{{ form.rol_3.html_name }}" id="{{ form.rol_3.id_for_label }}"
+                        class="block w-48 h-8 ml-0 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 border border-purple-500 rounded-md">
+                        {% for value, label in form.rol_3.field.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Rol/Cargo:
+                    </td>
+                    <td colspan="1" class="whitespace-nowrap border-r px-4 py-2 white:border">
+                      <select name="{{ form.rol_4.html_name }}" id="{{ form.rol_4.id_for_label }}"
+                        class="block w-48 h-8 ml-0 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 border border-purple-500 rounded-md">
+                        {% for value, label in form.rol_4.field.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+                  </tr>
+
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ------------------------------------------------------------------------------------------------------------------------ -->
+
+    <!-- -----------------TABLA 6----------------- -->
+    <div class="mt-7">
+      <h1 class="text-white">4. DEFINICIÓN DEL PROBLEMA O SITUACIÓN QUE MOTIVA LA ENTREVISTA</h1>
+      <div class="flex flex-col">
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 sm:px-2 lg:px-8">
+            <div class="overflow-hidden">
+              <table class="table-auto border text-center text-sm font-light white:border">
+
+                <tbody>
+                  <tr class="border-b white:border">
+                    <td colspan="6" class="border-l px-4 py-3 w-full">
+                      <textarea cols="120" name="{{ form.definicionProblema.name }}"
+                        id="{{ form.definicionProblema.id_for_label }}"
+                        class=" rounded-md border-purple-500 w-full h-48 mr-8 text-black leading-tight
+              focus:shadow-outline-purple focus:border-purple-500">{{ form.definicionProblema.value|default:'' }}</textarea>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- -------------------------------------------------------------------------------------------------------------------------------------- -->
+    <!-- -----------------TABLA 5----------------- -->
+    <div class="mt-7">
+      <h1 class="text-white">5. ANTECEDENTES RELATIVOS AL DESARROLLO Y A LA SALUD DEL/LA ESTUDIANTE</h1>
+
+      <div class="flex flex-col">
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 sm:px-2 lg:px-8">
+            <div class="overflow-hidden">
+              <table class="table-auto border text-center text-sm font-light white:border">
+                <thead class="border-b font-medium white:border">
+                  <tr>
+                    <th colspan="6" class="border-r text-white text-start px-4 py-3 white:border
+                  bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-amber-900 to-yellow-600">
+                      ¿El o la estudiante tiene algún diagnóstico previo?  No  Sí (especificar)
+                    </th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- FILA 2 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Pediatría:
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.pediatria.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.pediatria.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Psicología:
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.psicologia.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.psicologia.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <!-- FILA 3 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Kinesiología:
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.kinesiologia.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.kinesiologia.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Psiquiatría:
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.psiquiatria.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.psiquiatria.1 }}
+                      </label>
+                    </td>
+                  </tr>
+
+                  <!-- FILA 4 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Genético:
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.genetico.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.genetico.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Psicopedagogía:
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.psicopedagogia.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.psicopedagogia.1 }}
+                      </label>
+                    </td>
+                  </tr>
+
+                  <!-- FILA 5 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Fonoaudiología:
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.fonoaudiologia.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.fonoaudiologia.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Terapia Ocupacional:
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.terapiaocupacional.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.terapiaocupacional.1 }}
+                      </label>
+                    </td>
+                  </tr>
+
+                  <!-- FILA 6 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Neurología:
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.neurologia.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.neurologia.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Otro:
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.otro.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.otro.1 }}
+                      </label>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- -------------------------------------------------------------------------------------------------------------------------------------- -->
+    <!-- -----------------TABLA 6----------------- -->
+    <div class="mt-7">
+      <div class="flex flex-col">
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 sm:px-2 lg:px-8">
+            <div class="overflow-hidden">
+              <table class="table-auto border text-center text-sm font-light white:border">
+                <thead class="border-b font-medium white:border">
+                  <tr>
+                    <th colspan="6" class="border-r text-white text-start px-4 py-3 white:border
+                  bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-amber-900 to-yellow-600">
+                      5.1. Primer año de vida
+                    </th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- FILA 2 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Tipo de parto:
+                    </td>
+                    <td class="whitespace-nowrap -px-2 py-2 white:border w-4">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.tipo_parto.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-6 py-2 white:border w-4">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.tipo_parto.1 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap -px-10 py-2 white:border w-14">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.tipo_parto.2 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-4">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.tipo_parto.3 }}
+                      </label>
+                    </td>
+                  <tr class="border-b white:border">
+                    <td colspan="1" class="text-start text-white px-2 py-2 font-medium white:border">
+                      Cesarea: Señale motivo
+                    </td>
+                    <td colspan="5" class="py-2 white:border ">
+                      <input type="text" name="{{ form.cesarea.name }}" id="{{ form.cesarea.id_for_label }}"
+                        class="border-purple-500 rounded-md w-11/12 h-8 px-4 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                  </tr>
+                  </tr>
+                  <!-- FILA 3 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                      Tuvo asistencia médica <br> durante el parto?
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.asistencia_medica_parto.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.asistencia_medica_parto.1 }}
+                      </label>
+                    </td>
+                    <td class="border-l px-2 py-2 w-8">
+                      <label class="text-white" for="">Peso:</label> <br>
+                      <input type="number" min="1" name="{{ form.peso.name }}" id="{{ form.peso.id_for_label }}"
+                        class="border-purple-500 rounded-md w-16 h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                    <td class="px-0 py-2 w-8">
+                      <label class="text-white" for="">Talla:</label> <br>
+                      <input type="number" min="1" name="{{ form.talla.name }}" id="{{ form.talla.id_for_label }}"
+                        class="border-purple-500 rounded-md w-16 h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                  </tr>
+                  <th colspan="6" class="border-r text-white text-start px-4 py-2 white:border">
+                    Señale antecedentes relevantes del Embarazo y Parto:
+                  </th>
+                  <tr class="border-b white:border">
+                    <td colspan="6" class="border-l px-6 py-2 w-full">
+                      <textarea name="{{ form.antecedentes_embarazo_parto.name }}"
+                        id="{{ form.antecedentes_embarazo_parto.id_for_label }}"
+                        class=" rounded-md border-purple-500 w-full h-48 mr-8 text-black leading-tight 
+                         focus:shadow-outline-purple focus:border-purple-500">{{ form.antecedentes_embarazo_parto.value|default:'' }}</textarea>
+                    </td>
+                  </tr>
+                  <th colspan="6" class="border-r border-b text-white text-start px-4 py-2 white:border
+                bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-amber-900 to-yellow-600">
+                    Señale si durante los doce primeros meses de vida el niño o niña presentó:
+                  </th>
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white px-2 py-2 font-medium white:border">
+                      Desnutrición
+                    </td>
+                    <td class="px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.desnutricion.0 }}
+                      </label>
+                    </td>
+                    <td class="px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.desnutricion.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white px-2 py-2 font-medium white:border">
+                      Traumatismos
+                    </td>
+                    <td class="px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.traumatismos.0 }}
+                      </label>
+                    </td>
+                    <td class="px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.traumatismos.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white px-2 py-2 font-medium white:border">
+                      Obesidad
+                    </td>
+                    <td class="px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.obesidad.0 }}
+                      </label>
+                    </td>
+                    <td class="px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.obesidad.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white px-2 py-2 font-medium white:border">
+                      Intoxicación
+                    </td>
+                    <td class="px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.intoxicacion.0 }}
+                      </label>
+                    </td>
+                    <td class="px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.intoxicacion.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white px-2 py-2 font-medium white:border">
+                      Fiebre alta
+                    </td>
+                    <td class="px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.fiebre_alta.0 }}
+                      </label>
+                    </td>
+                    <td class="px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.fiebre_alta.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white px-2 py-2 font-medium white:border">
+                      Enfermedad <br>respiratoria
+                    </td>
+                    <td class="x-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.enfermedad_respiratoria.0 }}
+                      </label>
+                    </td>
+                    <td class="px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.enfermedad_respiratoria.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white px-2 py-2 font-medium white:border">
+                      Convulsiones
+                    </td>
+                    <td class="px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.convulsiones.0 }}
+                      </label>
+                    </td>
+                    <td class=" px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.convulsiones.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white px-2 py-2 font-medium white:border">
+                      Asma
+                    </td>
+                    <td class="px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.asma.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.asma.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white px-2 py-2 font-medium white:border">
+                      Encefalitis
+                    </td>
+                    <td class="px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.encefalitis.0 }}
+                      </label>
+                    </td>
+                    <td class="px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.encefalitis.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white px-2 py-2 font-medium white:border">
+                      Meningitis
+                    </td>
+                    <td class="px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.meningitis.0 }}
+                      </label>
+                    </td>
+                    <td class=" px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.meningitis.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td colspan="1" class="text-start text-white px-2 py-2 font-medium white:border">
+                      Otra(s) Señale motivo
+                    </td>
+                    <td colspan="5" class=" py-2 white:border">
+                      <input type="text" name="{{ form.otra.name }}" id="{{ form.otra.id_for_label }}"
+                        class="border-purple-500 rounded-md w-11/12 h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white px-2 py-2 font-medium white:border">
+                      Hospitalizaciones
+                    </td>
+                    <td class="px-2 py-2  white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.hospitalizaciones.0 }}
+                      </label>
+                    </td>
+                    <td class="px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.hospitalizaciones.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start whitespace-nowrap text-white px-2 py-2 font-medium white:border">
+                      Especifique <br> motivos y duración
+                    </td>
+                    <td colspan="4" class="px-2 py-2 white:border w-2">
+                      <input type="text" name="{{ form.hospitalizacion.name }}"
+                        id="{{ form.hospitalizacion.id_for_label }}"
+                        class="border-purple-500 rounded-md w-56 h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white px-2 py-2 font-medium white:border">
+                      Se realizaron controles <br>periódicos de salud
+                    </td>
+                    <td class="px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.control_periodico_salud.0 }}
+                      </label>
+                    </td>
+                    <td class=" px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.control_periodico_salud.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white px-2 py-2 font-medium white:border">
+                      Vacunas
+                    </td>
+                    <td class="px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.vacunas.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.vacunas.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td colspan="6" class="border-l px-4 py-2 w-full">
+                      <label class="text-start  text-white font-medium " for="">Obervaciones:</label>
+                      <textarea name="{{ form.observaciones.name }}"
+                        id="{{ form.observaciones.id_for_label }}"
+                        class=" rounded-md border-purple-500 w-full h-48 mr-8 text-black leading-tight 
+                     focus:shadow-outline-purple focus:border-purple-500">{{ form.observaciones.value|default:'' }}</textarea>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+    <!-- -----------------TABLA 5----------------- -->
+    <div class="mt-7">
+      <h1 class="text-white">5.2. Desarrollo Sensorio Motriz </h1>
+      <div class="flex flex-col">
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 sm:px-2 lg:px-8">
+            <div class="overflow-hidden">
+              <table class="table-auto border text-center text-sm font-light white:border">
+                <thead class="border-b font-medium white:border">
+                  <tr>
+                    <th colspan="6" class="border-r border-b text-white text-start px-4 py-2 white:border
+                  bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-amber-900 to-yellow-600">
+                      Edad en que el niño (a)
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- FILA 1 -->
+                  <tr class="border-b white:border">
+                    <td class="w-2/8 text-start whitespace-nowrap  px-2 py-2 font-medium white:border text-white">
+                      Fija la cabeza:
+                    </td>
+                    <td class="border-r px-2 py-2 w-8">
+                      <input type="number" min="1" name="{{ form.fija_la_cabeza.name }}"
+                        id="{{ form.fija_la_cabeza.id_for_label }}"
+                        class="border-purple-500 rounded-md w-16 h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                    <td class="w-2/8 text-start whitespace-nowrap px-2 py-2 font-medium white:border text-white">
+                      Se sienta sólo/a:
+                    </td>
+                    <td class=" border-r px-2 py-2 w-8">
+                      <input type="number" min="1" name="{{ form.se_sienta_solo.name }}"
+                        id="{{ form.se_sienta_solo.id_for_label }}"
+                        class="border-purple-500 rounded-md w-16 h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                    <td class="w-2/8 text-start whitespace-nowrap px-2 py-2 font-medium white:border text-white">
+                      Camina sin apoyo:
+                    </td>
+                    <td class="border-r px-2 py-2 w-8">
+                      <input type="number" min="1" name="{{ form.camina_sin_apoyo.name }}"
+                        id="{{ form.camina_sin_apoyo.id_for_label }}"
+                        class="border-purple-500 rounded-md w-16 h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                  </tr>
+                  <!-- FILA 2 -->
+                  <tr class="border-b white:border">
+                    <td class="w-2/8 text-start whitespace-nowrap  px-2 py-2 font-medium white:border text-white">
+                      Primeras palabras:
+                    </td>
+                    <td class="border-r px-2 py-2 w-8">
+                      <input type="number" min="1" name="{{ form.primeras_palabras.name }}"
+                        id="{{ form.primeras_palabras.id_for_label }}"
+                        class="border-purple-500 rounded-md w-16 h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                    <td class="w-2/8 text-start whitespace-nowrap px-2 py-2 font-medium white:border text-white">
+                      Primeras frases:
+                    </td>
+                    <td class=" border-r px-2 py-2 w-8">
+                      <input type="number" min="1" name="{{ form.primeras_frases.name }}"
+                        id="{{ form.primeras_frases.id_for_label }}"
+                        class="border-purple-500 rounded-md w-16 h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                    <td class="w-2/8 text-start whitespace-nowrap px-2 py-2 font-medium white:border text-white">
+                      Se viste solo/a:
+                    </td>
+                    <td class="border-r px-2 py-2 w-8">
+                      <input type="number" min="1" name="{{ form.se_viste_solo.name }}"
+                        id="{{ form.se_viste_solo.id_for_label }}"
+                        class="border-purple-500 rounded-md w-16 h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                    </td>
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white  px-2 py-2 font-medium white:border">
+                      Controla esfínter vesical
+                    </td>
+                    <td class="px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.controla_esfinter_vesical.0 }}
+                      </label>
+                    </td>
+                    <td class="px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.controla_esfinter_vesical.1 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap text-start text-white px-2 py-2 font-medium white:border">
+                      Controla esfínter anal
+                    </td>
+                    <td class="px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.controla_esfinter_anal.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.controla_esfinter_anal.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td colspan="6" class="border-l px-4 py-2 w-full">
+                      <label class="text-start  text-white font-medium " for="">Obervaciones:</label>
+                      <textarea name="{{ form.observaciones_2.name }}" id="{{ form.observaciones_2.id_for_label }}"
+                        class=" rounded-md border-purple-500 w-full h-48 mr-8 text-black leading-tight 
+                         focus:shadow-outline-purple focus:border-purple-500">{{ form.observaciones_2.value|default:'' }}</textarea>
+                    </td>
+                  </tr>
+                  <!-- ------------------------------------------------------------------------------------------- -->
+                  <tr class="border-b white:border">
+                    <td class="whitespace-nowrap text-start text-white px-2 py-2 font-medium white:border">
+                      En su actividad motora general se aprecia:
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.actividad_motora_general.0 }}
+                      </label>
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.actividad_motora_general.1 }}
+                      </label>
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.actividad_motora_general.2 }}
+                      </label>
+                    </td>
+                    <td class="py-2 white:border ">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.actividad_motora_general.3 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <!-- ------------------------------------------------------------------------------------------- -->
+                  <tr class="border-b white:border">
+                    <td class="whitespace-nowrap text-start text-white px-2 py-2 font-medium white:border">
+                      Su tono muscular general se aprecia:
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.tono_muscular_general.0 }}
+                      </label>
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.tono_muscular_general.1 }}
+                      </label>
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.tono_muscular_general.2 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <!-- ------------------------------------------------------------------------------------------- -->
+                  <tr class="border-b white:border">
+                    <td colspan="6" class="whitespace-nowrap text-start text-white px-2 py-2 font-medium white:border
+                  bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-amber-900 to-yellow-600">
+                      En su actividad motora general se aprecia:
+                    </td>
+                  </tr>
+                  <!-- ------------------------------------------------------------------------------------------------------------- -->
+                  <tr class="border-b white:border">
+                    <td class="whitespace-nowrap text-start text-white px-2 py-2 font-medium white:border">
+                      Estabilidad al caminar:
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.estabilidad_caminar.0 }}
+                      </label>
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.estabilidad_caminar.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <!-- ------------------------------------------------------------------------------------------------------------- -->
+                  <tr class="border-b white:border">
+                    <td class="whitespace-nowrap text-start text-white px-2 py-2 font-medium white:border">
+                      Caídas frecuentes:
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.caida_frecuente.0 }}
+                      </label>
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.caida_frecuente.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <!-- ------------------------------------------------------------------------------------------------------------- -->
+                  <tr class="border-b white:border">
+                    <td class="whitespace-nowrap text-start text-white px-2 py-2 font-medium white:border">
+                      Dominancia lateral:
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.dominancia_lateral.0 }}
+                      </label>
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.dominancia_lateral.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <!-- ------------------------------------------------------------------------------------------- -->
+                  <tr class="border-b white:border">
+                    <td colspan="6" class="whitespace-nowrap text-start text-white px-2 py-2 font-medium white:border
+                  bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-amber-900 to-yellow-600">
+                    En relación con su motricidad fina el niño (a) logra: 
+                    </td>
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td class="whitespace-nowrap text-start text-white px-2 py-2 font-medium white:border">
+                      Garra:
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.garra.0 }}
+                      </label>
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.garra.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td class="whitespace-nowrap text-start text-white px-2 py-2 font-medium white:border">
+                      Ensarta:
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.ensarta.0 }}
+                      </label>
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.ensarta.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td class="whitespace-nowrap text-start text-white px-2 py-2 font-medium white:border">
+                      Prensión:
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.presion.0 }}
+                      </label>
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.presion.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td class="whitespace-nowrap text-start text-white px-2 py-2 font-medium white:border">
+                      Dibuja:
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.dibuja.0 }}
+                      </label>
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.dibuja.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td class="whitespace-nowrap text-start text-white px-2 py-2 font-medium white:border">
+                      Pinza:
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.pinza.0 }}
+                      </label>
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.pinza.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td class="whitespace-nowrap text-start text-white px-2 py-2 font-medium white:border">
+                      Escribe:
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.escribe.0 }}
+                      </label>
+                    </td>
+                    <td class="py-2 white:border">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.escribe.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <!-- ------------------------------------------------------------------------------------------- -->
+                  <tr class="border-b white:border">
+                    <td colspan="6" class="whitespace-nowrap text-start text-white px-2 py-2 font-medium white:border
+                    bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-amber-900 to-yellow-600">
+                  En relación con algunos signos cognitivos el niño (a):
+                    </td>
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Reacciona a voces o caras familiares:
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.reaccion_voces_caras.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.reaccion_voces_caras.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Manipula y Explora objetos:
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.manipula_explora.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.manipula_explora.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Demanda objetos y compañía:
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.demanda_obj_comp.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.demanda_obj_comp.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Comprende prohibiciones:
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.comprende_prohibiciones.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.comprende_prohibiciones.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Sonríe, balbucea, grita, llora, indica o señala:
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.sonr_balb_gri_llo.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.sonr_balb_gri_llo.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Posee evidente descoordinación ojo-mano:
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.disc_ojo_mano.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.disc_ojo_mano.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td colspan="6" class="border-l px-4 py-2 w-full">
+                      <label class="text-start  text-white font-medium " for="">Obervaciones:</label>
+                      <textarea name="{{ form.observaciones_3.name }}" id="{{ form.observaciones_3.id_for_label }}"
+                        class=" rounded-md border-purple-500 w-full h-48 mr-8 text-black leading-tight 
+                         focus:shadow-outline-purple focus:border-purple-500">{{ form.observaciones_3.value|default:'' }}</textarea>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
+    <!-- -----------------TABLA 6----------------- -->
+    <div class="mt-7">
+      <div class="flex flex-col">
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 sm:px-2 lg:px-8">
+            <div class="overflow-hidden">
+              <table class="table-auto border text-center text-sm font-light white:border">
+                <thead class="border-b font-medium white:border">
+                  <tr>
+                    <th colspan="6" class="border-r text-white text-start px-4 py-3 white:border
+                  bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-amber-900 to-yellow-600">
+                  5.3. Visión - Audición:
+                    </th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- FILA 1 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Se interesa por los estímulos visuales <br>(colores,
+                      formas, movimientos, etc.)
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.estimulos_visuales.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.estimulos_visuales.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Se interesa por los estímulos auditivos <br>
+                      (ruidos, voces, música, etc.)
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.estimulo_auditivo.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.estimulo_auditivo.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <!-- FILA 2 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      En ocasiones tiene los ojos irritados o llorosos
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.ojos_irrt_llor.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.ojos_irrt_llor.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Reacciona o reconoce voces o sonidos
+                      familiares 
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.voces_sonidos.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.voces_sonidos.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <!-- FILA 3 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Presenta dolores frecuentes de cabeza
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.dolores_cabeza.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.dolores_cabeza.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Gira la cabeza cuando se le llama o ante un 
+                      ruido fuerte
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.gira_cabeza.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.gira_cabeza.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <!-- FILA 4 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Se acerca o aleja demasiado los objetos a la vista <br>(frunce el ceño)
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.acerca_aleja.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.acerca_aleja.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Acerca los oídos a la TV, radio o fuente de sonido
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.acerca_oidos.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.acerca_oidos.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <!-- FILA 4 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Sigue con la vista el desplazamiento de los <br>objetos o personas
+
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.sigue_con_vista.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.sigue_con_vista.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      En ocasiones se tapa o golpea los oídos
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.tapa_golpea_ojo.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.tapa_golpea_ojo.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <!-- FILA 5 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Presenta movimientos oculares “anormales”
+
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.presenta_movimientos.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.presenta_movimientos.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Presenta frecuentes dolores de oídos
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.dolor_oidos.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.dolor_oidos.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <!-- FILA 6 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Manifiesta conductas “erróneas” <br>(tropiezos, choques)
+
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.man_cond_erron.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.man_cond_erron.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      La pronunciación oral es adecuada
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.pronunciacion_oral.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.pronunciacion_oral.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <!-- FILA 7 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Presenta diagnóstico médico de miopía,<br>
+                      estrabismo, astigmatismo, u otro.
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.diag_medico.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.diag_medico.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Presenta diagnóstico médico de otitis crónica,<br>
+                      hipoacusia u otra.
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.otitis_hipo_otra.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.otitis_hipo_otra.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <tr class="border-b white:border">
+                    <td colspan="6" class="border-l px-4 py-2 w-full">
+                      <label class="text-start  text-white font-medium " for="">Obervaciones:</label>
+                      <textarea name="{{ form.observaciones_4.name }}" id="{{ form.observaciones_4.id_for_label }}"
+                        class=" rounded-md border-purple-500 w-full h-48 mr-8 text-black leading-tight 
+                         focus:shadow-outline-purple focus:border-purple-500">{{ form.observaciones_4.value|default:'' }}</textarea>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- -------------------------------------------------------------------------------------------------------------------- -->
+    <!-- -----------------TABLA 6----------------- -->
+    <div class="mt-7">
+      <div class="flex flex-col">
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 sm:px-2 lg:px-8">
+            <div class="overflow-hidden">
+              <table class="table-auto border text-center text-sm font-light white:border">
+                <thead class="border-b font-medium white:border">
+                  <tr>
+                    <th colspan="6" class="border-r text-white text-start px-4 py-3 white:border
+                  bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-amber-900 to-yellow-600">
+                  5.4. Desarrollo del Lenguaje:
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- FILA 1 -->
+                  <tr class="white:border">
+                    <td colspan="1" class="whitespace-nowrap text-start text-white px-2 py-2 font-medium white:border">
+                      El niño (a) se comunica preferentemente en forma
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border ">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.nino_comunica.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border ">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.nino_comunica.1 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap py-2 white:border pr-40 ">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.nino_comunica.2 }}
+                      </label>
+                    </td>
+                    <tr class="border-b white:border">
+                      <td class=" px-2 py-2 white:border w-16">
+                        <label
+                          class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                          {{ form.nino_comunica.3 }}
+                        </label>
+                      </td>
+                      <td colspan="1" class="text-start text-white px-2 py-2 font-medium white:border">
+                        especifique:
+                      </td>
+                      
+                      <td colspan="5" class="py-2 white:border ">
+                        <input type="text" name="{{ form.especifique.name }}" id="{{ form.especifique.id_for_label }}"
+                          class="border-purple-500 rounded-md w-11/12 h-8 px-4 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                      </td>
+                    </tr>
+                  <tr>
+                  <th colspan="6" class="border-r text-white text-start px-2 py-2 white:border
+                  bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-amber-900 to-yellow-600">
+                  Características del lenguaje expresivo
+                    </th>
+                  </tr>
+                  <!-- FILA 1 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Balbucea (oral o señas)/emite sonidos
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.balbucea.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.balbucea.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Emite/produce frases
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.emite_produce.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.emite_produce.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <!-- FILA 2 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Vocaliza/realiza gestos o señas aisladas
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.vocaliza.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.vocaliza.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Relata experiencias
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.relata_expeciencias.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.relata_expeciencias.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <!-- FILA 3 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Emite palabras/produce señas
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.emite_palabras.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.emite_palabras.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      La emisión/pronunciación/producción es clara
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.emision_pronunciacion.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.emision_pronunciacion.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th colspan="6" class="border-r text-white text-start px-2 py-2 white:border
+                    bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-amber-900 to-yellow-600">
+                    Características del lenguaje comprensivo
+                    </th>
+                  </tr>
+                    <!-- FILA 1 -->
+                  <tr class="border-b white:border">
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Identifica objetos 
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.identifica_objetos.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.identifica_objetos.1 }}
+                      </label>
+                    </td>
+                    <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                      Sigue instrucciones simples
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.instrucciones_simples.0 }}
+                      </label>
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                      <label
+                        class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                        {{ form.instrucciones_simples.1 }}
+                      </label>
+                    </td>
+                  </tr>
+                     <!-- FILA 2 -->
+                     <tr class="border-b white:border">
+                      <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                        Identifica personas
+                      </td>
+                      <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                        <label
+                          class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                          {{ form.identifica_personas.0 }}
+                        </label>
+                      </td>
+                      <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                        <label
+                          class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                          {{ form.identifica_personas.1 }}
+                        </label>
+                      </td>
+                      <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                        Sigue instrucciones complejas
+                      </td>
+                      <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                        <label
+                          class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                          {{ form.instrucciones_complejas.0 }}
+                        </label>
+                      </td>
+                      <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                        <label
+                          class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                          {{ form.instrucciones_complejas.1 }}
+                        </label>
+                      </td>
+                    </tr>
+                    <!-- FILA 3 -->
+                    <tr class="border-b white:border">
+                      <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                        Comprende conceptos abstractos
+                      </td>
+                      <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                        <label
+                          class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                          {{ form.comprende_conceptos.0 }}
+                        </label>
+                      </td>
+                      <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                        <label
+                          class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                          {{ form.comprende_conceptos.1 }}
+                        </label>
+                      </td>
+                      <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                        Sigue instrucciones grupales
+                      </td>
+                      <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                        <label
+                          class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                          {{ form.instrucciones_grupales.0 }}
+                        </label>
+                      </td>
+                      <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                        <label
+                          class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                          {{ form.instrucciones_grupales.1 }}
+                        </label>
+                      </td>
+                    </tr>
+                    <!-- FILA 4 -->
+                    <tr class="border-b white:border">
+                      <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                        Responde en forma coherente preguntas de <br>
+                        la vida diaria
+                      </td>
+                      <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                        <label
+                          class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                          {{ form.responde_coherente.0 }}
+                        </label>
+                      </td>
+                      <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                        <label
+                          class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                          {{ form.responde_coherente.1 }}
+                        </label>
+                      </td>
+                      <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                        Comprende relatos, noticias, cuentos cortos
+                      </td>
+                      <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                        <label
+                          class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                          {{ form.comprende_relatos.0 }}
+                        </label>
+                      </td>
+                      <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                        <label
+                          class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                          {{ form.comprende_relatos.1 }}
+                        </label>
+                      </td>
+                    </tr>
+                    <tr class="border-b white:border">
+                      <td colspan="1" class="text-start text-white px-2 py-2 font-medium white:border">
+                        Manifestó pérdida del lenguaje oral <br>
+                        (especifique edad y motivos):
+                      </td>
+                      <td colspan="5" class=" py-2 white:border">
+                        <input type="text" name="{{ form.perdida_lenguaje.name }}" id="{{ form.perdida_lenguaje.id_for_label }}"
+                          class="border-purple-500 rounded-md w-11/12 h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                      </td>
+                    </tr>
+                    <tr class="border-b white:border">
+                      <td colspan="6" class="border-l px-4 py-2 w-full">
+                        <label class="text-start  text-white font-medium " for="">Obervaciones:</label>
+                        <textarea name="{{ form.observaciones_5.name }}" id="{{ form.observaciones_5.id_for_label }}"
+                          class=" rounded-md border-purple-500 w-full h-48 mr-8 text-black leading-tight 
+                           focus:shadow-outline-purple focus:border-purple-500">{{ form.observaciones_5.value|default:'' }}</textarea>
+                      </td>
+                    </tr>
+                    
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- ------------------------------------------------------------------------------------------------------------------------ -->
+  <!-- -----------------TABLA 7----------------- -->
+  <div class="mt-7">
+    <div class="flex flex-col">
+      <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 sm:px-2 lg:px-8">
+          <div class="overflow-hidden">
+            <table class="table-auto border text-center text-sm font-light white:border">
+              <thead class="border-b font-medium white:border">
+                <tr>
+                  <th colspan="6" class="border-r text-white text-start px-4 py-3 white:border
+                bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-amber-900 to-yellow-600">
+                5.5. Desarrollo Social
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- FILA 1 -->
+                <tr class="border-b white:border">
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Se relaciona espontáneamente con las personas <br>
+                    de su entorno natural.
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.espontaneamente.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.espontaneamente.1 }}
+                    </label>
+                  </td>
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Se relaciona en forma colaborativa
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.forma_colaborativa.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.forma_colaborativa.1 }}
+                    </label>
+                  </td>
+                </tr>
+                <!-- FILA 2 -->
+                <tr class="border-b white:border">
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Explica razones de sus comportamientos y actitudes
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.comportamiento_actitudes.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.comportamiento_actitudes.1 }}
+                    </label>
+                  </td>
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Respeta normas sociales
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.normas_sociales.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.normas_sociales.1 }}
+                    </label>
+                  </td>
+                </tr>
+                <!-- FILA 3 -->
+                <tr class="border-b white:border">
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Participa en actividades grupales 
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.actividades_grupales.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.actividades_grupales.1 }}
+                    </label>
+                  </td>
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Respeta normas escolares 
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.normas_escolares.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.normas_escolares.1 }}
+                    </label>
+                  </td>
+                </tr>
+                <!-- FILA 4 -->
+                <tr class="border-b white:border">
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Opta por trabajo individual 
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.trabajo_individual.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.trabajo_individual.1 }}
+                    </label>
+                  </td>
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Muestra sentido del humor
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.sentido_humor.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.sentido_humor.1 }}
+                    </label>
+                  </td>
+                </tr>
+                <!-- FILA 5 -->
+                <tr class="border-b white:border">
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Presenta lenguaje ecolálico
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.lenguaje_ecolalico.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.lenguaje_ecolalico.1 }}
+                    </label>
+                  </td>
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Movimientos estereotipados
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.movimientos_estereotipados.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.movimientos_estereotipados.1 }}
+                    </label>
+                  </td>
+                </tr>
+                <!-- FILA 6 -->
+                <tr class="border-b white:border">
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Exhibe dificultad para adaptarse a situaciones nuevas
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.dificultad_adaptarse.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.dificultad_adaptarse.1 }}
+                    </label>
+                  </td>
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Pataletas frecuentes 
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.pataletas_frecuentes.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.pataletas_frecuentes.1 }}
+                    </label>
+                  </td>
+                </tr>
+                <tr>
+                  <th colspan="6" class="border-r text-white text-start px-2 py-2 white:border
+                  bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-amber-900 to-yellow-600">
+                  Ante los siguientes estímulos su reacción es: 
+                  </th>
+                </tr>
+                <tr class="border-b white:border">
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    luces:
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.luces.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.luces.1 }}
+                    </label>
+                  </td>
+                </tr>
+                <tr class="border-b white:border">
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Sonidos:
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.sonidos.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.sonidos.1 }}
+                    </label>
+                  </td>
+                </tr>
+                <tr class="border-b white:border">
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Personas extrañas:
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2  white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.personas_extranas.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.personas_extranas.1 }}
+                    </label>
+                  </td>
+                </tr>
+                <tr class="border-b white:border">
+                  <td colspan="6" class="border-l px-4 py-2 w-full">
+                    <label class="text-start  text-white font-medium " for="">Obervaciones:</label>
+                    <textarea name="{{ form.observaciones_6.name }}" id="{{ form.observaciones_6.id_for_label }}"
+                      class=" rounded-md border-purple-500 w-full h-48 mr-8 text-black leading-tight 
+                       focus:shadow-outline-purple focus:border-purple-500">{{ form.observaciones_6.value|default:'' }}</textarea>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- --------------------------------------------------------------------------------------------------------------------------------------->
+  <!-- -----------------TABLA 8----------------- -->
+  <div class="mt-7">
+    <div class="flex flex-col">
+      <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 sm:px-2 lg:px-8">
+          <div class="overflow-hidden">
+            <table class="table-auto border text-center text-sm font-light white:border">
+              <thead class="border-b font-medium white:border">
+                <tr>
+                  <th colspan="6" class="border-r text-white text-start px-4 py-3 white:border
+                bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-amber-900 to-yellow-600">
+                5.6. Estado Actual de Salud del/la Estudiante
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- FILA 1 -->
+                <tr class="border-b white:border">
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Vacunas al día 
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.vacunas_al_dia.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.vacunas_al_dia.1 }}
+                    </label>
+                  </td>
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Trastorno motor
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.trastorno_motor.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.trastorno_motor.1 }}
+                    </label>
+                  </td>
+                </tr>
+                <!-- FILA 2 -->
+                <tr class="border-b white:border">
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Epilepsia
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.epilepsia.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.epilepsia.1 }}
+                    </label>
+                  </td>
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Problema <br> bronco-respiratorio
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.prob_bronco_resp.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.prob_bronco_resp.1 }}
+                    </label>
+                  </td>
+                </tr>
+                <!-- FILA 3 -->
+                <tr class="border-b white:border">
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Problemas cardiacos
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.problemas_cardiacos.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.problemas_cardiacos.1 }}
+                    </label>
+                  </td>
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Enfermedad <br> infecto-contagiosa
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.enf_infect_cont.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.enf_infect_cont.1 }}
+                    </label>
+                  </td>
+                </tr>
+                <!-- FILA 4 -->
+                <tr class="border-b white:border">
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Paraplejia
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.paraplejia.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.paraplejia.1 }}
+                    </label>
+                  </td>
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Trastorno emocional
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.trastorno_emocional.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.trastorno_emocional.1 }}
+                    </label>
+                  </td>
+                </tr>
+                <!-- FILA 5 -->
+                <tr class="border-b white:border">
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Pérdida auditiva
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.perdida_auditiva.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.perdida_auditiva.1 }}
+                    </label>
+                  </td>
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Trastorno conductual
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.trastorno_conductual.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 border-r white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.trastorno_conductual.1 }}
+                    </label>
+                  </td>
+                </tr>
+                <!-- FILA 6 -->
+                <tr class="border-b white:border">
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Pérdida visual 
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.perdida_visual.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.perdida_visual.1 }}
+                    </label>
+                  </td>
+                </tr>
+                <tr class="border-b white:border">
+                  <td colspan="1" class="text-start text-white px-2 py-2 font-medium white:border">
+                    Otro (especifique):
+                  </td>
+                  <td colspan="5" class=" py-2 white:border">
+                    <input type="text" name="{{ form.otro_1.name }}" id="{{ form.otro_1.id_for_label }}"
+                      class="border-purple-500 rounded-md w-11/12 h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                  </td>
+                  <tr class="border-b white:border">
+                    <td colspan="6" class="border-l px-4 py-2 w-full">
+                      <label class="text-start  text-white font-medium " for="">El o los problemas de salud reciben control/tratamiento (especifique):
+                      </label>
+                      <textarea name="{{ form.problemas_salud.name }}" id="{{ form.problemas_salud.id_for_label }}"
+                        class=" rounded-md border-purple-500 w-full h-48 mr-8 text-black leading-tight 
+                         focus:shadow-outline-purple focus:border-purple-500">{{ form.problemas_salud.value|default:'' }}</textarea>
+                    </td>
+                  </tr>
+                </tr>
+                <!-- FILA 8 -->
+                <tr class=" white:border">
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Alimentación: 
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.alimentacion.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.alimentacion.1 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.alimentacion.2 }}
+                    </label>
+                  </td>
+                </tr>
+                <tr class="border-b white:border">
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.alimentacion.3 }}
+                    </label>
+                  </td>
+                  <td colspan="5" class=" py-2 white:border">
+                    <input type="text" name="{{ form.otro_2.name }}" id="{{ form.otro_2.id_for_label }}"
+                      class="border-purple-500 rounded-md w-11/12 h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                  </td>
+                </tr>
+                <!-- FILA 9 -->
+                <tr class="border-b white:border">
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Peso (apreciación del informante): 
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.peso_apreciacion.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.peso_apreciacion.1 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.peso_apreciacion.2 }}
+                    </label>
+                  </td>
+                </tr>
+                <!-- FILA 10 -->
+                <tr class="border-b white:border">
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Sueño: 
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.sueno.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.sueno.1 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.sueno.2 }}
+                    </label>
+                  </td>
+                  <td class="px-0 py-2 w-8">
+                    <label class="text-white" for="">Horas que duerme:</label> <br>
+                    <input type="number" min="1" max="24" name="{{ form.horas_sueno.name }}" id="{{ form.horas_sueno.id_for_label }}"
+                      class="border-purple-500 rounded-md w-16 h-8 text-black leading-tight focus:shadow-outline-purple focus:border-purple-500">
+                  </td>
+                </tr>
+                <!-- FILA 11 -->
+                <tr class="border-b white:border">
+                  <td colspan="1" class="whitespace-nowrap px-2 py-2 white:border">
+                    <label class="text-white" for="">Insomnio</label> <br>
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.insomnio}}
+                    </label>
+                  </td>
+                  <td colspan="1" class="whitespace-nowrap px-2 py-2 white:border">
+                    <label class="text-white" for="">Pesadillas</label> <br>
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.pesadillas  }}
+                    </label>
+                  </td>
+                  <td colspan="1" class="whitespace-nowrap px-2 py-2 white:border">
+                    <label class="text-white" for="">Terrores nocturnos</label> <br>
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.terrores_nocturnos}}
+                    </label>
+                  </td>
+                  <td colspan="1" class="whitespace-nowrap px-2 py-2 white:border">
+                    <label class="text-white" for=""> Sonambulismo </label> <br>
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.sonambulismo}}
+                    </label>
+                  </td>
+                  <td colspan="1" class="whitespace-nowrap px-2 py-2 white:border">
+                    <label class="text-white" for="">Despierta de buen humor</label> <br>
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.despierta_buen_humor}}
+                    </label>
+                  </td>
+                </tr>
+                <!-- FILA 12 -->
+                <tr class="border-b white:border">
+                  <td class="text-start text-white whitespace-nowrap  px-2 py-2 font-medium white:border">
+                    Duerme:
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.duerme.0 }}
+                    </label>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-2 white:border w-16">
+                    <label
+                      class="inline-flex items-center text-white border-purple-500 rounded-md  focus:shadow-outline-purple focus:border-purple-500">
+                      {{ form.duerme.1 }}
+                    </label>
+                  </td>
+                  <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium white:border">
+                    (Especifique):
+                  </td>
+                  <td colspan="1" class="whitespace-nowrap  px-2 py-2 white:border">
+                    <select name="{{ form.especifique_2.html_name }}" id="{{ form.especifique_2.id_for_label }}"
+                      class="block w-full h-8 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 border border-purple-500 rounded-md">
+                      {% for value, label in form.especifique_2.field.choices %}
+                      <option value="{{ value }}">{{ label }}</option>
+                      {% endfor %}
+                    </select>
+                  </td>
+                </tr>
+                <tr class="border-b white:border">
+                  <td colspan="6" class="border-l px-4 py-2 w-full">
+                    <label class="text-start  text-white font-medium " for="">El o los problemas de salud reciben control/tratamiento (especifique):
+                    </label>
+                    <textarea name="{{ form.observaciones_7.name }}" id="{{ form.observaciones_7.id_for_label }}"
+                      class=" rounded-md border-purple-500 w-full h-48 mr-8 text-black leading-tight 
+                       focus:shadow-outline-purple focus:border-purple-500">{{ form.observaciones_7.value|default:'' }}</textarea>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- -------------TABLA PARA ALOJAR BOTON DE GUARDAR FORMULARIA----------------------- -->
+<div>
+  <div class="flex flex-col">
+    <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 sm:px-2 lg:px-8">
+        <div class="overflow-hidden">
+          <table class="table-auto border text-center text-sm font-light white:border">
+
+            <tbody>
+              <tr class="border-b white:border bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-amber-900 to-yellow-600">
+                <td class="text-start whitespace-nowrap  px-2 py-2 font-medium white:border text-white">
+                  Registrar formulario Anamnesis: 
+                </td>
+                <td class="text-start whitespace-nowrap  px-2 py-2 font-medium white:border text-white">
+                  <button type="submit" value="Guardar" class="bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">
+                    Guardar
+                  </button>
+                </td>              
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  </form>
+
+  {{ mensaje }}
+
+
+</body>
+
+{% endblock content %}

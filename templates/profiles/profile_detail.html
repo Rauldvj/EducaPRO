@@ -1,0 +1,12 @@
+<!-- #PAGINA PARA VER EL PERFIL DE CADA USUARIO POR EL COORDINADOR O ADMINISTRADOR -->
+{% extends 'base.html' %}
+
+{% block content %}
+<body class="bg-gradient-to-r from-amber-900 to-yellow-300"></body>
+
+{% include 'componentes/navbar_user.html' %}
+
+{{ user_profile.username }}
+
+<body/>
+{% endblock %}

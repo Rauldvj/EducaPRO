@@ -1,0 +1,55 @@
+<div class="w-11/12">
+    <div class="relative right-0">
+      <ul
+        class="relative flex flex-wrap p-1 list-none rounded-xl bg-blue-gray-50/60"
+        data-tabs="tabs"
+        role="list"
+      >
+        <li class="z-30 flex-auto text-center">
+          <a
+            class="z-30 flex items-center justify-center w-full px-0 py-1 mb-0 transition-all 
+            ease-in-out border-0 rounded-lg cursor-pointer text-slate-900 bg-inherit"
+            data-tab-target=""
+            active=""
+            role="tab"
+            aria-selected="true"
+            aria-controls="perfiles"
+          >
+            <span class="ml-1 font-bold">PERFILES</span>
+          </a>
+        </li>
+        <li class="z-30 flex-auto text-center">
+          <a
+            class="z-30 flex items-center justify-center w-full px-0 py-1 mb-0 transition-all 
+            ease-in-out border-0 rounded-lg cursor-pointer text-slate-900 bg-inherit"
+            data-tab-target=""
+            role="tab"
+            aria-selected="false"
+            aria-controls="cursos"
+          >
+            <span class="ml-1 font-bold">CURSOS</span>
+          </a>
+        </li>
+      </ul>
+      <div data-tab-content="" class="p-5">
+        <div class="block opacity-100" id="perfiles" role="tabpanel">
+          <h5 class="text-white text-lg font-bold text-start -ml-4">LISTADO DE PERSONAL</h5>
+        
+        </div>
+        <div class="hidden opacity-0" id="cursos" role="tabpanel">
+          <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit text-white">
+            "AQUI IRA LA INFORMACIÓN DE LOS CURSOS CON LINK QUE MUESTRE CADA PERFIL DE ALUMNO, DATOS PERSONALES Y DE APODERADOS"
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+<!-- from node_modules -->
+<script src="node_modules/@material-tailwind/html/scripts/tabs.js"></script>
+ 
+<!-- from cdn -->
+<script src="https://unpkg.com/@material-tailwind/html@latest/scripts/tabs.js"></script>

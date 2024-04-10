@@ -1,0 +1,78 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Agregar el enlace al archivo de estilos de Tailwind CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <!-- Agregar el enlace al archivo de la biblioteca FontAwesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- //Borrar esta linea cuando se realice la producción// -->
+    {% tailwind_css %}
+    <style>
+      input[type="text"]:focus,
+      input[type="password"]:focus {
+        border: 0px solid #8b5cf6;
+        outline: none;
+        border-color: #8b5cf6;
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.5);
+      }
+    </style>
+    
+    <title class="text-md">Registro Usuario</title>
+  </head>
+  <body class="bg-gradient animate-gradient">
+    {% load tailwind_filters %}
+    <!-- source:https://codepen.io/owaiswiz/pen/jOPvEPB -->
+    <form action="" method="post">
+      {% csrf_token %}
+
+      <div class="min-h-screen bg-gradient animate-gradient flex justify-center">
+        <div
+          class="max-w-screen-lg m-0 sm:m-5 bg-gradient-to-r from-sky-500 to-cyan-700 shadow sm:rounded-lg flex justify-center flex-1"
+        >
+          <div class="lg:w-1/2 xl:w-5/12 p-6 sm:p-3">
+            <div class="mt-0 flex flex-col">
+              <h1 class="text-start px-2 text-white text-2xl font-extrabold">
+                Registro de nuevo Usuario
+              </h1>
+              <div class="w-full flex-1 mt-2 ">
+                <div class="mx-auto max-w-sm">
+                  {{ form|crispy }}
+                  
+                  <button
+                    type="submit"
+                    value="Registrar"
+                    class="mt-5 tracking-wide h-10 font-semibold bg-yellow-800 hover:bg-yellow-600 w-full py-4 rounded-lg  transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                  >
+                    <span class="ml-3 text-xl text-white"> Registrar Usuario</span>
+                  </button>
+                 
+                    <a href="{% url 'home' %}" class="block p-2 text-white text-xl ">
+                      <i class="fas fa-home mr-1 text-xl "></i>
+                       Ir al Home
+                    </a>
+   
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex-1 bg-indigo-100 text-center hidden lg:flex">
+            <img src="/static/Imagenes/Imagen Login.png" alt="" />
+          </div>
+        </div>
+      </div>
+    </form>
+   
+
+  </body>
+</html>

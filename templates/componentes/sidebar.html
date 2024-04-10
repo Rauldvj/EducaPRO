@@ -1,0 +1,113 @@
+<!-- Agregar el enlace al archivo de estilos de Tailwind CSS -->
+<link
+  href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+  rel="stylesheet"
+/>
+<!-- Agregar el enlace al archivo de la biblioteca FontAwesome -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  rel="stylesheet"
+/>
+
+<!-- Navegación lateral -->
+<aside
+  class="bg-gradient animate-gradient p-3 mb-3 text-white w-60 h-full border-r-2 fixed"
+>
+  <!-- <img class="w-14 h-14 rounded-full mt-1" src="{{ user.profile.image.url }}" alt="{{ user.username }}">
+      <span class="text-md italic text-amber-300">En línea:  </span>{{ user.username }} -->
+  <nav>
+    <ul class="space-y-2 mt-4">
+      <li class="opcion-con-desplegable">
+        <div class="flex items-center justify-between p-2 hover:bg-gray-700">
+          <div class="flex items-center">
+            <i class="fas fa-user mr-2"></i>
+            <span>Gestión funcionarios</span>
+          </div>
+          <i class="fas fa-chevron-down text-xs"></i>
+        </div>
+        <ul class="desplegable ml-4 hidden">
+          <li>
+            <a href="{% url 'perfil' %}" class="block p-2 hover:bg-gray-700 items-center">
+              <i class="fas fa-chevron-right mr-2 text-xs"></i>
+              Perfiles
+            </a>
+            <a href="{% url 'registro' %}" class="block p-2 hover:bg-gray-700 items-center">
+              <i class="fas fa-chevron-right mr-2 text-xs"></i>
+              Registro Usuario
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="opcion-con-desplegable">
+        <div class="flex items-center justify-between p-2 hover:bg-gray-700">
+          <div class="flex items-center">
+            <i class="fas fa-file mr-2"></i>
+            <span>Informes</span>
+          </div>
+          <i class="fas fa-chevron-down text-xs"></i>
+        </div>
+        <ul class="desplegable ml-4 hidden">
+          <li>
+            <a href="" class="block p-2 hover:bg-gray-700 items-center">
+              <i class="fas fa-chevron-right mr-2 text-xs"></i>
+              Anamnesis
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="block p-2 hover:bg-gray-700 items-center">
+              <i class="fas fa-chevron-right mr-2 text-xs"></i>
+              Paci
+            </a>
+          </li>
+          <li>
+            <a href="" class="block p-2 hover:bg-gray-700 items-center">
+              <i class="fas fa-chevron-right mr-2 text-xs"></i>
+              Bitacora
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="mt-72">
+    <a href="{% url 'home' %}" class="block p-2 hover:bg-gray-700 items-center">
+      <i class="fas fa-home mr-2"></i>
+      home
+    </a>
+  </div>
+
+  <!-- Logout al final de la barra lateral -->
+  {% if request.user.is_authenticated %}
+  <div class="">
+    <a
+      href="{% url 'logout' %}"
+      class="block p-2 hover:bg-gray-700 items-center"
+    >
+      <i class="fas fa-sign-out-alt mr-2"></i>
+      Logout
+    </a>
+  </div>
+  {% endif %}
+</aside>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Obtener todas las opciones principales con desplegables
+    const opcionesConDesplegable = document.querySelectorAll(
+      ".opcion-con-desplegable"
+    );
+
+    // Agregar evento de clic a cada opción principal
+    opcionesConDesplegable.forEach(function (opcion) {
+      opcion.addEventListener("click", function () {
+        // Obtener el desplegable asociado a la opción
+        const desplegable = opcion.querySelector(".desplegable");
+
+        // Alternar la clase "hidden" para mostrar u ocultar el desplegable
+        desplegable.classList.toggle("hidden");
+      });
+    });
+  });
+</script>

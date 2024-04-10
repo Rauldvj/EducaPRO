@@ -1,0 +1,76 @@
+  
+  <div class="flex flex-col ml-12 w-4/5 ">
+    <div class="sm:-mx-6 lg:-mx-16">
+        <div class="inline-block w-full py-2">
+            <div class="overflow-hidden">
+                <table class="w-full text-center text-sm font-light">
+                    <!-- ... (código de la tabla) ... -->
+                    <thead class="border-b font-medium dark:border-neutral-500 bg-gradient-to-r from-sky-900 to-cyan-700">
+                      <tr>
+                        <th scope="col" class="text-start text-white px-2 py-2">NOMBRES Y APELLIDOS</th>
+                        <th scope="col" class="text-start text-white px-2 py-2">USUARIO</th>
+                        <th scope="col" class="text-start text-white px-2 py-2">CARGO</th>
+                        <th scope="col" class="text-start text-white px-2 py-2 w-8">ACCIONES</th>
+                      </tr>
+                    </thead>
+                      <tbody>
+                        {% for user_profile in user_profiles %}
+                            <!-- Condiciones para aplicar estilos según el grupo del usuario -->
+                            {% if 'Funcionario' in user_profile.groups %}
+                                <!-- Estilo para el grupo 'Funcionario' -->
+                                <tr class="border-b border-neutral-100 bg-zinc-950 text-neutral-800">
+                            {% elif 'Administrador' in user_profile.groups %}
+                                <!-- Estilo para el grupo 'Administrador' -->
+                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-gray-600 to-gray-900 text-neutral-800">
+                            {% elif 'Coordinador' in user_profile.groups %}
+                                <!-- Estilo para el grupo 'Coordinador' -->
+                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-lime-600 to-lime-900 text-neutral-800">
+                            {% elif 'Fonoaudiologo' in user_profile.groups %}
+                                <!-- Estilo para el grupo 'Fonoaudiologo' -->
+                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-amber-600 to-amber-900 text-neutral-800">
+                            {% elif 'Psicólogo' in user_profile.groups %}
+                                <!-- Estilo para el grupo 'Psicólogo' -->
+                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-indigo-600 to-indigo-900 text-neutral-800">
+                            {% elif 'Psicopedagógo' in user_profile.groups %}
+                                <!-- Estilo para el grupo 'Psicopedagógo' -->
+                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-purple-600 to-purple-900 text-neutral-800">
+                            {% elif 'Técnico Diferencial' in user_profile.groups %}
+                                <!-- Estilo para el grupo 'Técnico Diferencial' -->
+                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-pink-600 to-pink-900 text-neutral-800">
+                            {% elif 'Técnico Parvulario' in user_profile.groups %}
+                                <!-- Estilo para el grupo 'Técnico Parvulario' -->
+                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-green-600 to-green-900 text-neutral-800">
+                            {% elif 'Terapeuta Ocupacional' in user_profile.groups %}
+                                <!-- Estilo para el grupo 'Terapeuta Ocupacional' -->
+                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-red-600 to-red-900 text-neutral-800">
+                            {% endif %}
+          
+                            <!-- Cuerpo de la tabla -->
+                            <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium">
+                                {{ user_profile.user.get_full_name }}
+                            </td>
+                            <td class="text-start text-white whitespace-nowrap px-2 py-2">{{ user_profile.user.username }}</td>
+                            <td class="text-start text-white whitespace-nowrap px-2 py-2">{{ user_profile.groups | join:", " | capfirst }}</td>
+                            <td class="text-start text-white whitespace-nowrap px-2 py-2">
+                                <a href=""
+                                class="bg-yellow-700 hover:bg-yellow-500 border px-1 py-1 w-20">
+                                INFOs
+                                </a>
+
+                               
+                                <button type="button" class="bg-green-700 hover:bg-green-500 border px-1 py-1 w-20">EDITAR</button>
+                            </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="flex flex-col -ml-4 mt-2 w-full">
+    <a href="" class="rounded-lg 
+    text-white text-sm text-center font-bold bg-gradient-to-br from-red-600 to-red-900 px-3 py-2 w-24"">
+    Agregar Usuario</a>
+    
+</div>

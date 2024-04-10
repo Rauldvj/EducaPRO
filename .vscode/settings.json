@@ -1,0 +1,21 @@
+{
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.autopep8"
+  },
+  "python.formatting.provider": "none",
+  "cSpell.words": [
+    "Bitacora",
+    "cardiacos",
+    "extranas",
+    "logeado",
+    "pais",
+    "pasarle",
+    "psicopedagogo",
+    "redireccionamiento",
+    "redireccionamos",
+    "relacion",
+    "Renderizar",
+    "tecnicodiferen",
+    "telefono"
+  ]
+}

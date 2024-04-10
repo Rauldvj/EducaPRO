@@ -1,0 +1,12 @@
+
+
+<!-- Template perfiles/profile_detail.html -->
+<nav class="  h-16 flex items-center justify-between flex-wrap">
+    <div class="flex">
+        <h1 class=" text-xl ml-2 font-semibold">EDUCAPRO</h1>
+    </div>
+    <div class="flex space-x-4 px-4">
+        <span class="text-white text-md italic">En línea: {{ user_profile.first_name }} {{ user_profile.last_name }}</span>
+        <img class="mx-auto w-9 h-9 rounded-full" src="{{ user_profile.profile.image.url }}" alt="{{ user_profile.username }}">
+    </div>
+</nav>

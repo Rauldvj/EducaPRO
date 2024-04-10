@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@material-tailwind/html": "^2.1.1",
+    "@preline/overlay": "^2.0.1",
+    "@preline/toggle-password": "^2.0.1",
+    "tw-elements": "^1.1.0"
+  }
+}

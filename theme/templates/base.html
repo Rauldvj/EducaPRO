@@ -1,0 +1,73 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>{% block title %} {% endblock %}</title>
+    <!-- Agregar el enlace al archivo de estilos de Tailwind CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <!-- Agregar el enlace al archivo de la biblioteca FontAwesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- //Borrar esta linea cuando se realice la producción// -->
+    {% tailwind_css %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body>
+    <div class="header">{% block header %} {% endblock %}</div>
+
+    <div class="sidenav">{% block navbar %} {% endblock %}</div>
+    
+    <div class="sidebar">{% block sidebar %} {% endblock %}</div>
+    
+    <div class="contenido">{% block content %} {% endblock content %}</div>
+
+    <div class="imagen">{% block img %} {% endblock %}</div>
+
+    <div class="footer">{% block footer %} {% endblock %}</div>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == 'success' %}
+          <script>
+            Swal.fire({
+              title: "¡Excelente!",
+              text: "{{ message }}",
+              icon: "success",
+            });
+          </script>
+        {% elif message.tags == 'error' %}
+          <script>
+            Swal.fire({
+              title: "Error",
+              text: "{{ message }}",
+              icon: "error",
+            });
+          </script>
+        {% elif message.tags == 'warning' %}
+          <script>
+            Swal.fire({
+              title: "Advertencia",
+              text: "{{ message }}",
+              icon: "warning",
+            });
+          </script>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    {% block js %} {% endblock %}
+  </body>
+</html>
