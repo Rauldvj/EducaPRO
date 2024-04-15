@@ -61,21 +61,21 @@
                         <!-- Evaluar grupo al que pertenece el usuario -->
                         {% if group_name_singular == 'Funcionario' %}
                             {% include 'profiles/funcionarios.html' %}
-                        {% elif group_name == 'Administradores' %}
+                        {% elif group_name_singular == 'Administrador' %}
                             {% include 'profiles/administradores.html' %}
-                        {% elif group_name == 'Coordinadores' %}
+                        {% elif group_name_singular == 'Coordinador' %}
                             {% include 'profiles/coordinador.html' %}
-                        {% elif group_name == 'Psicopedagógos' %}
+                        {% elif group_name_singular == 'Psicopedagógo' %}
                             {% include 'profiles/psicopedagogo.html' %}
-                        {% elif group_name == 'Psicólogos' %}
+                        {% elif group_name_singular == 'Psicólogo' %}
                             {% include 'profiles/psicologo.html' %}
-                        {% elif group_name == 'Terapeutas Ocupacionales' %}
+                        {% elif group_name_singular == 'Terapeuta Ocupacional' %}
                             {% include 'profiles/terapeutaocu.html' %}
-                        {% elif group_name == 'Fonoaudiologos' %}
+                        {% elif group_name_singular == 'Fonoaudiologo' %}
                             {% include 'profiles/fonoaudiologo.html' %}
-                        {% elif group_name == 'Técnicos Diferenciales' %}
+                        {% elif group_name_singular == 'Técnico Diferencial' %}
                             {% include 'profiles/tecnicodiferen.html' %}
-                        {% elif group_name == 'Técnicos Parvularios' %}
+                        {% elif group_name_singular == 'Técnico Parvulario' %}
                             {% include 'profiles/tecnicoparvulo.html' %}
                         {% endif %}
                     </div>
@@ -178,33 +178,22 @@
                             <!-- ----FILA 6 ----- -->
 
                             <div class="flex space-x-2 text-start">
-
                                 <div class="w-1/2">
-                                    <label for="region"
-                                        class="form-label text-white text-sm font-bold italic mb-0">Region</label>
-                                    <select name="region" id="region"
-                                        class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full">
-                                        
-                                        <!-- #AQUÍ SE ITERAN LAS REGIONES -->
-                                        {% for region_id, region_name in profile_form.fields.region.choices %}
-                                        {% if region_name != "---------" %}
-                                        <option value="{{ region_id }}">{{ region_name }}</option>
-                                        {% endif %}
+                                    <label for="region" class="form-label text-white text-sm font-bold italic mb-0">Región</label>
+                                    <select name="region" id="region" class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full">
+                                        <!-- Opciones de región -->
+                                        {% for region in regiones %}
+                                            <option value="{{ region.id }}" {% if user.profile.region_id == region.id %} selected {% endif %}>{{ region.region }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
-
+                        
                                 <div class="w-1/2 ml-2">
-                                    <label for="comuna"
-                                        class="form-label text-white text-sm font-bold italic mb-0">Comuna</label>
-                                    <select name="comuna" id="comuna"
-                                        class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full">
-                                       
-                                        <!-- #AQUÍ SE ITERAN LAS COMUNAS -->
-                                        {% for comuna_id, comuna_name in profile_form.fields.comuna.choices %}
-                                        {% if comuna_name != "---------" %}
-                                        <option value="{{ comuna_id }}">{{ comuna_name }}</option>
-                                        {% endif %}
+                                    <label for="comuna" class="form-label text-white text-sm font-bold italic mb-0">Comuna</label>
+                                    <select name="comuna" id="comuna" class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full">
+                                        <!-- Opciones de comuna -->
+                                        {% for comuna in comunas %}
+                                            <option value="{{ comuna.id }}" {% if user.profile.comuna_id == comuna.id %} selected {% endif %}>{{ comuna.comuna }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>

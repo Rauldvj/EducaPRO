@@ -1,5 +1,5 @@
 from django.db import models
-from localidad.models import *
+from localidad.models import Region, Comuna
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 

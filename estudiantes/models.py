@@ -53,6 +53,7 @@ def estudiante_pre_save(sender, instance, *args, **kwargs):
 # SECCION PARA CREAR MODELOS DE LOS APODERADOS ---------------------------------------------------
 
 class ApoderadoTitular(Persona):
+    estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE, verbose_name='Estudiante')
     correo = models.EmailField(validators=[EmailValidator()], verbose_name='Correo Electrónico')
     region = models.ForeignKey(Region, on_delete=models.CASCADE, verbose_name='Region' )
     comuna = models.ForeignKey(Comuna, on_delete=models.CASCADE, verbose_name='Comuna')
@@ -72,6 +73,7 @@ class ApoderadoTitular(Persona):
 #MODELO PARA REGISTRAR UN APODERADO SUPLENTE 1
 
 class ApoderadoSuplente1(Persona):
+    estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE, verbose_name='Estudiante')
     region = models.ForeignKey(Region, on_delete=models.CASCADE, verbose_name='Region' )
     comuna = models.ForeignKey(Comuna, on_delete=models.CASCADE, verbose_name='Comuna')
     def __str__(self):
@@ -85,6 +87,7 @@ class ApoderadoSuplente1(Persona):
 #MODELO PARA REGISTRAR UN APODERADO SUPLENTE 2
 
 class ApoderadoSuplente2(Persona):
+    estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE, verbose_name='Estudiante')
     region = models.ForeignKey(Region, on_delete=models.CASCADE, verbose_name='Region' )
     comuna = models.ForeignKey(Comuna, on_delete=models.CASCADE, verbose_name='Comuna')
     def __str__(self):

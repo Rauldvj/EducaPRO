@@ -1,10 +1,20 @@
 from django.urls import path
 
 #IMPORTAMOS LAS CLASES DE VISTAS (VIEWS)
-from .views import IndexView, HomeView, RegisterView, ProfileView
+from .views import IndexView, HomeView, RegisterView, ProfileView, ErrorView
+
+#IMPORTAMOS UN HELPER (AYUDA), PARA PROTEGER LOS FORMULARIOS Y REGISTROS (ROLES Y PERMISOS DE ACCESO)
+from django.contrib.auth.decorators import login_required
     
 #--------------------------------------------------------------------------------------
 urlpatterns = [
+
+    #URL DE PAGINA DE ERRO
+    path('error/', login_required(ErrorView.as_view()), name="error"),
+
+
+    #--------------------------------------------------------------------------------------
+
     #URL INDEX (PAGINA PRINCIPAL)
     path('', IndexView.as_view(), name="index"), 
 
@@ -16,14 +26,14 @@ urlpatterns = [
 #--------------------------------------------------------------------------------------
 
     #URL DEL REGISTRO
-    path('registro/', RegisterView.as_view(), name="registro"),
+    path('registro/', login_required(RegisterView.as_view()), name="registro"),
 #--------------------------------------------------------------------------------------
 
     #URL HOME (PAGINA PRINCIPAL)
-    path('home/', HomeView.as_view(), name="home"),
+    path('home/', login_required(HomeView.as_view()), name="home"),
 
 #--------------------------------------------------------------------------------------
 
     #URL DEL PERFIL
-    path('perfil/', ProfileView.as_view(), name="perfil"),
+    path('perfil/', login_required(ProfileView.as_view()), name="perfil"),
 ]

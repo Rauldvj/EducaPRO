@@ -13,14 +13,14 @@ admin.site.register(Estudiante, EstudianteAdmin)
 #Registrar Apoderado Titular
 
 class ApoderadoTitularAdmin(admin.ModelAdmin):
-    list_display = ('rut', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'direccion', 'telefono', 'correo', 'region', 'comuna', 'etnia', 'salud', 'renta')
+    list_display = ('estudiante','rut', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'direccion', 'telefono', 'correo', 'region', 'comuna', 'etnia', 'salud', 'renta')
 admin.site.register(ApoderadoTitular, ApoderadoTitularAdmin)
 #____________________________________________________________________________________________________________________________________________________________________________________________
 
 #Registrar Apoderado Suplente 1
 
 class ApoderadoSuplente1Admin(admin.ModelAdmin):
-    list_display = ('rut', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'direccion', 'telefono', 'region', 'comuna')
+    list_display = ('estudiante', 'rut', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'direccion', 'telefono', 'region', 'comuna')
 admin.site.register(ApoderadoSuplente1, ApoderadoSuplente1Admin)
 
 #___________________________________________________________________________________________________________________________________________________________________________________________
@@ -28,10 +28,10 @@ admin.site.register(ApoderadoSuplente1, ApoderadoSuplente1Admin)
 #Registrar Apoderado Suplente 2
 
 class ApoderadoSuplente2Admin(admin.ModelAdmin):
-    list_display = ('rut', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'direccion', 'telefono', 'region', 'comuna')
+    list_display = ('estudiante', 'rut', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'direccion', 'telefono', 'region', 'comuna')
     fieldsets = (
         (None, {
-            'fields': ('rut', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'direccion', 'telefono'),
+            'fields': ('estudiante','rut', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'direccion', 'telefono'),
         }),
         ('Localidad', {
             'fields': ('region', 'comuna'),

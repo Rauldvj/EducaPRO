@@ -2,7 +2,7 @@ from django import forms #IMPORTAMOS LOS FORMULARIOS
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm #IMPORTAMOS EL FORMULARIO DE AUTENTICACIÓN
 from django.contrib.auth.models import User #IMPORTAMOS EL MODELO DE USUARIOS
 from .models import * #IMPORTAMOS LOS MODELOS
-from accounts.models import *
+from accounts.models import Profile
 from estudiantes.models import *
 
 #FORMULARIO LOGIN
@@ -34,17 +34,18 @@ class RegisterUserForm(UserCreationForm):
 #CREAMOS EL FORMULARIO EL CUAL HEREDA LOS DATOS DEL USER
 class UserForm(forms.ModelForm):
     class Meta:
-        model = User
+        model = User #IMPORTAMOS EL MODELO DE USUARIOS
         fields = ['first_name', 'last_name']
 
 #____________________________________________________________________________________________________________________________
 #FORMULARIO DE PERFIL
 class ProfileForm(forms.ModelForm):
-    group = forms.ModelChoiceField(queryset=Group.objects.all(), required=False)
-
     class Meta:
         model = Profile
         fields = ['image', 'rut', 'direccion', 'region', 'comuna', 'telefono']
+        widgets = {
+            'region': forms.Select(attrs={'class': 'form-control'}),
+        }
       
 
 #____________________________________________________________________________________________________________________________

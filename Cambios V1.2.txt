@@ -1,0 +1,10 @@
+1.- Se completa la vista de Profile, para que guarde las modificaciones en el modal de Perfil
+	-Se hacen modificiones en el form y se completa la logica en el html de profiles/profile.html
+
+2. Se construye un decorador para hacer el codigo en las vistas mas limpio al reutlizar 
+este decorador para todas las vistas
+
+3. Usar login_required y Mixin Administrativos (Permiso y Seguridad), se proteguen los formularios
+
+4. Seccion de Perfiles Administradores y Coordinadores
+
