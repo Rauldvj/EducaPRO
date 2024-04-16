@@ -62,9 +62,9 @@
                     <option disabled selected>Seleccione el Cargo</option>
 
                     <!-- #AQUÍ SE ITERAN LOS CARGOS -->
-                    {% for group, singular_groups in groups %}
-                    <option value="{{ group.id }}">{{ singular_groups }}</option>
-                    {% endfor %}
+                    {% for group, singular_group in groups %}
+                                    <option value="{{ group.id }}">{{ singular_group }}</option>
+                                    {% endfor %}
                   </select>
                 </div>
               </div>
@@ -78,7 +78,7 @@
 
             <div class="flex justify-center">
               <a class="bg-rose-900 hover:bg-rose-600  font-medium p-2 md:p-3 
-              text-white uppercase text-center w-full rounded mx-auto" href="{% url 'perfil' %}">
+              text-white uppercase text-center w-full rounded mx-auto" href="{% url 'profile' %}">
               REGRESAR A PERFILES</a>
             </div>
             </form>

@@ -42,9 +42,11 @@
                
                     <div class="flex flex-col items-stretch text-center">
                         <!-- Botón Cambiar Contraseña -->
-                        <a href=""
+                        {% if request.user.username == 'coordinadores'%}
+                        <a href="{% url 'profile_password_change' %}"
                             class="bg-yellow-800 hover:bg-yellow-600 text-white mb-2 py-2 px-2 rounded block w-full ">Cambiar
                             Contraseña</a>
+                        {% endif %}
                         <hr>
                         <!-- Botón Editar Perfil -->
                         <button onclick="document.getElementById('editarPerfil').showModal()" id="btn"

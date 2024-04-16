@@ -1,0 +1,9 @@
+1. Seccion de Perfiles Administradores y Coordinadores Ok
+
+2. Cambio de contraseña del usuario Ok
+
+3. Crear nuevos usaurios
+
+4. Crear un Login personalizado (Ya no usamos el por defecto de django)
+
+5. El nuevo usuario logeado lo redireccionara a cambiar la constraseña

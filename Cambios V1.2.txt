@@ -6,5 +6,5 @@ este decorador para todas las vistas
 
 3. Usar login_required y Mixin Administrativos (Permiso y Seguridad), se proteguen los formularios
 
-4. Seccion de Perfiles Administradores y Coordinadores
+
 
