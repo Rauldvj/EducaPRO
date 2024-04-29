@@ -4,33 +4,33 @@
     {% if group_name == 'Funcionarios' %}
         <nav class="border-b border-neutral-100 bg-zinc-950 h-16 flex items-center justify-between flex-wrap">
     {% elif group_name == 'Administradores' %}
-        <nav class="border-b border-neutral-100 bg-gradient-to-tr from-gray-600 to-gray-900 h-16 flex items-center justify-between flex-wrap">
+        <nav class="border-b border-neutral-100 bg-gradient-to-tr from-gray-600 to-gray-900 h-12 flex items-center justify-between flex-wrap">
     {% elif group_name == 'Coordinadores' %}
-        <nav class="border-b border-neutral-100 bg-gradient-to-tr from-lime-600 to-lime-900 h-16 flex items-center justify-between flex-wrap">
+        <nav class="border-b border-neutral-100 bg-gradient-to-tr from-lime-600 to-lime-900 h-12 flex items-center justify-between flex-wrap">
     {% elif group_name == 'Psicopedagógos' %}
-        <nav class="border-b border-neutral-100 bg-gradient-to-tr from-purple-600 to-purple-900 h-16 flex items-center justify-between flex-wrap">
+        <nav class="border-b border-neutral-100 bg-gradient-to-tr from-purple-600 to-purple-900 h-12 flex items-center justify-between flex-wrap">
     {% elif group_name == 'Psicólogos' %}
-        <nav class="border-b border-neutral-100 bg-gradient-to-tr from-indigo-600 to-indigo-900 h-16 flex items-center justify-between flex-wrap">
+        <nav class="border-b border-neutral-100 bg-gradient-to-tr from-indigo-600 to-indigo-900 h-12 flex items-center justify-between flex-wrap">
     {% elif group_name == 'Terapeutas Ocupacionales' %}
         <nav class="bg-gradient-to-tr from-red-600 to-red-900 h-16 flex items-center justify-between flex-wrap">
     {% elif group_name == 'Fonoaudiologos' %}
-        <nav class="border-b border-neutral-100 bg-gradient-to-tr from-amber-600 to-amber-900 h-16 flex items-center justify-between flex-wrap">
+        <nav class="border-b border-neutral-100 bg-gradient-to-tr from-amber-600 to-amber-900 h-12 flex items-center justify-between flex-wrap">
     {% elif group_name == 'Técnicos Diferenciales' %}
-        <nav class="border-b border-neutral-100 bg-gradient-to-tr from-pink-600 to-pink-900 h-16 flex items-center justify-between flex-wrap">
+        <nav class="border-b border-neutral-100 bg-gradient-to-tr from-pink-600 to-pink-900 h-12 flex items-center justify-between flex-wrap">
     {% elif group_name == 'Técnicos Parvularios' %}
-        <nav class="border-b border-neutral-100 bg-gradient-to-tr from-green-600 to-green-900 h-16 flex items-center justify-between flex-wrap">
+        <nav class="border-b border-neutral-100 bg-gradient-to-tr from-green-600 to-green-900 h-12 flex items-center justify-between flex-wrap">
     {% endif %}
 {% else %}
 
-    <nav class="h-16 flex items-center justify-between flex-wrap">
+    <nav class="h-12 flex items-center justify-between flex-wrap">
 {% endif %}
 
  <!-- Navegación Superior -->
     <div class="flex ">
-      <h1 class="text-white text-xl ml-2 font-semibold">EDUCAPIE v1.0</h1>
+      <h1 class="text-white text-md ml-2 font-semibold">EDUCAPIE v2.0</h1>
     </div>
     <div class="flex space-x-4 px-4">
-      <span class="text-white text-md italic">Usuario en línea: {{ user.first_name|capfirst }} {{user.last_name|capfirst}} | {{group_name_singular}}</span>
+      <span class="text-white text-sm italic mt-2">Usuario en línea: {{ user.first_name|capfirst }} {{user.last_name|capfirst}} | {{group_name_singular}}</span>
       <img class="mx-auto w-9 h-9 rounded-full " src="{{ user.profile.image.url }}" alt="{{ user.username }}">
     </div>
   </nav>

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %} PIE {% endblock %}
+
+{% block content %}
+
+<body class="bg-gradient-to-r from-amber-900 to-yellow-600">
+
+    {% include 'componentes/navbar.html' %}
+
+    {% include 'componentes/sidebar.html' %}
+
+    <div class="flex flex-col ml-64 mt-2 w-4/5"> <!-- Cambié w-3/5 a w-4/5 para hacer la tabla un poco más ancha -->
+        <div class="overflow-x-auto">
+            <table class="w-full text-center text-sm font-light">
+                <thead class="border-b font-medium bg-gradient-to-r from-sky-900 to-cyan-700">
+                    <tr>
+                        <th scope="col" class="text-start text-white px-2 py-2">CURSO</th>
+                        <th scope="col" class="text-start text-white px-2 py-2">LETRA</th>
+                        <th scope="col" class="text-start text-white px-2 py-2 min-w-1/6">ESTUDIANTE</th>
+                        <th scope="col" class="text-start text-white px-2 py-2 min-w-1/4">APODERADO TITULAR</th>
+                        <th scope="col" class="text-start text-white px-2 py-2 min-w-1/4">APODERADO SUPLENTE 1</th>
+                        <th scope="col" class="text-start text-white px-2 py-2 w-8">ACCIONES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pie in pies %}
+                    <tr class="border-b border-neutral-100 bg-gradient-to-b from-sky-500 to-sky-700">
+                        <td class="text-start text-white px-2 py-2 font-medium whitespace-no-wrap">{{ pie.curso }}</td>
+                        <td class="text-start text-white px-2 py-2 whitespace-no-wrap">{{ pie.letra_curso }}</td>
+                        <td class="text-start text-white px-2 py-2 whitespace-no-wrap">{{ pie.estudiante|capfirst }}</td>
+                        <td class="text-start text-white px-2 py-2 whitespace-no-wrap">{{ pie.apoderado|capfirst }}</td>
+                        <td class="text-start text-white px-2 py-2 whitespace-no-wrap">{{ pie.ApoderadoSuplente1|capfirst }}</td>
+                        <td class="text-start text-white px-2 py-2 whitespace-no-wrap">
+                            <div class="flex">
+                                <a href="" class="bg-yellow-700 hover:bg-yellow-500 border px-3 py-1 w-20 mr-2">INFO</a>
+                                <button type="button" class="bg-green-700 hover:bg-green-500 border px-1 py-1 w-20">EDITAR</button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="flex flex-col ml-72 mt-2">
+        <a href="{% url 'add_user' %}" 
+        class="rounded-lg text-white text-sm text-center font-bold bg-gradient-to-br from-red-600 to-red-900 px-3 py-2 w-24"
+        >Agregar Estudiante</a>
+    </div>
+
+</body>
+
+{% endblock content %}

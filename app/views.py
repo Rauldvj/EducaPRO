@@ -1,24 +1,26 @@
 from typing import Any
 from django.http.response import HttpResponseRedirect
 from accounts.models import Profile
+from app.models import Anamnesis
 from django.shortcuts import redirect, render # Importamos render y redirect
-from django.urls import reverse_lazy # Importamos reverse_lazy
+from django.urls import reverse_lazy, reverse # Importamos reverse_lazy
 from django.views import View # Importamos la vista basada en clases
 from django.contrib import messages  # Importamos mensajes
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView, DeleteView, DetailView # Importamos ListView, TemplateView, CreateView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.models import Group # Importamos la estructura de los grupos de Django
-from .forms import RegisterUserForm, UserForm, ProfileForm, UserCreationForm
+from .forms import RegisterUserForm, UserForm, ProfileForm, UserCreationForm, AnamnesisForm
 from django.contrib.auth.models import User # Importamos el modelo de usuario
 from django.contrib.auth import authenticate, login, logout # Importamos la autenticación
 from .funciones import plural_singular # Importa la función plural_singular
 from .models import Region, Comuna  # Importa los modelos Region y Comuna
-from .decorators import add_group_name_to_context
+from .decorators import add_group_name_to_context, get_group_and_color
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin # Importamos la clase UserPassesTestMixin para proteger las vistas URLs
 import os # Importamos la librería os
 from django.conf import settings    # Importamos la configuración de Django
 from django.contrib.auth.views import PasswordChangeView  # Importamos la clase PasswordChangeView
 from django.contrib.auth import update_session_auth_hash # Importamos la clase update_session_auth_hash
 from django.contrib.auth.views import LoginView # Importamos la clase LoginView
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # ____________________________________________________________________________________________________________________________
 
 #VISTA BASADA EN CLASES PARA LA VIEW DE ERROR
@@ -87,11 +89,12 @@ class RegisterView(UserPassesTestMixin, View):
 @add_group_name_to_context # Decorador Personalizado
 class ProfileView(TemplateView):  
     template_name = 'profiles/profile.html'
+    
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.request.user  # Obtenemos el usuario que está logeado
-
+        
         # Obtener las opciones de región y comuna
         regiones = Region.objects.all()
         comunas = Comuna.objects.all()
@@ -108,8 +111,12 @@ class ProfileView(TemplateView):
     #LLAMAMOS A LOS GRUPOS PARA OBTENER LOS USUARIOS
         if user.groups.first().name == 'Coordinadores':
 
+            #Obtenemos a todos los usuarios que no sean administradores o coordinadores
+            coordinadores_groups = Group.objects.get(name='Coordinadores')
+
+
             #Obtenemos todos los usuarios
-            all_users = User.objects.all()
+            all_users = User.objects.exclude(groups__in=[coordinadores_groups])
 
             #Obtenemos todos los grupos
             all_groups = Group.objects.all()
@@ -132,6 +139,22 @@ class ProfileView(TemplateView):
             context['user_profiles'] = user_profiles
             context['all_groups'] = all_groups
             
+            # Paginación de perfiles de usuario
+            profiles_pages = 2  # Definir el número de perfiles por página
+            paginator = Paginator(user_profiles, profiles_pages)  # Crear un objeto Paginator
+            number_page = self.request.GET.get('page')  # Obtener el número de página solicitada desde la URL
+
+            try:
+                profiles_paginated = paginator.page(number_page)  # Intentar obtener la página solicitada
+            except PageNotAnInteger:
+                # Si el número de página no es un entero, mostrar la primera página
+                profiles_paginated = paginator.page(1)
+            except EmptyPage:
+                # Si el número de página está fuera de rango, mostrar la última página
+                profiles_paginated = paginator.page(paginator.num_pages)
+
+            # Agregar los perfiles paginados al contexto
+            context['user_profiles'] = profiles_paginated
 
         return context
     
@@ -139,7 +162,7 @@ class ProfileView(TemplateView):
     def post(self, request, *args, **kwargs):
         user = self.request.user # Obtenemos el usuario que está logeado
         user_form = UserForm(data=request.POST, instance=user) # Definimos el formulario con los datos del POST 
-        profile_form = ProfileForm(data=request.POST, instance=user.profile) # Definimos el formulario con los datos del POST
+        profile_form = ProfileForm(request.POST, request.FILES, instance=user.profile) # Definimos el formulario con los datos del POST
 
         #Preguntamos si el user_form y el profile_form son validos
         if user_form.is_valid() and profile_form.is_valid():
@@ -216,10 +239,10 @@ class AddUserView(UserPassesTestMixin, LoginRequiredMixin, CreateView):
 
     #Recuperamos los grupos y su singular
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        groups = Group.objects.all()
-        singular_groups = [plural_singular(group.name).capitalize() for group in groups]
-        context['groups'] = zip(groups, singular_groups)
+        context = super().get_context_data(**kwargs) #Obtenemos el contexto
+        groups = Group.objects.all() #Obtenemos todos los grupos
+        singular_groups = [plural_singular(group.name).capitalize() for group in groups] # Obtener los nombres singulares de los grupos
+        context['groups'] = zip(groups, singular_groups) #unimos las 2 variables de grupos para obtener el singular del grupo
 
         return context
     
@@ -281,3 +304,92 @@ class CustomLoginView(LoginView):
 
 
 # ____________________________________________________________________________________________________________________________
+
+#VISTA BASADA EN CLASES PARA LA VIEW DE PERFIL DETALLADO DE UN USUARIO
+
+@add_group_name_to_context
+class UserDetailView(LoginRequiredMixin, DetailView):
+    model = User
+    template_name = 'profiles/profile_detail.html'
+    context_object_name = 'user_profile'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.get_object()
+        group_id, group_name, group_name_singular, color = get_group_and_color(user)
+        
+        # Obtener las opciones de región y comuna
+        regiones = Region.objects.all()
+        comunas = Comuna.objects.all()
+
+        #Obtengo todos los grupos
+        groups = Group.objects.all()
+        singular_names = [plural_singular(group.name).capitalize() for group in groups] # Obtener los nombres singulares de los grupos
+        groups_ids = [group.id for group in groups]
+        singular_groups = zip(singular_names, groups_ids) #unimos las 2 variables de grupos para obtener el singular del grupo
+
+        context['regiones'] = regiones
+        context['comunas'] = comunas
+        context['singular_groups'] = singular_groups
+        context['group_id_user'] = group_id
+        context['group_name_user'] = group_name
+        context['group_name_singular_user'] = group_name_singular
+        context['color_user'] = color
+
+        return context
+
+
+# ____________________________________________________________________________________________________________________________
+#VISTA BASADA EN FUNCIONES PARA LA GRABACIÓN EN LA EDICIÓN DE UN USUARIO
+
+def superuser_edit(request, user_id):
+
+    #Verificamos si es Super Usuario o no
+    if not request.user.is_superuser:
+        return redirect('error')
+
+    user = User.objects.get(pk=user_id)
+
+    #Verificamos los datos que ingresamos en el formulario
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=user.profile)
+        group = request.POST.get('group')
+
+        #validación del formulario
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            user.groups.clear()
+            user.groups.add(group)
+
+            messages.success(request, 'Usuario editado exitosamente')
+            return redirect('profile_detail', pk=user.pk)
+
+    else:
+        user_form = UserForm(instance=user)
+        profile_form = ProfileForm(instance=user.profile)
+
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form
+    }
+    return render(request, 'profiles/profile_detail.html', context)
+    
+
+
+    
+# ___________________________________________________________________________________________________________________________
+
+#VISTA BASADA EN FUNCIONES PARA EL FORMULARIO DEL ANAMNESIS
+@add_group_name_to_context
+class AnamnesisView(CreateView):
+    model = Anamnesis #importamos el modelo Anamnesis
+    form_class = AnamnesisForm
+    template_name = 'informes/anamnesis.html'
+    success_url = reverse_lazy('home')
+    
+
+    
+    
+

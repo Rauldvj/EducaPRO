@@ -1,0 +1,8 @@
+Beta 2.0 build 2.0
+
+1. Realizar validaciones con JavaScript de:
+	-rut
+	-seleccion de comunas segun region
+
+2. Programar un paginador para visualizar ciertas cantidades de
+registros 

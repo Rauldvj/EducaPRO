@@ -37,6 +37,8 @@ class UserForm(forms.ModelForm):
         model = User #IMPORTAMOS EL MODELO DE USUARIOS
         fields = ['first_name', 'last_name']
 
+    
+
 #____________________________________________________________________________________________________________________________
 #FORMULARIO DE PERFIL
 class ProfileForm(forms.ModelForm):
@@ -45,8 +47,7 @@ class ProfileForm(forms.ModelForm):
         fields = ['image', 'rut', 'direccion', 'region', 'comuna', 'telefono']
         widgets = {
             'region': forms.Select(attrs={'class': 'form-control'}),
-        }
-      
+        }  
 
 #____________________________________________________________________________________________________________________________
 

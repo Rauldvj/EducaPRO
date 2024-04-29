@@ -1,12 +1,273 @@
 <!-- #PAGINA PARA VER EL PERFIL DE CADA USUARIO POR EL COORDINADOR O ADMINISTRADOR -->
 {% extends 'base.html' %}
 
+{% block title %} Editar ID Perfil {% endblock %}
+
+
 {% block content %}
+
+{% load tailwind_filters %}
+
+{% load static %}
+
+<!-- Incluir el archivo funciones.js -->
+<script src="{% static 'js/funciones.js' %}"></script>
+
 <body class="bg-gradient-to-r from-amber-900 to-yellow-300"></body>
 
-{% include 'componentes/navbar_user.html' %}
+{% include 'componentes/navbar.html' %}
 
-{{ user_profile.username }}
+
+<h2 class="text-xl font-bold text-white">Consulta de Datos</h2>
+<hr>
+<!-- Contenedor principal -->
+<div class="container">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <!-- Tarjeta de datos de perfil -->
+        <div class="bg-gradient-to-r from-sky-900 to-cyan-700 p-2 border-r">
+            <!-- Imagen de perfil -->
+            <img class="mx-auto w-24 h-24 rounded-full mb-3" src="{{ user_profile.profile.image.url }}" alt="{{ user.username }}">
+            <!-- Nombre y apellido del usuario -->
+            <h2 class="text-xl font-bold text-white">{{ user_profile.first_name }}</h2>
+            <h2 class="text-md font-bold text-white">{{ user_profile.last_name}}</h2>
+            <!-- Grupo al que pertenece el usuario -->
+            <h4 class="mt-0">
+                <span class="{{ color_user }} text-white text-sm font-bold italic me-2 py-1 px-2 rounded">{{ group_name_singular_user | capfirst }}</span>
+            </h4>
+        
+            <!-- Grupo al que pertenece el usuario -->
+            <hr class="my-3">
+            <!-- Datos personales del usuario -->
+            <p class="text-white text-sm"><strong>Rut: </strong>{{ user_profile.profile.rut }}</p>
+            <p class="text-white text-sm"><strong>Dirección: </strong>{{ user_profile.profile.direccion }}</p>
+            <p class="text-white text-sm"><strong>Región: </strong>{{ user_profile.profile.region}} </p>
+            <p class="text-white text-sm"><strong>Comuna: </strong>{{ user_profile.profile.comuna}} </p>
+            <p class="text-white text-sm"><strong>Teléfono: </strong>+569 {{ user_profile.profile.telefono }}</p>
+            <p class="text-white text-sm"><strong>Email: </strong>{{ user_profile.email }}</p>
+            <hr class="my-2">
+       
+            <div class="flex flex-col items-stretch text-center">
+                <!-- Botón Cambiar Contraseña -->
+                {% if request.user.username == 'coordinadores'%}
+                <a href="{% url 'profile_password_change' %}"
+                    class="bg-yellow-800 hover:bg-yellow-600 text-white mb-2 py-2 px-2 rounded block w-full ">Cambiar
+                    Contraseña</a>
+                {% endif %}
+                <hr>
+                <!-- Botón Editar Perfil -->
+                <button onclick="document.getElementById('editarPerfil').showModal()" id="btn"
+                    class="py-2 px-4 mt-2 mb-2 bg-purple-800 hover:bg-purple-400 text-white rounded text shadow-xl block w-full">Editar
+                    Perfil</button> 
+                    <hr>
+                <!-- Botón Home -->
+                <a href="{% url 'profile' %}"
+                    class="bg-red-500 hover:bg-red-600 text-white mt-2 py-2 px-4 rounded block w-full">Regresar a Perfiles</a>
+            </div>
+        </div>
+        <div class="lg:col-span-3 :col-span-3">
+            <div class=" rounded mt-5 ">
+                <div class="block opacity-100" id="perfiles" role="tabpanel">
+                    <h5 class="text-white text-lg text-start -ml-4">Herramientas administrativas </h5>
+                <!-- Evaluar grupo al que pertenece el usuario -->
+                {% if group_name_user == 'Funcionarios' %}
+                    {% include 'profiles/funcionarios.html' %}
+                {% elif group_name_user == 'Administradores' %}
+                    {% include 'profiles/administradores.html' %}
+                {% elif group_name_user == 'Coordinadores' %}
+                    {% include 'profiles/coordinador.html' %}
+                {% elif group_name_user == 'Psicopedagógos' %}
+                    {% include 'profiles/psicopedagogo.html' %}
+                {% elif group_name_user == 'Psicólogos' %}
+                    {% include 'profiles/psicologo.html' %}
+                {% elif group_name_user == 'Terapeutas Ocupacionales' %}
+                    {% include 'profiles/terapeutaocu.html' %}
+                {% elif group_name_user == 'Fonoaudiologos' %}
+                    {% include 'profiles/fonoaudiologo.html' %}
+                {% elif group_name_user == 'Técnicos Diferenciales' %}
+                    {% include 'profiles/tecnicodiferen.html' %}
+                {% elif group_name_user == 'Técnicos Parvularios' %}
+                    {% include 'profiles/tecnicoparvulo.html' %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+   
+
+    <!-- Modal centrado verticalmente -->
+    <dialog id="editarPerfil"
+    class="h-auto w-1/3 p-1 rounded-md bg-gradient-to-r from-sky-900 to-cyan-700">
+    <div class="flex flex-col w-full h-auto">
+        <!-- Header -->
+        <h2 class="flex w-full h-auto justify-center items-center text-xl font-bold text-white">Editar
+            Perfil</h2>
+        <hr>
+        <div class="flex justify-center items-center">
+            <div class="flex  py-2 justify-center items-center ">
+                <img class="mx-auto w-14 h-14 justify-center items-center rounded-full "
+                    src="{{ user_profile.profile.image.url }}" alt="{{ user.username }}">
+            </div>
+        </div>
+        <!-- Modal Content-->
+        <div
+            class="flex w-full h-auto py-0 px-4 justify-center items-center rounded text-center text-gray-500">
+            <form action="{% url 'superuser_edit' user_profile.id %}" id="profile_form" method="post" enctype="multipart/form-data">
+
+
+
+                {% csrf_token %}
+
+                <div class="mb-0 flex space-x-1">
+                    <div class="w-4/5 mr-2 text-start">
+                        <label for="image" class="form-label text-white text-xs font-bold italic mb-0">Foto
+                            de Perfil</label>
+                        <input type="file" name="image" id="image" "
+                            value="{{user.profile.image}}"
+                            class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full" />
+                    </div>
+                </div>
+
+                <!-- ----FILA 2--- -->
+                <div class="mb-2 flex space-x-1 ">
+                    <div class="w-1/2 mr-2 text-start">
+                        <label for="rut" class="form-label text-white text-sm font-bold italic mb-0">Rut</label>
+                        <input type="text" name="rut" id="profile.rut" value="{{user_profile.profile.rut}}"
+                            class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full"
+                            placeholder="Ejemplo: 11111111-1" maxlength="12" required />
+                    </div>
+
+                    <div class="w-1/2 ml-2">
+                        <label for="group" class="form-label text-white text-sm font-bold italic mb-0">Cargo</label>
+                        <select name="group" id="group" class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full">
+                            <option disabled selected>Seleccione el Cargo</option>
+      
+                          <!-- #AQUÍ SE ITERAN LOS CARGOS -->
+                            {% for group_name, group_id in singular_groups %}
+                                <option value="{{ group_id }}"
+                                {% if group_id == group_id_user %} selected{% endif %}>{{ group_name }}</option>
+                            {% endfor %}
+                        </select>
+                      </div>
+
+
+                </div>
+                <!-- <---------FILA 3----->
+                <div class="flex items-center mb-4 md:mb-2 text-start">
+                    <div class="w-1/2">
+                        <label for="first_name"
+                            class="form-label text-white text-sm font-bold italic mb-0">Nombres</label>
+                        <input type="text" name="first_name" 
+                            class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full"
+                            value="{{user_profile.first_name}}"
+                            placeholder="Nombres" />
+                    </div>
+                    <div class="w-1/2 ml-2">
+                        <label for="last_name"
+                            class="form-label text-white text-sm font-bold italic mb-0">Apellidos</label>
+                        <input type="text" name="last_name" 
+                            class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full"
+                            value="{{user_profile.last_name}}"
+                            placeholder="Apellidos" />
+                    </div>
+                </div>
+                <!-- ----FILA 4 ---- -->
+                <div class="mb-2 flex space-x-1 ">
+                    <div class="w-1/2 mr-2 text-start">
+                        <label for="direccion"
+                            class="form-label text-white text-sm font-bold italic mb-0">Dirección</label>
+                        <input type="text" name="direccion"  value="{{user_profile.profile.direccion}}"
+                            class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full"
+                            placeholder="Ejemplo: Calle 123" />
+                    </div>
+                </div>
+
+                <!-- ------------FILA 5----------- -->
+                <div class="flex items-center mb-4 md:mb-2 text-start">
+                    <div class="w-1/2 mr-2">
+                        <label for="telefono"
+                            class="form-label text-white text-sm font-bold italic mb-0">Teléfono: +569</label>
+                        <input type="text" name="telefono" 
+                            class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full"
+                            value="{{user_profile.profile.telefono}}"
+                            placeholder="Ejemplo: 12345678" maxlength="8" />
+                    </div>
+                    <div class="w-1/2 ml-2">
+                        <label for="email"
+                            class="form-label text-white text-sm font-bold italic mb-0">Correo</label>
+                        <input type="email" name="email" disabled
+                            class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full"
+                            value="{{user_profile.email}}" 
+                            placeholder="ejemplo@mail.com" />
+                    </div>
+                </div>
+                <!-- ----FILA 6 ----- -->
+
+                <div class="flex space-x-2 text-start">
+                    <div class="w-1/2">
+                        <label for="region" class="form-label text-white text-sm font-bold italic mb-0">Región</label>
+                        <select name="region" id="region" class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full">
+                            <!-- Opciones de región -->
+                            {% for region in regiones %}
+                                <option value="{{ region.id }}">{{ region.region }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+            
+                    <div class="w-1/2 ml-2">
+                        <label for="comuna" class="form-label text-white text-sm font-bold italic mb-0">Comuna</label>
+                        <select name="comuna" id="comuna" class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full">
+                            <!-- Opciones de comuna -->
+                            {% for comuna in comunas %}
+                                <option value="{{ comuna.id }}" data-region="{{ comuna.region_id }}">{{ comuna.comuna }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-footer flex justify-end mt-3">
+                    <button type="button"
+                        class="bg-yellow-800 hover:bg-yellow-600 text-white py-1 px-4 mr-5 rounded"
+                        onclick="document.getElementById('editarPerfil').close()">Cerrar</button>
+                    <button type="submit"
+                        class="bg-red-800 hover:bg-red-600 text-white py-1 px-4 rounded">Guardar
+                        cambios</button>
+                </div>
+            </form>
+            {{ mensaje }}
+        </div>
+        <!-- End of Modal Content-->
+    </div>
+</dialog>
+
+<!-- -----MODAL CONTRASEÑA------- -->
+
+
+
+
+
+<!-- Estilos personalizados del Modal -->
+<style>
+    dialog[open] {
+        animation: appear 0.3s cubic-bezier(0, 1.8, 1, 1);
+    }
+
+    dialog::backdrop {
+        background: linear-gradient(45deg, rgba(0, 0, 0, 0.5), rgba(54, 54, 54, 0.5));
+        backdrop-filter: blur(3px);
+    }
+
+    @keyframes appear {
+        from {
+            opacity: 0;
+            transform: scale(0.5);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+</style>
 
 <body/>
 {% endblock %}

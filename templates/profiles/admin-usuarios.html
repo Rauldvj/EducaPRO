@@ -1,10 +1,8 @@
-  
-  <div class="flex flex-col ml-12 w-4/5 ">
+<div class="flex flex-col ml-12 w-4/5">
     <div class="sm:-mx-6 lg:-mx-16">
         <div class="inline-block w-full py-2">
             <div class="overflow-hidden">
                 <table class="w-full text-center text-sm font-light">
-                    <!-- ... (código de la tabla) ... -->
                     <thead class="border-b font-medium dark:border-neutral-500 bg-gradient-to-r from-sky-900 to-cyan-700">
                       <tr>
                         <th scope="col" class="text-start text-white px-2 py-2">NOMBRES Y APELLIDOS</th>
@@ -52,11 +50,11 @@
                             <td class="text-start text-white whitespace-nowrap px-2 py-2">{{ user_profile.user.username }}</td>
                             <td class="text-start text-white whitespace-nowrap px-2 py-2">{{ user_profile.groups | join:", " | capfirst }}</td>
                             <td class="text-start text-white whitespace-nowrap px-2 py-2">
-                                <a href=""
-                                class="bg-yellow-700 hover:bg-yellow-500 border px-1 py-1 w-20">
-                                INFOs
+                                <a href="{% url 'profile_detail' user_profile.user.id %}"
+                                class="bg-yellow-700 hover:bg-yellow-500 border px-3 py-1 w-20">
+                                INFO
                                 </a>
-
+                                
                                
                                 <button type="button" class="bg-green-700 hover:bg-green-500 border px-1 py-1 w-20">EDITAR</button>
                             </td>
@@ -68,9 +66,35 @@
         </div>
     </div>
 </div>
+
+<!-- Enlaces de paginación -->
+<div class="flex justify-center mt-4">
+    <ul class="flex space-x-2">
+        {% if user_profiles.has_previous %}
+            <li><a href="?page=1" 
+                class="bg-gradient-to-r from-sky-900 to-cyan-700 font-sans text-white px-2 py-1 rounded-md">
+                Primera Pagina</a></li>
+            <li><a href="?page={{ user_profiles.previous_page_number }}" 
+                class="bg-gradient-to-r from-sky-900 to-cyan-700 font-sans text-white px-2 py-1 rounded-md"
+                >Anterior</a></li>
+        {% endif %}
+        
+        <li class="bg-gradient-to-r from-sky-900 to-cyan-700 font-sans text-white px-3 py-1 -my-1 rounded-md"
+        >{{ user_profiles.number }}</li>
+        
+        {% if user_profiles.has_next %}
+            <li><a href="?page={{ user_profiles.next_page_number }}" 
+                class="bg-gradient-to-r from-sky-900 to-cyan-700 font-sans text-white px-2 py-1 rounded-md"
+                >Siguiente</a></li>
+            <li><a href="?page={{ user_profiles.paginator.num_pages }}" 
+                class="bg-gradient-to-r from-sky-900 to-cyan-700 font-sans text-white px-2 py-1 rounded-md"
+                >Última</a></li>
+        {% endif %}
+    </ul>
+</div>
+
 <div class="flex flex-col -ml-4 mt-2 w-full">
     <a href="{% url 'add_user' %}" class="rounded-lg 
-    text-white text-sm text-center font-bold bg-gradient-to-br from-red-600 to-red-900 px-3 py-2 w-24"">
+    text-white text-sm text-center font-bold bg-gradient-to-br from-red-600 to-red-900 px-3 py-2 w-24">
     Agregar Usuario</a>
-    
 </div>

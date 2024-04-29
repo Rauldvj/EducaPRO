@@ -2,9 +2,15 @@
 
 {% block title %} Perfil {% endblock %}
 
+
 {% block content %}
 
 {% load tailwind_filters %}
+
+{% load static %}
+
+<!-- Incluir el archivo funciones.js -->
+<script src="{% static 'js/funciones.js' %}"></script>
 
 <body class="bg-gradient-to-r from-amber-900 to-yellow-600">
 
@@ -26,7 +32,7 @@
                     <h2 class="text-md font-bold text-white">{{ user.last_name}}</h2>
                     <!-- Grupo al que pertenece el usuario -->
                     <h4 class="mt-0">
-                        <span class="{{ color }} text-white text-sm font-bold italic me-2 py-0 px-1 rounded">{{ group_name_singular | capfirst }}</span>
+                        <span class="{{ color }} text-white text-sm font-bold italic me-2 py-1 px-2 rounded">{{ group_name_singular | capfirst }}</span>
                     </h4>
                 
                     <!-- Grupo al que pertenece el usuario -->
@@ -36,13 +42,13 @@
                     <p class="text-white text-sm"><strong>Dirección: </strong>{{ user.profile.direccion }}</p>
                     <p class="text-white text-sm"><strong>Región: </strong>{{ user.profile.region}} </p>
                     <p class="text-white text-sm"><strong>Comuna: </strong>{{ user.profile.comuna}} </p>
-                    <p class="text-white text-sm"><strong>Teléfono: </strong>{{ user.profile.telefono }}</p>
+                    <p class="text-white text-sm"><strong>Teléfono: </strong>+569 {{ user.profile.telefono }}</p>
                     <p class="text-white text-sm"><strong>Email: </strong>{{ user.email }}</p>
                     <hr class="my-2">
                
                     <div class="flex flex-col items-stretch text-center">
                         <!-- Botón Cambiar Contraseña -->
-                        {% if request.user.username == 'coordinadores'%}
+                        {% if group_name_singular == 'Coordinador' %}
                         <a href="{% url 'profile_password_change' %}"
                             class="bg-yellow-800 hover:bg-yellow-600 text-white mb-2 py-2 px-2 rounded block w-full ">Cambiar
                             Contraseña</a>
@@ -111,8 +117,7 @@
                                 <div class="w-4/5 mr-2 text-start">
                                     <label for="image" class="form-label text-white text-xs font-bold italic mb-0">Foto
                                         de Perfil</label>
-                                    <input type="file" name="image" id="profile.image" value="{{user.profile.image}}"
-                                        value="{{user.profile.image}}"
+                                    <input class="form-control" type="file" name="image" id="image"  value="profile.image"
                                         class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full" />
                                 </div>
                             </div>
@@ -120,12 +125,10 @@
                             <!-- ----FILA 2--- -->
                             <div class="mb-2 flex space-x-1 ">
                                 <div class="w-1/2 mr-2 text-start">
-                                    <label for="rut"
-                                        class="form-label text-white text-sm font-bold italic mb-0">Rut</label>
+                                    <label for="rut" class="form-label text-white text-sm font-bold italic mb-0">Rut</label>
                                     <input type="text" name="rut" id="profile.rut" value="{{user.profile.rut}}"
                                         class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full"
-                                        value="{{user.profile.rut}}"
-                                        placeholder="Ejemplo: 11111111-1" />
+                                        placeholder="Ejemplo: 11111111-1" maxlength="12" required />
                                 </div>
                             </div>
                             <!-- <---------FILA 3----->
@@ -166,14 +169,14 @@
                                     <input type="text" name="telefono" id="profile.telefono"
                                         class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full"
                                         value="{{user.profile.telefono}}"
-                                        placeholder="Ejemplo: 12345678" />
+                                        placeholder="Ejemplo: 12345678" maxlength="8"/>
                                 </div>
                                 <div class="w-1/2 ml-2">
                                     <label for="email"
                                         class="form-label text-white text-sm font-bold italic mb-0">Correo</label>
-                                    <input type="email" name="email" id="email"
+                                    <input type="email" name="email" id="email" disabled
                                         class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full"
-                                        value="{{user.email}}" disabled
+                                        value="{{user.email}}" 
                                         placeholder="ejemplo@mail.com" />
                                 </div>
                             </div>
@@ -185,7 +188,7 @@
                                     <select name="region" id="region" class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full">
                                         <!-- Opciones de región -->
                                         {% for region in regiones %}
-                                            <option value="{{ region.id }}" {% if user.profile.region_id == region.id %} selected {% endif %}>{{ region.region }}</option>
+                                            <option value="{{ region.id }}">{{ region.region }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -195,7 +198,7 @@
                                     <select name="comuna" id="comuna" class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full">
                                         <!-- Opciones de comuna -->
                                         {% for comuna in comunas %}
-                                            <option value="{{ comuna.id }}" {% if user.profile.comuna_id == comuna.id %} selected {% endif %}>{{ comuna.comuna }}</option>
+                                            <option value="{{ comuna.id }}" data-region="{{ comuna.region_id }}">{{ comuna.comuna }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -218,7 +221,7 @@
 
             <!-- -----MODAL CONTRASEÑA------- -->
 
-
+            
 
 
 
