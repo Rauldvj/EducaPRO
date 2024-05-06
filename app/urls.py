@@ -4,9 +4,9 @@ from django.urls import path
 from .views import IndexView, HomeView, RegisterView, ProfileView, superuser_edit, ErrorView, CustomLoginView, ProfilePasswordChangeView\
 ,AddUserView, UserDetailView, AnamnesisView
 
-from estudiantes.views import EstudianteView
+from estudiantes.views import AddEstudianteView, AddApoderadoTitularView, AddApoderadoSuplenteUnoView, AddApoderadoSuplenteDosView
 
-from pie.views import ListPieView
+from pie.views import ListPieView, AddRegistroPieView
 #IMPORTAMOS UN HELPER (AYUDA), PARA PROTEGER LOS FORMULARIOS Y REGISTROS (ROLES Y PERMISOS DE ACCESO)
 from django.contrib.auth.decorators import login_required
     
@@ -60,10 +60,22 @@ urlpatterns = [
     path('custom_login/', CustomLoginView.as_view(), name="custom_login"),
 
     #URL DE ESTUDIANTES
-    path('estudiante/', login_required(EstudianteView.as_view()), name="estudiante"),
+    path('add_estudiante/', login_required(AddEstudianteView.as_view()), name="add_estudiante"),
+
+    #URL DE APODERADOS TITULARES
+    path('add_apoderado_titular/', login_required(AddApoderadoTitularView.as_view()), name="add_apoderado_titular"),
+
+    #URL DE APODERADOS SUPLENTE UNO
+    path('add_apoderado_suplente_uno/', login_required(AddApoderadoSuplenteUnoView.as_view()), name="add_apoderado_suplente_uno"),
+
+    #URL DE APODERADOS SUPLENTE DOS
+    path('add_apoderado_suplente_dos/', login_required(AddApoderadoSuplenteDosView.as_view()), name="add_apoderado_suplente_dos"),
+
+    #URL DE LISTADO DE PIE
+    path('pie/', login_required(ListPieView.as_view()), name="pie"),
 
     #URL DE REGISTRO DE PIE
-    path('pie/', login_required(ListPieView.as_view()), name="pie"),
+    path('add_pie/', login_required(AddRegistroPieView.as_view()), name="add_pie"),
 
     #URL PARA REGISTRO DE INFORME ANAMNESIS
     path('anamnesis/', login_required(AnamnesisView.as_view()), name="anamnesis"),

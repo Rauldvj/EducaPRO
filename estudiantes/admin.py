@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Estudiante, ApoderadoTitular, ApoderadoSuplente1, ApoderadoSuplente2
+from .models import Estudiante, ApoderadoTitular, ApoderadoSuplenteUno, ApoderadoSuplenteDos
 
 #____________________________________________________________________________________________________________________________________________________________________________________________
 #Registrar en el Administrador
@@ -19,15 +19,15 @@ admin.site.register(ApoderadoTitular, ApoderadoTitularAdmin)
 
 #Registrar Apoderado Suplente 1
 
-class ApoderadoSuplente1Admin(admin.ModelAdmin):
+class ApoderadoSuplenteUnoAdmin(admin.ModelAdmin):
     list_display = ('estudiante', 'rut', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'direccion', 'telefono', 'region', 'comuna')
-admin.site.register(ApoderadoSuplente1, ApoderadoSuplente1Admin)
+admin.site.register(ApoderadoSuplenteUno, ApoderadoSuplenteUnoAdmin)
 
 #___________________________________________________________________________________________________________________________________________________________________________________________
 
 #Registrar Apoderado Suplente 2
 
-class ApoderadoSuplente2Admin(admin.ModelAdmin):
+class ApoderadoSuplenteDosAdmin(admin.ModelAdmin):
     list_display = ('estudiante', 'rut', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'direccion', 'telefono', 'region', 'comuna')
     fieldsets = (
         (None, {
@@ -38,5 +38,5 @@ class ApoderadoSuplente2Admin(admin.ModelAdmin):
         })
     )
 
-admin.site.register(ApoderadoSuplente2, ApoderadoSuplente2Admin)
+admin.site.register(ApoderadoSuplenteDos, ApoderadoSuplenteDosAdmin)
 

@@ -1,4 +1,4 @@
-<div class="w-full">
+<div class="w-full -mt-4">
     <div class="relative right-0 w-full">
         <ul class="relative flex flex-wrap p-1 list-none rounded-xl bg-blue-gray-50/60 w-full" data-tabs="tabs" role="list">
             <li class="z-30 flex-auto text-center">
@@ -17,7 +17,25 @@
 
         <div data-tab-content="" class="p-5 w-full">
             <div class="block opacity-100" id="perfiles" role="tabpanel">
-                <h5 class="text-white text-lg font-bold text-start -ml-4">LISTADO DE PERSONAL</h5>
+                
+
+                <!-- FILTRO PARA VISUALIZAR SOLO UN GRUPO DE PROFESIONALES -->
+
+                <form method="get" action="{% url 'profile' %}">
+                    <label class="text-white text-sm -ml-4" for="group-filter">Filtrar por Profesional:</label>
+                    <select class="rounded-md pl-2 py-1 px-2 text-sm md:py-1 " name="group" id="group-filter">
+                        <option value="">Todos</option>
+                        {% for group in all_groups %}
+                            <option value="{{ group.name }}">{{ group.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="bg-gradient-to-r from-sky-900 to-cyan-700 
+                    hover:from-cyan-400 hover:to-sky-900 hover:text-white text-white text-sm py-1 px-2 rounded" 
+                    type="submit">Filtrar</button>
+
+                </form>
+
+
                 {% include 'profiles/admin-usuarios.html' %}
             </div>
             <div class="hidden opacity-0" id="cursos" role="tabpanel">

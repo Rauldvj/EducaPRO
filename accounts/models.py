@@ -11,7 +11,7 @@ from django.db.models.signals import post_save
 class Profile(models.Model): #Modelo para el perfil
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile', verbose_name='Usuario')
     image = models.ImageField(default='default.png', upload_to='users/', verbose_name='Imagen de perfil')
-    rut = models.CharField(max_length=15, null=True, blank=True, verbose_name='Rut')
+    rut = models.CharField(max_length=12, null=True, blank=True, verbose_name='Rut')
     direccion = models.CharField(max_length=150, null=True, blank=True, verbose_name='Dirección')
     region = models.ForeignKey(Region, blank=True, null=True, on_delete=models.CASCADE, verbose_name='Region')
     comuna = models.ForeignKey(Comuna, blank=True, null=True, on_delete=models.CASCADE, verbose_name='Comuna')

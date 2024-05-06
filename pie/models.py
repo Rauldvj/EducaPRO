@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models.signals import pre_save, post_save, post_delete
-from estudiantes.models import Estudiante, ApoderadoTitular, ApoderadoSuplente1, ApoderadoSuplente2
+from estudiantes.models import Estudiante, ApoderadoTitular, ApoderadoSuplenteUno, ApoderadoSuplenteDos
 from .opciones import opcion_nivel_educativo, opcion_curso, opcion_letra_curso
 
 
@@ -27,8 +27,8 @@ class Curso(models.Model):
 class RegistroPie(Curso):
     estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE, verbose_name='Estudiante')
     apoderado = models.ForeignKey(ApoderadoTitular, on_delete=models.CASCADE, verbose_name='Apoderado')
-    ApoderadoSuplente1 = models.ForeignKey(ApoderadoSuplente1, on_delete=models.CASCADE, verbose_name='Apoderado Suplente 1')
-    ApoderadoSuplente2 = models.ForeignKey(ApoderadoSuplente2, on_delete=models.CASCADE, verbose_name='Apoderado Suplente 2')
+    ApoderadoSuplenteUno = models.ForeignKey(ApoderadoSuplenteUno, on_delete=models.CASCADE, verbose_name='Apoderado Suplente 1')
+    ApoderadoSuplenteDos = models.ForeignKey(ApoderadoSuplenteDos, on_delete=models.CASCADE, verbose_name='Apoderado Suplente 2')
     enable = models.BooleanField(default=True, null=True, verbose_name='Alumno Regular')
     def __str__(self):
         return f'{self.estudiante}'

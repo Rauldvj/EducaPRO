@@ -86,96 +86,89 @@ class RegisterView(UserPassesTestMixin, View):
 # ____________________________________________________________________________________________________________________________
 
 
-@add_group_name_to_context # Decorador Personalizado
+# Usamos el decorador `add_group_name_to_context` para agregar el nombre del grupo al contexto de la vista
+@add_group_name_to_context
 class ProfileView(TemplateView):  
     template_name = 'profiles/profile.html'
     
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user = self.request.user  # Obtenemos el usuario que está logeado
+        user = self.request.user
         
-        # Obtener las opciones de región y comuna
         regiones = Region.objects.all()
         comunas = Comuna.objects.all()
 
-        context['user_form'] = UserForm(instance=user)  # Agregar el formulario de usuario al contexto
-        context['profile_form'] = ProfileForm(instance=user.profile)  # Agregar el formulario de perfil al contexto
-
-        # Agregar las opciones de región y comuna al contexto
+        # Agregamos los formularios de usuario y perfil al contexto
+        context['user_form'] = UserForm(instance=user)
+        context['profile_form'] = ProfileForm(instance=user.profile)
         context['regiones'] = regiones
         context['comunas'] = comunas
 
-        
-    
-    #LLAMAMOS A LOS GRUPOS PARA OBTENER LOS USUARIOS
+        # Si el usuario pertenece al grupo 'Coordinadores', realizamos algunas operaciones adicionales
         if user.groups.first().name == 'Coordinadores':
-
-            #Obtenemos a todos los usuarios que no sean administradores o coordinadores
+            # Obtenemos el objeto del grupo 'Coordinadores'
             coordinadores_groups = Group.objects.get(name='Coordinadores')
-
-
-            #Obtenemos todos los usuarios
+            # Excluimos a los usuarios que pertenecen al grupo 'Coordinadores' y 'Administradores' para evitar duplicados
             all_users = User.objects.exclude(groups__in=[coordinadores_groups])
+            all_users = all_users.exclude(groups__name='Administradores')
+            
+            # Obtenemos el grupo seleccionado del filtro, si existe
+            selected_group = self.request.GET.get('group')
+            if selected_group:
+                all_users = all_users.filter(groups__name=selected_group)
 
-            #Obtenemos todos los grupos
-            all_groups = Group.objects.all()
-
-            #Obtenemos cada perfil de usuario
+            # Obtenemos todos los grupos disponibles, excluyendo 'Coordinadores' y 'Administradores'
+            all_groups = Group.objects.exclude(name__in=['Coordinadores', 'Administradores', 'Funcionarios'])
             user_profiles = []
 
-            #Iteramos en los perfiles
+            # Iteramos sobre los usuarios obtenidos y construimos sus perfiles para mostrar en la vista
             for user in all_users:
                 profile = user.profile
                 user_groups = user.groups.all()
                 processed_groups = [plural_singular(group.name) for group in user_groups]
 
-                #Guardamos esta información en esta variable
                 user_profiles.append({
                     'user': user,
                     'groups': processed_groups,
                     'profile': profile
                 })
+                
+            # Agregamos los perfiles de usuario y grupos al contexto
             context['user_profiles'] = user_profiles
             context['all_groups'] = all_groups
             
-            # Paginación de perfiles de usuario
-            profiles_pages = 2  # Definir el número de perfiles por página
-            paginator = Paginator(user_profiles, profiles_pages)  # Crear un objeto Paginator
-            number_page = self.request.GET.get('page')  # Obtener el número de página solicitada desde la URL
+            # Realizamos la paginación de los perfiles de usuario
+            profiles_pages = 5
+            paginator = Paginator(user_profiles, profiles_pages)
+            number_page = self.request.GET.get('page')
 
             try:
-                profiles_paginated = paginator.page(number_page)  # Intentar obtener la página solicitada
+                profiles_paginated = paginator.page(number_page)
             except PageNotAnInteger:
-                # Si el número de página no es un entero, mostrar la primera página
                 profiles_paginated = paginator.page(1)
             except EmptyPage:
-                # Si el número de página está fuera de rango, mostrar la última página
                 profiles_paginated = paginator.page(paginator.num_pages)
 
-            # Agregar los perfiles paginados al contexto
             context['user_profiles'] = profiles_paginated
 
         return context
     
-    #FUNCION PARA GRABAR LOS DATOS
     def post(self, request, *args, **kwargs):
-        user = self.request.user # Obtenemos el usuario que está logeado
-        user_form = UserForm(data=request.POST, instance=user) # Definimos el formulario con los datos del POST 
-        profile_form = ProfileForm(request.POST, request.FILES, instance=user.profile) # Definimos el formulario con los datos del POST
+        user = self.request.user
+        user_form = UserForm(data=request.POST, instance=user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=user.profile)
 
-        #Preguntamos si el user_form y el profile_form son validos
         if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save() # Guardamos el formulario de usuario y obtenemos la instancia actualizada
-            profile_form.save() # Guardamos el formulario de perfil
-            messages.success(request, 'Perfil actualizado exitosamente') # Mostramos un mensaje de éxito
-            return redirect('profile') # Redireccionamos al perfil
-        
-        # Si alguno de estos datos "NO SON VALIDOS"
+            user = user_form.save()
+            profile_form.save()
+            messages.success(request, 'Perfil actualizado exitosamente')
+            return redirect('profile')
+
+        # Si los formularios no son válidos, volvemos a Renderizar la vista con los datos y los errores
         context = self.get_context_data()
         context['user_form'] = user_form
         context['profile_form'] = profile_form
-        return render (request, 'profiles/profile.html', context)
+        return render(request, 'profiles/profile.html', context)
 
 
 # ____________________________________________________________________________________________________________________________
@@ -240,7 +233,10 @@ class AddUserView(UserPassesTestMixin, LoginRequiredMixin, CreateView):
     #Recuperamos los grupos y su singular
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs) #Obtenemos el contexto
-        groups = Group.objects.all() #Obtenemos todos los grupos
+
+
+        # Obtenemos todos los grupos disponibles, excluyendo los grupos 'Funcionarios' y 'Administradores'
+        groups = Group.objects.exclude(name__in=['Administradores', 'Funcionarios'])
         singular_groups = [plural_singular(group.name).capitalize() for group in groups] # Obtener los nombres singulares de los grupos
         context['groups'] = zip(groups, singular_groups) #unimos las 2 variables de grupos para obtener el singular del grupo
 
@@ -337,10 +333,6 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         context['color_user'] = color
 
         return context
-
-
-# ____________________________________________________________________________________________________________________________
-#VISTA BASADA EN FUNCIONES PARA LA GRABACIÓN EN LA EDICIÓN DE UN USUARIO
 
 def superuser_edit(request, user_id):
 

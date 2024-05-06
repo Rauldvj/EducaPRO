@@ -1,4 +1,5 @@
 <div class="flex flex-col ml-12 w-4/5">
+
     <div class="sm:-mx-6 lg:-mx-16">
         <div class="inline-block w-full py-2">
             <div class="overflow-hidden">
@@ -65,36 +66,47 @@
             </div>
         </div>
     </div>
-</div>
 
-<!-- Enlaces de paginación -->
-<div class="flex justify-center mt-4">
-    <ul class="flex space-x-2">
-        {% if user_profiles.has_previous %}
-            <li><a href="?page=1" 
-                class="bg-gradient-to-r from-sky-900 to-cyan-700 font-sans text-white px-2 py-1 rounded-md">
-                Primera Pagina</a></li>
-            <li><a href="?page={{ user_profiles.previous_page_number }}" 
-                class="bg-gradient-to-r from-sky-900 to-cyan-700 font-sans text-white px-2 py-1 rounded-md"
-                >Anterior</a></li>
-        {% endif %}
-        
-        <li class="bg-gradient-to-r from-sky-900 to-cyan-700 font-sans text-white px-3 py-1 -my-1 rounded-md"
-        >{{ user_profiles.number }}</li>
-        
-        {% if user_profiles.has_next %}
-            <li><a href="?page={{ user_profiles.next_page_number }}" 
-                class="bg-gradient-to-r from-sky-900 to-cyan-700 font-sans text-white px-2 py-1 rounded-md"
-                >Siguiente</a></li>
-            <li><a href="?page={{ user_profiles.paginator.num_pages }}" 
-                class="bg-gradient-to-r from-sky-900 to-cyan-700 font-sans text-white px-2 py-1 rounded-md"
-                >Última</a></li>
-        {% endif %}
-    </ul>
-</div>
+    <!-- Enlaces de paginación -->
+    <div class="flex justify-center mt-4">
+        <ul class="flex space-x-2">
+            {% if user_profiles.has_previous %}
+                <li><a href="?page=1" 
+                    class="bg-gradient-to-r from-sky-900 to-cyan-700 
+                    hover:from-cyan-400 hover:to-sky-900 hover:text-white text-white
+                     font-sans text-white px-2 py-1 rounded-md">
+                    Primera Pagina</a></li>
+                <li><a href="?page={{ user_profiles.previous_page_number }}" 
+                    class="bg-gradient-to-r from-sky-900 to-cyan-700 
+                    hover:from-cyan-400 hover:to-sky-900 hover:text-white text-white
+                     font-sans text-white px-2 py-1 rounded-md"
+                    >Anterior</a></li>
+            {% endif %}
+            
+            <li class="bg-gradient-to-r from-sky-900 to-cyan-700 
+            hover:from-cyan-400 hover:to-sky-900 hover:text-white text-white
+             font-sans text-white px-3 py-1 -my-1 rounded-md"
+            >{{ user_profiles.number }}</li>
+            
+            {% if user_profiles.has_next %}
+                <li><a href="?page={{ user_profiles.next_page_number }}" 
+                    class="bg-gradient-to-r from-sky-900 to-cyan-700 
+                    hover:from-cyan-400 hover:to-sky-900 hover:text-white text-white
+                     font-sans text-white px-2 py-1 rounded-md"
+                    >Siguiente</a></li>
+                <li><a href="?page={{ user_profiles.paginator.num_pages }}" 
+                    class="bg-gradient-to-r from-sky-900 to-cyan-700 
+                    hover:from-cyan-400 hover:to-sky-900 hover:text-white text-white
+                     font-sans text-white px-2 py-1 rounded-md"
+                    >Última</a></li>
+            {% endif %}
+        </ul>
+    </div>
 
-<div class="flex flex-col -ml-4 mt-2 w-full">
-    <a href="{% url 'add_user' %}" class="rounded-lg 
-    text-white text-sm text-center font-bold bg-gradient-to-br from-red-600 to-red-900 px-3 py-2 w-24">
-    Agregar Usuario</a>
+    <div class="flex flex-col -ml-16 mt-2 w-full">
+        <a href="{% url 'add_user' %}" class="rounded-lg 
+        text-white text-sm text-center bg-gradient-to-br from-red-600 to-red-900
+        hover:from-amber-900 hover:to-yellow-600 hover:text-white px-3 py-2 w-24">
+        Agregar Usuario</a>
+    </div>
 </div>

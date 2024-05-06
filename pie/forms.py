@@ -1,7 +1,14 @@
 from django import forms
-from .models import ListPieView
+from .models import RegistroPie
 
 class ListPieForm(forms.ModelForm):
     class Meta:
-        model = ListPieView
-        fields = ['estudiante', 'apoderado', 'ApoderadoSuplente1', 'ApoderadoSuplente2', 'enable']
+        model = RegistroPie
+        fields = ['estudiante', 'apoderado', 'ApoderadoSuplenteUno', 'ApoderadoSuplenteDos', 'enable']
+
+class AddRegistroPieForm(forms.ModelForm):
+    class Meta:
+        model = RegistroPie
+        fields = ['nivel_academico', 'curso', 'letra_curso', 'estudiante', 'apoderado', 'ApoderadoSuplenteUno', 'ApoderadoSuplenteDos', 'enable']
+
+

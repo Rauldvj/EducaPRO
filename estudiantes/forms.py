@@ -1,29 +1,29 @@
 from django import forms #IMPORTAMOS LOS FORMULARIOS
 from .models import * #IMPORTAMOS LOS MODELOS
-from estudiantes.models import *
+from estudiantes.models import Estudiante, ApoderadoTitular, ApoderadoSuplenteUno, ApoderadoSuplenteDos
 
 #_____________________________________________________________________________________________________________
 
 #FORMULARIO PARA CREAR EL REGISTRO DE UN ESTUDIANTE
 
-class EstudianteForm(forms.ModelForm):
+class AddEstudianteForm(forms.ModelForm):
     class Meta:
         model = Estudiante
         fields = '__all__'
 
 
-class ApoderadoTitularForm(forms.ModelForm):
+class AddApoderadoTitularForm(forms.ModelForm):
     class Meta:
         model = ApoderadoTitular
         fields = '__all__'
 
 
-class ApoderadoSuplenteUno(forms.ModelForm):
+class AddApoderadoSuplenteUnoForm(forms.ModelForm):
     class Meta:
-        model = ApoderadoSuplente1
+        model = ApoderadoSuplenteUno
         fields = '__all__'
 
-class ApoderadoSuplenteDos(forms.ModelForm):
+class AddApoderadoSuplenteDosForm(forms.ModelForm):
     class Meta:
-        model = ApoderadoSuplente2
+        model = ApoderadoSuplenteDos
         fields = '__all__'

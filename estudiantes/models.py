@@ -11,10 +11,10 @@ from django.core.validators import EmailValidator
 # SINO QUE SERA UNA MODELO BASE PARA CUALQUIER OTRO MODELO QUE LO REQUIERA
 
 class Persona(models.Model):
-    rut= models.CharField(max_length=10, unique=True, verbose_name="Rut")
-    nombres = models.CharField(max_length=50, verbose_name="Nombres")
-    apellido_paterno = models.CharField(max_length=50, verbose_name="Apellido Paterno")
-    apellido_materno = models.CharField(max_length=50, verbose_name="Apellido Materno")
+    rut= models.CharField(max_length=12, unique=True, verbose_name="Rut")
+    nombres = models.CharField(max_length=100, verbose_name="Nombres")
+    apellido_paterno = models.CharField(max_length=100, verbose_name="Apellido Paterno")
+    apellido_materno = models.CharField(max_length=100, verbose_name="Apellido Materno")
     fecha_nacimiento = models.DateField(verbose_name="Fecha de Nacimiento")
     direccion = models.CharField(max_length=100, verbose_name='Dirección')
     telefono = models.CharField(max_length=9, verbose_name='Teléfono')
@@ -50,7 +50,7 @@ def estudiante_pre_save(sender, instance, *args, **kwargs):
 
 
 #-------------------------------------------------------------------------------------------------
-# SECCION PARA CREAR MODELOS DE LOS APODERADOS ---------------------------------------------------
+# SECCIÓN PARA CREAR MODELOS DE LOS APODERADOS ---------------------------------------------------
 
 class ApoderadoTitular(Persona):
     estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE, verbose_name='Estudiante')
@@ -72,7 +72,7 @@ class ApoderadoTitular(Persona):
 #____________________________________________________________________________________________________________
 #MODELO PARA REGISTRAR UN APODERADO SUPLENTE 1
 
-class ApoderadoSuplente1(Persona):
+class ApoderadoSuplenteUno(Persona):
     estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE, verbose_name='Estudiante')
     region = models.ForeignKey(Region, on_delete=models.CASCADE, verbose_name='Region' )
     comuna = models.ForeignKey(Comuna, on_delete=models.CASCADE, verbose_name='Comuna')
@@ -86,7 +86,7 @@ class ApoderadoSuplente1(Persona):
 #____________________________________________________________________________________________________________
 #MODELO PARA REGISTRAR UN APODERADO SUPLENTE 2
 
-class ApoderadoSuplente2(Persona):
+class ApoderadoSuplenteDos(Persona):
     estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE, verbose_name='Estudiante')
     region = models.ForeignKey(Region, on_delete=models.CASCADE, verbose_name='Region' )
     comuna = models.ForeignKey(Comuna, on_delete=models.CASCADE, verbose_name='Comuna')

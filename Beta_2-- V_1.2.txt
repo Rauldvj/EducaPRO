@@ -1,0 +1,11 @@
+Cambio en la nueva version.
+
+1. Aplicación del filtro para visualizar los profesionales de un grupo especifico.
+
+2. Programar vista de registro de.
+	Estudiante Ok
+ 	Apoderado Titular Ok
+	Apoderado Suplente 1
+	Apoderado Suplente 2
+
+3. Programar validaciones JavaScript para validar el rut

@@ -79,3 +79,59 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+
+
+// -----FUNCION VALIDAR --------------------------------------------------------
+
+// Función para validar un RUT chileno
+function validarRut(rut) {
+    rut = rut.replace(/\./g, ''); // Eliminar puntos
+    rut = rut.replace('-', ''); // Eliminar guión
+
+    var rutSinDV = rut.slice(0, -1); // Obtener solo el número del RUT
+    var dv = rut.slice(-1).toUpperCase(); // Obtener el dígito verificador
+
+    // Validar que el RUT tenga formato numérico válido
+    if (!/^[0-9]+$/.test(rutSinDV) || (rutSinDV.length < 7)) {
+        return false;
+    }
+
+    // Calcular dígito verificador esperado
+    var suma = 0;
+    var multiplo = 2;
+
+    for (var i = rutSinDV.length - 1; i >= 0; i--) {
+        suma += parseInt(rutSinDV.charAt(i)) * multiplo;
+        if (multiplo < 7) {
+            multiplo += 1;
+        } else {
+            multiplo = 2;
+        }
+    }
+
+    var dvEsperado = 11 - (suma % 11);
+
+    // Tratar casos especiales para dígito verificador
+    dvEsperado = (dvEsperado === 11) ? 0 : ((dvEsperado === 10) ? 'K' : dvEsperado.toString());
+
+    // Comparar dígito verificador ingresado con dígito verificador esperado
+    return (dv == dvEsperado);
+}
+
+// Agregar evento de escucha a todos los formularios para validar el RUT
+document.addEventListener('DOMContentLoaded', function() {
+    var forms = document.querySelectorAll('form');
+    forms.forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+            var rutInputs = form.querySelectorAll('input[name="rut"]');
+            rutInputs.forEach(function(rutInput) {
+                var rutValue = rutInput.value.trim();
+                if (!validarRut(rutValue)) {
+                    alert('El RUT ingresado en el formulario no es válido');
+                    event.preventDefault(); // Evitar envío del formulario si el RUT no es válido
+                }
+            });
+        });
+    });
+});

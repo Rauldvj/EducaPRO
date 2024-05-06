@@ -5,27 +5,41 @@ import re
 #VALIDAR LONGITUD DEL RUT Y EL DÍGITO VERIFICADOR
 
 
-
-
 def validar_rut(rut):
-    # Función para validar el RUT chileno
-    rut = rut.replace(".", "").replace("-", "")
-    
-    # Verifica que el formato del RUT sea correcto
-    if not re.match(r'^\d{1,8}[-kK0-9]{1}$', rut):
-        return False
+    rut = rut.replace(".", "").replace("-", "").lower()
+    rut = rut[:-1] + "-" + rut[-1]
 
-    # Separa los dígitos del RUT y el dígito verificador
-    rut_digits, check_digit = rut[:-1], rut[-1].lower()
+    rut = rut.split("-")
+    cuerpo_rut = rut[0]
+    digito_verificador = rut[1]
 
-    # Calcula el dígito verificador esperado
-    calculated_check_digit = str((11 - sum(int(digit) * (i % 6 + 2) for i, digit in enumerate(reversed(rut_digits)))) % 11)
-    
-    # Si el cálculo resulta en 11, se considera como 0
-    calculated_check_digit = '0' if calculated_check_digit == '11' else calculated_check_digit
+    suma = 0
+    multiplo = 2
+    for i in reversed(cuerpo_rut):
+        suma += int(i) * multiplo
+        multiplo += 1
+        if multiplo == 8:
+            multiplo = 2
 
-    # Compara el dígito verificador calculado con el proporcionado y verifica si es válido
-    return check_digit == calculated_check_digit if calculated_check_digit != '10' else check_digit == 'k'
+    digito_calculado = 11 - (suma % 11)
+    if digito_calculado == 11:
+        digito_calculado = 0
+    elif digito_calculado == 10:
+        digito_calculado = "k"
+
+    return str(digito_calculado) == digito_verificador
+
+
+# Ejemplo de uso:
+if __name__ == "__main__":
+    rut = "11111111-1"  # Aquí coloca el RUT que quieres validar
+    if validar_rut(rut):
+        print("El RUT es válido.")
+    else:
+        print("El RUT no es válido.")
+
+
+
 
 
 #FUNCIÓN PARA PASAR DE PLURAL A SINGULAR LOS GRUPOS

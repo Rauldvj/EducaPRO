@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm #IMPO
 from django.contrib.auth.models import User #IMPORTAMOS EL MODELO DE USUARIOS
 from .models import * #IMPORTAMOS LOS MODELOS
 from accounts.models import Profile
-from estudiantes.models import *
+
 
 #FORMULARIO LOGIN
 class LoginForm(AuthenticationForm):
@@ -49,16 +49,8 @@ class ProfileForm(forms.ModelForm):
             'region': forms.Select(attrs={'class': 'form-control'}),
         }  
 
+
 #____________________________________________________________________________________________________________________________
-
-
-#FORMULARIO PARA REGISTRO DE NUEVO ESTUDIANTE
-
-#CREAMOS EL FORMULARIO EL CUAL REGISTRA Y RETORNA EN FORMATO HTML A NUESTRA VISTA DE ESTUDIANTE
-class EstudianteForm(forms.ModelForm):
-    class Meta:
-        model = Estudiante
-        fields = '__all__'
 
 
 #FORMULARIO PARA REGISTRO DE NUEVO USUARIO CREADO POR EL COORDINADOR
