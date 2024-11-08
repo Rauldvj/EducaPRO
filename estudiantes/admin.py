@@ -6,14 +6,14 @@ from .models import Estudiante, ApoderadoTitular, ApoderadoSuplenteUno, Apoderad
 #Registrar Estudiante
 
 class EstudianteAdmin(admin.ModelAdmin):
-    list_display = ('rut', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'direccion', 'telefono', 'correo', 'region', 'comuna', 'etnia', 'comorbilidad')
+    list_display = ('cursos', 'rut', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'direccion', 'telefono', 'correo', 'region', 'comuna', 'etnia', 'comorbilidad')
 admin.site.register(Estudiante, EstudianteAdmin)
 
 #____________________________________________________________________________________________________________________________________________________________________________________________________________
 #Registrar Apoderado Titular
 
 class ApoderadoTitularAdmin(admin.ModelAdmin):
-    list_display = ('estudiante','rut', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'direccion', 'telefono', 'correo', 'region', 'comuna', 'etnia', 'salud', 'renta')
+    list_display = ('estudiante', 'rut', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'direccion', 'telefono', 'email', 'region', 'comuna', 'etnia', 'salud', 'renta')
 admin.site.register(ApoderadoTitular, ApoderadoTitularAdmin)
 #____________________________________________________________________________________________________________________________________________________________________________________________
 
@@ -21,6 +21,14 @@ admin.site.register(ApoderadoTitular, ApoderadoTitularAdmin)
 
 class ApoderadoSuplenteUnoAdmin(admin.ModelAdmin):
     list_display = ('estudiante', 'rut', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'direccion', 'telefono', 'region', 'comuna')
+    fieldsets = (
+        (None, {
+            'fields': ('estudiante', 'rut', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'direccion', 'telefono'),
+        }),
+        ('Localidad', {
+            'fields': ('region', 'comuna'),
+        })
+    )
 admin.site.register(ApoderadoSuplenteUno, ApoderadoSuplenteUnoAdmin)
 
 #___________________________________________________________________________________________________________________________________________________________________________________________
@@ -31,7 +39,7 @@ class ApoderadoSuplenteDosAdmin(admin.ModelAdmin):
     list_display = ('estudiante', 'rut', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'direccion', 'telefono', 'region', 'comuna')
     fieldsets = (
         (None, {
-            'fields': ('estudiante','rut', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'direccion', 'telefono'),
+            'fields': ('estudiante', 'rut', 'nombres', 'apellido_paterno', 'apellido_materno', 'fecha_nacimiento', 'direccion', 'telefono'),
         }),
         ('Localidad', {
             'fields': ('region', 'comuna'),

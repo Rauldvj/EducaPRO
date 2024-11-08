@@ -2,7 +2,7 @@ from django.utils.decorators import method_decorator # Importamos decoradores
 from .funciones import plural_singular
 
 
-#OBTENER COLOR Y GRUPO DE UN USUARIO (DECORDADOR INDEPENDIENTE)
+#OBTENER COLOR Y GRUPO DE UN USUARIO (DECORADOR INDEPENDIENTE)
 
 def get_group_and_color(user):
     group = user.groups.first()
@@ -21,6 +21,8 @@ def get_group_and_color(user):
                 color = 'bg-gradient-to-tr from-gray-600 to-gray-900'
             elif group.name == 'Coordinadores':
                 color = 'bg-gradient-to-tr from-lime-600 to-lime-900'
+            elif group.name == 'Coordinadores Suplentes':
+                color = 'bg-gradient-to-tr from-gray-600 to-gray-900'
             elif group.name == 'Psicopedagógos':
                 color = 'bg-gradient-to-tr from-purple-600 to-purple-900'
             elif group.name == 'Psicólogos':
@@ -41,10 +43,7 @@ def get_group_and_color(user):
     return group_id, group_name, group_name_singular, color
 
 
-
-
-
-
+# DECORADOR INDEPENDIENTE
 
 def add_group_name_to_context(view_class):
     original_dispatch = view_class.dispatch # Obtenemos el dispatch original

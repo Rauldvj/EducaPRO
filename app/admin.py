@@ -1,41 +1,46 @@
 from django.contrib import admin
 from .models import *
 
+#REGISTRAR MODELO ASIGNATURA
+class AsignaturaAdmin(admin.ModelAdmin):
+    list_display = ['asignatura']
+    search_fields = ['asignatura']
+
+admin.site.register(Asignatura, AsignaturaAdmin)
 
 # REGISTRAR BITACORA ESTUDIANTE
-
-class BitacoraAdmin(admin.ModelAdmin): 
-    list_display = ['fecha', 'hora_entrada', 'hora_salida', 'estudiante']
-    search_fields = ['estudiante']
+class BitacoraEstudianteAdmin(admin.ModelAdmin):
+    list_display = ['profesional', 'estudiante', 'fecha', 'asignatura', 'actividad', 'observaciones']
+    search_fields = ['estudiante', 'asignatura', 'actividad']  # Excluir 'fecha' si no es necesario
     fieldsets = (
-        ('BITACORA ESTUDIANTE', {
-            'fields': ('fecha', 'hora_entrada', 'hora_salida', 'estudiante'),
+        ('1. IDENTIFICACIÓN DEL ESTUDIANTE', {
+            'fields': ('profesional', 'estudiante', 'asignatura', 'actividad', 'observaciones'),  # Excluir 'fecha'
         }),
-        ('PRIMER BLOQUE', {
-            'fields': ('bloque1', 'objetivoClase1', 'objetivoPaci1', 'desarrolloActividad1', 'material1', 'personaMaterial1', 'reaccion1', 'estadoAprendizaje1', 'apoyoDocente1', 'obervacionesGenerales1'),
-        }),
-        ('SEGUNDO BLOQUE', {
-            'fields': ('bloque2b', 'objetivoClase2b', 'objetivoPaci2b', 'desarrolloActividad2b', 'material2b', 'personaMaterial2b', 'reaccion2b', 'estadoAprendizaje2b', 'apoyoDocente2b', 'obervacionesGenerales2b'),
-        }),
-        ('TERCER BLOQUE', {
-            'fields': ('bloque3c', 'objetivoClase3c', 'objetivoPaci3c', 'desarrolloActividad3c', 'material3c', 'personaMaterial3c', 'reaccion3c', 'estadoAprendizaje3c', 'apoyoDocente3c', 'obervacionesGenerales3c'),
-        }),
-        ('CUARTO BLOQUE', {
-            'fields': ('bloque4d', 'objetivoClase4d', 'objetivoPaci4d', 'desarrolloActividad4d', 'material4d', 'personaMaterial4d', 'reaccion4d', 'estadoAprendizaje4d', 'apoyoDocente4d', 'obervacionesGenerales4d'),
-        })
     )
 
-admin.site.register(Bitacora, BitacoraAdmin)
+admin.site.register(BitacoraEstudiante, BitacoraEstudianteAdmin)
+
+# REGISTRAR MODELO OBJETIVO APRENDIZAJE
+class ObjetivoAprendizajeAdmin(admin.ModelAdmin):
+    list_display = ['bitacora_estudiante', 'objetivo_aprendizaje', 'promedio_objetivo', 'semana']
+    search_fields = ['bitacora_estudiante__estudiante', 'objetivo_aprendizaje', 'semana']
+
+admin.site.register(ObjetivoAprendizaje, ObjetivoAprendizajeAdmin)
 
 
+
+
+
+
+#_______________________________________________________________________________________________________________________
 #REGISTRAR ANAMNESIS
 
 class AnamnesisAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'sexo', 'fecha_nacimiento', 'años']
-    search_fields = ['nombre']
+    list_display = ['estudiante', 'sexo', 'fecha_nacimiento', 'años']
+    search_fields = ['estudiante']
     fieldsets = (
-        ('1. IDENTIFICACION DEL ESTUDIANTE', {
-            'fields': ('nombre', 'sexo', 'fecha_nacimiento', 'años', 'meses', 'pais', 'domicilio', 'telefono',\
+        ('1. IDENTIFICACIÓN DEL ESTUDIANTE', {
+            'fields': ('estudiante', 'sexo', 'fecha_nacimiento', 'años', 'meses', 'pais', 'domicilio', 'telefono',\
                         'lengua_materna', 'comprende_materna', 'habla_materna',  'lee_materna', 'escribe_materna',\
                         'lengua_uso', 'comprende_uso', 'habla_uso', 'lee_uso', 'escribe_uso' , 'escolaridad_actual','establecimiento'),
         }),

@@ -1,0 +1,99 @@
+<!-- Modal centrado verticalmente -->
+<dialog id="apoderado_suplente_uno_edit_modal" class="max-w-2xl p-3 rounded-sm bg-gradient-to-r from-sky-900 to-sky-700">
+    <div class="flex flex-col w-full h-auto">
+        <!-- Header -->
+        <h2 class="flex w-full justify-center items-center text-lg font-semibold font-sans text-white">
+            Edición Apoderado Suplente Uno de:
+        </h2>
+        <span class="flex w-full justify-center items-center text-xl font-semibold font-sans text-white">{{ apoderado_suplente_uno.estudiante }}</span>
+        <hr>
+
+        <!-- Modal Content-->
+        <div class="flex max-w-lg py-0 px-2 mt-5 justify-center items-center rounded-sm text-center text-gray-500">
+            <form action="{% url 'apoderado_suplente_uno_edit' apoderado_suplente_uno.pk %}" method="post" id="apoderado_suplente_uno_form" class="" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- ----FILA 1: rut, etnia, fecha nacimiento--- -->
+                <div class="mb-2 flex space-x-2">
+                    <div class="w-1/3 text-start">
+                        <label for="rut" class="form-label text-white text-sm italic mb-0">Rut</label>
+                        <input type="text" name="rut" id="apoderado_suplente_uno" value="{{ apoderado_suplente_uno.rut }}" 
+                        class="rut-input bg-white text-gray-900 rounded-sm pl-2 py-1 md:py-1 text-sm focus:outline-none w-full" placeholder="Ej: 11111111-1" maxlength="12" required />
+                    </div>
+                    <div class="w-1/3 text-start">
+                        <label for="fecha_nacimiento" class="form-label text-white text-sm italic mb-0">Fecha Nacimiento</label>
+                        <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" value="{{ apoderado_suplente_uno.fecha_nacimiento|date:'Y-m-d' }}" 
+                        class="bg-white text-gray-900 rounded-sm pl-2 py-1 md:py-1 text-sm focus:outline-none w-full" />
+                    </div>
+                </div>
+
+                <!-- ----FILA 2: nombres, apellido paterno, apellido materno--- -->
+                <div class="mb-2 flex space-x-2">
+                    <div class="w-1/3 text-start">
+                        <label for="nombres" class="form-label text-white text-sm italic mb-0">Nombres</label>
+                        <input type="text" name="nombres" id="nombres" value="{{ apoderado_suplente_uno.nombres }}" 
+                        class="bg-white text-gray-900 rounded-sm pl-2 py-1 md:py-1 text-sm focus:outline-none w-full" placeholder="Nombres" />
+                    </div>
+                    <div class="w-1/3 text-start">
+                        <label for="apellido_paterno" class="form-label text-white text-sm italic mb-0">Apellido Paterno</label>
+                        <input type="text" name="apellido_paterno" id="apellido_paterno" value="{{ apoderado_suplente_uno.apellido_paterno }}" 
+                        class="bg-white text-gray-900 rounded-sm pl-2 py-1 md:py-1 text-sm focus:outline-none w-full" placeholder="Apellido Paterno" />
+                    </div>
+                    <div class="w-1/3 text-start">
+                        <label for="apellido_materno" class="form-label text-white text-sm italic mb-0">Apellido Materno</label>
+                        <input type="text" name="apellido_materno" id="apellido_materno" value="{{ apoderado_suplente_uno.apellido_materno }}" 
+                        class="bg-white text-gray-900 rounded-sm pl-2 py-1 md:py-1 text-sm focus:outline-none w-full" placeholder="Apellido Materno" />
+                    </div>
+                </div>
+
+                <!-- ----FILA 3: dirección, telefono, correo--- -->
+                <div class="mb-2 flex space-x-2">
+                    <div class="w-1/2 text-start">
+                        <label for="direccion" class="form-label text-white text-sm italic mb-0">Dirección</label>
+                        <input type="text" name="direccion" id="direccion" value="{{ apoderado_suplente_uno.direccion }}" 
+                        class="bg-white text-gray-900 rounded-sm pl-2 py-1 md:py-1 text-sm focus:outline-none w-full" placeholder="Dirección 445" />
+                    </div>
+                    <div class="w-1/4 text-start">
+                        <label for="telefono" class="form-label text-white text-sm italic mb-0">Teléfono +56</label>
+                        <input type="text" name="telefono" id="telefono" value="{{ apoderado_suplente_uno.telefono }}" 
+                        class="bg-white text-gray-900 rounded-sm pl-2 py-1 md:py-1 text-sm focus:outline-none w-full" placeholder="Ej: 912233333" maxlength="9" required />
+                    </div>
+                </div>
+
+                <!-- ----FILA 5: región, comuna--- -->
+                <div class="mb-2 flex space-x-2">
+                    <div class="w-1/2 text-start">
+                        <label for="region" class="form-label text-white text-sm italic mb-0">Región</label>
+                        <select name="region" id="region_apoderado_suplente_uno" class="region-select bg-white text-gray-900 rounded-sm pl-2 py-1 md:py-1 text-sm focus:outline-none w-full">
+                            {% for region in regiones %}
+                                <option value="{{ region.id }}" {% if apoderado_suplente_uno.region_id == region.id %}selected{% endif %}>{{ region.region }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="w-1/2 text-start">
+                        <label for="comuna" class="form-label text-white text-sm italic mb-0">Comuna</label>                      
+                        <select name="comuna" data-region-select="region_apoderado_suplente_uno" 
+                        class="comuna-select bg-white text-gray-900 rounded-sm pl-2 py-1 md:py-1 text-sm focus:outline-none w-full">
+                            <option value="">Seleccione comuna</option>
+                            {% for comuna in comunas %}
+                                <option value="{{ comuna.id }}" data-region="{{ comuna.region_id }}" {% if apoderado_suplente_uno.comuna_id == comuna.id %}selected{% endif %}>{{ comuna.comuna }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Modal Footer -->
+                <div class="modal-footer flex flex-col justify-end mt-3 w-full">
+                    <button type="submit" class="bg-gradient-to-b from-red-800 to-red-700 
+                    hover:from-red-600 hover:to-red-500 text-md p-2 md:p-2 text-white uppercase w-full rounded-sm mx-auto mb-2">GUARDAR CAMBIOS</button>
+
+                    <button type="button" class="bg-gradient-to-b from-lime-800 to-lime-700
+                    hover:from-lime-600 hover:to-lime-500 text-white py-2 px-4 rounded-sm w-full" 
+                    onclick="document.getElementById('apoderado_suplente_uno_edit_modal').close()">CERRAR</button>
+                </div>
+
+            </form>
+        </div>
+        <!-- End of Modal Content-->
+    </div>
+</dialog>

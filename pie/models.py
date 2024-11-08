@@ -1,7 +1,6 @@
 from django.db import models
 from django.db.models.signals import pre_save, post_save, post_delete
 from estudiantes.models import Estudiante, ApoderadoTitular, ApoderadoSuplenteUno, ApoderadoSuplenteDos
-from .opciones import opcion_nivel_educativo, opcion_curso, opcion_letra_curso
 
 
 
@@ -12,28 +11,19 @@ from .opciones import opcion_nivel_educativo, opcion_curso, opcion_letra_curso
 
 #MODELO PARA CREAR UN CURSO
 
-class Curso(models.Model):
-    nivel_academico = models.CharField(max_length=100, choices=opcion_nivel_educativo, verbose_name='Nivel Académico')
-    curso = models.CharField(max_length=100, choices=opcion_curso, verbose_name='Curso')
-    letra_curso = models.CharField(max_length=1, choices=opcion_letra_curso, verbose_name='Letra')
-    
-    class Meta:
-        abstract = True
-#____________________________________________________________________________________________________________
-
-
-#MODELO PARA UNA Registro en el PIE
-
-class RegistroPie(Curso):
-    estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE, verbose_name='Estudiante')
-    apoderado = models.ForeignKey(ApoderadoTitular, on_delete=models.CASCADE, verbose_name='Apoderado')
-    ApoderadoSuplenteUno = models.ForeignKey(ApoderadoSuplenteUno, on_delete=models.CASCADE, verbose_name='Apoderado Suplente 1')
-    ApoderadoSuplenteDos = models.ForeignKey(ApoderadoSuplenteDos, on_delete=models.CASCADE, verbose_name='Apoderado Suplente 2')
+# Modelo de RegistroPie
+class RegistroPie(models.Model):
+    curso = models.CharField(max_length=150, choices=Estudiante._meta.get_field('cursos').choices, verbose_name='Curso')
+    estudiante = models.OneToOneField(Estudiante, on_delete=models.CASCADE, verbose_name='Estudiante')
+    apoderado_titular = models.ForeignKey(ApoderadoTitular, on_delete=models.CASCADE, verbose_name='Apoderado', null=True, blank=True)
+    apoderado_suplente_uno = models.OneToOneField(ApoderadoSuplenteUno, on_delete=models.CASCADE, verbose_name='Apoderado Suplente 1', null=True, blank=True)
+    apoderado_suplente_dos = models.OneToOneField(ApoderadoSuplenteDos, on_delete=models.CASCADE, verbose_name='Apoderado Suplente 2', null=True, blank=True)
     enable = models.BooleanField(default=True, null=True, verbose_name='Alumno Regular')
+
     def __str__(self):
         return f'{self.estudiante}'
     
-    class Meta: 
+    class Meta:
         verbose_name = 'Pie'
         verbose_name_plural = 'Pies'
 #____________________________________________________________________________________________________________

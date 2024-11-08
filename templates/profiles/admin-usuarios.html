@@ -4,12 +4,12 @@
         <div class="inline-block w-full py-2">
             <div class="overflow-hidden">
                 <table class="w-full text-center text-sm font-light">
-                    <thead class="border-b font-medium dark:border-neutral-500 bg-gradient-to-r from-sky-900 to-cyan-700">
+                    <thead class="border-b  dark:border-neutral-500 bg-gradient-to-b from-sky-900 to-sky-700">
                       <tr>
-                        <th scope="col" class="text-start text-white px-2 py-2">NOMBRES Y APELLIDOS</th>
-                        <th scope="col" class="text-start text-white px-2 py-2">USUARIO</th>
-                        <th scope="col" class="text-start text-white px-2 py-2">CARGO</th>
-                        <th scope="col" class="text-start text-white px-2 py-2 w-8">ACCIONES</th>
+                        <th scope="col" class="font-semibold text-sm text-start text-white px-2 py-1">NOMBRES Y APELLIDOS</th>
+                        <th scope="col" class="font-semibold text-sm text-start text-white px-2 py-1">USUARIO</th>
+                        <th scope="col" class="font-semibold text-sm text-start text-white px-2 py-1">CARGO</th>
+                        <th scope="col" class="font-semibold text-sm text-start text-white px-2 py-1 w-8">ACCIONES USUARIO</th>
                       </tr>
                     </thead>
                       <tbody>
@@ -17,47 +17,55 @@
                             <!-- Condiciones para aplicar estilos según el grupo del usuario -->
                             {% if 'Funcionario' in user_profile.groups %}
                                 <!-- Estilo para el grupo 'Funcionario' -->
-                                <tr class="border-b border-neutral-100 bg-zinc-950 text-neutral-800">
+                                <tr class="border-b border-neutral-100 bg-zinc-950 text-white">
                             {% elif 'Administrador' in user_profile.groups %}
                                 <!-- Estilo para el grupo 'Administrador' -->
-                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-gray-600 to-gray-900 text-neutral-800">
+                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-gray-600 to-gray-900">
                             {% elif 'Coordinador' in user_profile.groups %}
                                 <!-- Estilo para el grupo 'Coordinador' -->
-                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-lime-600 to-lime-900 text-neutral-800">
+                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-lime-600 to-lime-900 text-white">
+                            {% elif 'Coordinador Suplente' in user_profile.groups %}
+                                    <!-- Estilo para el grupo 'Coordinador' -->
+                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-gray-600 to-gray-900 text-white">
                             {% elif 'Fonoaudiologo' in user_profile.groups %}
                                 <!-- Estilo para el grupo 'Fonoaudiologo' -->
-                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-amber-600 to-amber-900 text-neutral-800">
+                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-amber-600 to-amber-900 text-white">
                             {% elif 'Psicólogo' in user_profile.groups %}
                                 <!-- Estilo para el grupo 'Psicólogo' -->
-                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-indigo-600 to-indigo-900 text-neutral-800">
+                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-indigo-600 to-indigo-900 text-white">
                             {% elif 'Psicopedagógo' in user_profile.groups %}
                                 <!-- Estilo para el grupo 'Psicopedagógo' -->
-                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-purple-600 to-purple-900 text-neutral-800">
+                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-purple-600 to-purple-900 text-white">
                             {% elif 'Técnico Diferencial' in user_profile.groups %}
                                 <!-- Estilo para el grupo 'Técnico Diferencial' -->
-                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-pink-600 to-pink-900 text-neutral-800">
+                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-pink-600 to-pink-900 text-white">
                             {% elif 'Técnico Parvulario' in user_profile.groups %}
                                 <!-- Estilo para el grupo 'Técnico Parvulario' -->
-                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-green-600 to-green-900 text-neutral-800">
+                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-green-600 to-green-900 text-white">
                             {% elif 'Terapeuta Ocupacional' in user_profile.groups %}
                                 <!-- Estilo para el grupo 'Terapeuta Ocupacional' -->
-                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-red-600 to-red-900 text-neutral-800">
+                                <tr class="border-b border-neutral-100 bg-gradient-to-tr from-red-600 to-red-900 text-white">
                             {% endif %}
           
                             <!-- Cuerpo de la tabla -->
-                            <td class="text-start text-white whitespace-nowrap px-2 py-2 font-medium">
-                                {{ user_profile.user.get_full_name }}
+                            <td class="text-start text-white whitespace-nowrap px-2 py-2 font-md">
+                                {{ user_profile.user.get_full_name  | capfirst }}
                             </td>
-                            <td class="text-start text-white whitespace-nowrap px-2 py-2">{{ user_profile.user.username }}</td>
-                            <td class="text-start text-white whitespace-nowrap px-2 py-2">{{ user_profile.groups | join:", " | capfirst }}</td>
-                            <td class="text-start text-white whitespace-nowrap px-2 py-2">
+                            <td class="text-start text- whitespace-nowrap px-1 py-1">{{ user_profile.user.username }}</td>
+                            <td class="text-start text-white whitespace-nowrap px-1 py-1">{{ user_profile.groups | join:", " | capfirst }}</td>
+                            
+                            <td class="text-start text-white whitespace-nowrap px-1 py-1">
                                 <a href="{% url 'profile_detail' user_profile.user.id %}"
-                                class="bg-yellow-700 hover:bg-yellow-500 border px-3 py-1 w-20">
+                                class="bg-yellow-700 hover:bg-yellow-500 border px-4 mr-3 py-1 w-20">
                                 INFO
                                 </a>
-                                
-                               
-                                <button type="button" class="bg-green-700 hover:bg-green-500 border px-1 py-1 w-20">EDITAR</button>
+                                <form id="delete-user-form-{{ user_profile.user.id }}" action="{% url 'delete_user' user_profile.user.id %}" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="button" class="bg-red-700 hover:bg-red-500 border px-2 py-1 w-20"
+                                            onclick="confirmDeleteUser({{ user_profile.user.id }})">
+                                        ELIMINAR
+                                    </button>
+                                </form>
                             </td>
                             </tr>
                         {% endfor %}
@@ -72,41 +80,45 @@
         <ul class="flex space-x-2">
             {% if user_profiles.has_previous %}
                 <li><a href="?page=1" 
-                    class="bg-gradient-to-r from-sky-900 to-cyan-700 
-                    hover:from-cyan-400 hover:to-sky-900 hover:text-white text-white
-                     font-sans text-white px-2 py-1 rounded-md">
+                    class="bg-gradient-to-r from-sky-900 to-sky-700 
+                    hover:from-sky-600 hover:to-sky-600
+                    font-sans text-white text-sm px-2 py-1 rounded-sm">
                     Primera Pagina</a></li>
                 <li><a href="?page={{ user_profiles.previous_page_number }}" 
-                    class="bg-gradient-to-r from-sky-900 to-cyan-700 
-                    hover:from-cyan-400 hover:to-sky-900 hover:text-white text-white
-                     font-sans text-white px-2 py-1 rounded-md"
+                    class="bg-gradient-to-r from-sky-900 to-sky-700 
+                    hover:from-sky-600 hover:to-sky-600
+                    font-sans text-white text-sm px-2 py-1 rounded-sm"
                     >Anterior</a></li>
             {% endif %}
             
-            <li class="bg-gradient-to-r from-sky-900 to-cyan-700 
-            hover:from-cyan-400 hover:to-sky-900 hover:text-white text-white
-             font-sans text-white px-3 py-1 -my-1 rounded-md"
+            <li class="bg-gradient-to-r from-sky-900 to-sky-700 
+            hover:from-sky-600 hover:to-sky-600
+            font-sans text-white text-sm px-3 py-1 rounded-sm"
             >{{ user_profiles.number }}</li>
             
             {% if user_profiles.has_next %}
                 <li><a href="?page={{ user_profiles.next_page_number }}" 
-                    class="bg-gradient-to-r from-sky-900 to-cyan-700 
-                    hover:from-cyan-400 hover:to-sky-900 hover:text-white text-white
-                     font-sans text-white px-2 py-1 rounded-md"
+                    class="bg-gradient-to-r from-sky-900 to-sky-700 
+                    hover:from-sky-600 hover:to-sky-600
+                    font-sans text-white text-sm px-2 py-1 rounded-sm"
                     >Siguiente</a></li>
                 <li><a href="?page={{ user_profiles.paginator.num_pages }}" 
-                    class="bg-gradient-to-r from-sky-900 to-cyan-700 
-                    hover:from-cyan-400 hover:to-sky-900 hover:text-white text-white
-                     font-sans text-white px-2 py-1 rounded-md"
+                    class="bg-gradient-to-r from-sky-900 to-sky-700 
+                    hover:from-sky-600 hover:to-sky-600
+                    font-sans text-white text-sm px-2 py-1 rounded-sm"
                     >Última</a></li>
             {% endif %}
         </ul>
     </div>
 
-    <div class="flex flex-col -ml-16 mt-2 w-full">
-        <a href="{% url 'add_user' %}" class="rounded-lg 
-        text-white text-sm text-center bg-gradient-to-br from-red-600 to-red-900
-        hover:from-amber-900 hover:to-yellow-600 hover:text-white px-3 py-2 w-24">
-        Agregar Usuario</a>
+    <div class="flex flex-col -ml-16 mt-2">
+        <button onclick="document.getElementById('add_user_modal').showModal()" id="btn"
+                    class="py-2 px-2 mt-1 mb-1 bg-gradient-to-b from-red-800 to-red-700 
+                    hover:from-red-600 hover:to-red-500 text-white rounded-sm text shadow-xl block w-1/5">
+                        AGREGAR USUARIO
+        </button> 
     </div>
 </div>
+
+{% include 'profiles/add_user.html' %}
+

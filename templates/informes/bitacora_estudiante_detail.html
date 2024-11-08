@@ -1,0 +1,109 @@
+<!-- <! CONTENIDO DE LA BITÁCORA DETAIL ESTUDIANTE > -->
+
+<div class="ml-96 px-4 mt-2 mx-auto w-full col-span-4">
+    <div class="md:flex-row">
+        <div class="overflow-hidden flex items-center justify-center mt-1">
+            <div class="bg-gradient-to-r from-sky-700 to-sky-600 w-full shadow-3xl rounded-sm mx-auto my-auto">
+
+                <form action="" method="post" class="p-4 md:p-4">
+                    <div class="mb-2 flex justify-between items-center">
+                        <div>
+                            <h2 class="text-white text-2xl font-semibold font-sans">BITÁCORA ESTUDIANTE</h2>
+                            <h2 class="text-white text-xl font-semibold font-sans">{{ estudiante.nombres }} {{ estudiante.apellido_paterno }} {{ estudiante.apellido_materno }}</h2>
+                            <h2 class="text-white text-md italic font-semibold font-sans">{{ estudiante.cursos }}</h2>
+                        </div>
+                        <img src="/static/Imagenes/logo_politecnico.jpg" alt="" class="w-20 mr-2">
+                    </div>
+                    {% csrf_token %}
+                    <!-- Mostrar errores del formulario -->
+                    {% if form.errors %}
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                        <strong class="font-bold">Error:</strong>
+                        <span class="block sm:inline">
+                            {% for field, errors in form.errors.items %}
+                            {{ field }}: {{ errors|join:", " }}
+                            {% endfor %}
+                        </span>
+                    </div>
+                    {% endif %}
+                    <!-- ---------FILA 1--------- -->
+                    <div class="flex items-center text-lg mb-1 md:mb-0">
+                        <!-- Información del estudiante -->
+                        <div class="ml-2 w-1/2 mr-2">
+                            <label for="estudiante" class="form-label text-white text-sm font-sans italic mb-0">Estudiante</label>
+                            <input type="hidden" name="estudiante" id="estudiante" value="{{ estudiante.id }}" />
+                            <input type="text" name="estudiante_nombre" id="estudiante_nombre"
+                                class="bg-white text-black rounded-sm pl-2 py-1 md:py-1 text-sm focus:outline-none w-full"
+                                value="{{ estudiante.nombres }} {{ estudiante.apellido_paterno }} {{ estudiante.apellido_materno }}"
+                                readonly />
+                        </div>
+                        <!-- Fecha de la bitácora -->
+                        <div class="w-1/3 mr-2">
+                            <label for="fecha" class="form-label text-white text-sm font-sans italic mb-0 block py-1">Fecha</label>
+                            <input type="text" name="fecha" id="fecha"
+                                class="bg-white text-black rounded-sm pl-2 py-1 md:py-1 text-sm focus:outline-none w-48"
+                                value="{{ bitacora.fecha }}" readonly />
+                        </div>
+                    </div>
+
+                    <!-- Iteración sobre las bitácoras del día -->
+                    <div class="mt-2">
+                        {% for bitacora in bitacoras %}
+                        <div class="bg-gradient-to-r from-sky-700 to-sky-600 w-full shadow-3xl rounded-sm mx-auto my-2 p-2">
+                            <div class="flex items-center text-lg mb-1 md:mb-1">
+                                <!-- Profesional que registró la bitácora -->
+                                <div class="w-1/2 mr-2">
+                                    <label for="profesional" class="form-label text-white text-sm font-sans italic mb-0">Profesional a cargo: {{ bitacora.profesional.group_name_singular }}</label>
+                                    
+                                    <input type="text" name="profesional" id="profesional"
+                                        class="bg-white text-black rounded-sm pl-2 py-1 md:py-1 text-sm focus:outline-none w-full"
+                                        value="{{ bitacora.profesional.user.first_name }} {{ bitacora.profesional.user.last_name }}" readonly />
+                                </div>
+                            </div>
+                            <div class="flex items-center text-lg mb-1 md:mb-1">
+                                <!-- Asignatura de la bitácora -->
+                                <div class="w-1/2 mr-2">
+                                    <label for="asignatura" class="form-label text-white text-sm font-sans italic mb-0 block py-1 my-2">Asignatura</label>
+                                    <input type="text" name="asignatura" id="asignatura"
+                                        class="bg-white rounded-sm pl-2 py-1 md:py-1 text-sm focus:outline-none w-1/2"
+                                        value="{{ bitacora.asignatura.asignatura }}" readonly />
+                                </div>
+                            </div>
+                            <div class="flex items-center text-lg mb-1 md:mb-1">
+                                <!-- Actividad de la bitácora -->
+                                <div class="w-full mr-2">
+                                    <label for="actividad" class="form-label text-white text-sm font-sans italic mb-0">Actividad</label>
+                                    <textarea name="actividad" id="actividad"
+                                        class="bg-white text-black rounded-sm pl-2 py-1 md:py-2 text-sm focus:outline-none w-full h-48"
+                                        rows="4" readonly>{{ bitacora.actividad }}</textarea>
+                                </div>
+                            </div>
+
+                            <!-- ---------FILA 6--------- -->
+                            <div class="flex items-center text-lg mb-2 md:mb-2">
+                                <div class="w-full mr-2">
+                                    <!-- Dentro de tu formulario o sección correspondiente -->
+                                    <label for="comorbilidad"
+                                        class="form-label text-white text-sm font-sans italic mb-0">Observaciones</label>
+                                    <textarea name="observaciones" id="observaciones"
+                                        class="bg-whte text-black rounded-sm pl-2 py-1 md:py-2 text-sm focus:outline-none w-full h-48"
+                                        rows="4">{{ bitacora.observaciones }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <!-- Botón de descarga de PDF -->
+                    <div class="flex justify-center">
+                        <a class="bg-gradient-to-b from-lime-800 to-lime-700
+                        hover:from-lime-600 hover:to-lime-500 font-medium p-2 md:p-2 
+                        text-white uppercase text-center w-1/4 rounded-sm mx-auto" href="?download=true">
+                        DESCARGAR PDF</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>

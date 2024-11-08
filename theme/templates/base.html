@@ -14,6 +14,8 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
       rel="stylesheet"
     />
+    <!-- Incluir el archivo funciones.js -->
+    <script src="{% static 'js/funciones.js' %}"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- //Borrar esta linea cuando se realice la producción// -->
     {% tailwind_css %}
@@ -21,6 +23,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Estilos personalizados para SweetAlert2 -->
+    <style>
+      .swal2-confirm {
+        background: linear-gradient(to bottom, #e3342f, #cc1f1a); /* Fondo degradado rojo */
+        color: #fff;
+        padding: 0.75rem 1.5rem; /* Padding vertical y horizontal */
+        margin-right: 1rem; /* Espaciado entre botones */
+        border: none; /* Quitar borde */
+      }
+      .swal2-confirm:hover {
+        background: linear-gradient(to bottom, #cc1f1a, #e3342f); /* Efecto hover */
+      }
+      .swal2-cancel {
+        background: linear-gradient(to bottom, #38c172, #1f9d55); /* Fondo degradado verde */
+        color: #fff;
+        padding: 0.75rem 1.5rem; /* Padding vertical y horizontal */
+        margin-left: 1rem; /* Espaciado entre botones */
+        border: none; /* Quitar borde */
+      }
+      .swal2-cancel:hover {
+        background: linear-gradient(to bottom, #1f9d55, #38c172); /* Efecto hover */
+      }
+      .swal2-actions {
+        display: flex;
+        justify-content: space-between;
+      }
+    </style>
   </head>
 
   <body>
@@ -36,8 +67,7 @@
 
     <div class="footer">{% block footer %} {% endblock %}</div>
 
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <!-- Script para mensajes de Django con SweetAlert2 -->
     {% if messages %}
       {% for message in messages %}
         {% if message.tags == 'success' %}
@@ -46,6 +76,11 @@
               title: "¡Excelente!",
               text: "{{ message }}",
               icon: "success",
+              confirmButtonText: 'OK',
+              customClass: {
+                confirmButton: "swal2-confirm"
+              },
+              buttonsStyling: false
             });
           </script>
         {% elif message.tags == 'error' %}
@@ -54,6 +89,11 @@
               title: "Error",
               text: "{{ message }}",
               icon: "error",
+              confirmButtonText: 'OK',
+              customClass: {
+                confirmButton: "swal2-confirm"
+              },
+              buttonsStyling: false
             });
           </script>
         {% elif message.tags == 'warning' %}
@@ -62,11 +102,90 @@
               title: "Advertencia",
               text: "{{ message }}",
               icon: "warning",
+              confirmButtonText: 'OK',
+              customClass: {
+                confirmButton: "swal2-confirm"
+              },
+              buttonsStyling: false
             });
           </script>
         {% endif %}
       {% endfor %}
     {% endif %}
+
+    <!-- Script para confirmar el reseteo de contraseña -->
+    <script>
+      function confirmResetPassword() {
+        const swalWithBootstrapButtons = Swal.mixin({
+          customClass: {
+            confirmButton: "swal2-confirm",
+            cancelButton: "swal2-cancel"
+          },
+          buttonsStyling: false
+        });
+
+        swalWithBootstrapButtons.fire({
+          title: "¿Está seguro de resetear la contraseña?",
+          text: "¡No podrá revertir esto!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "SÍ, RESETEAR",
+          cancelButtonText: "NO, CANCELAR",
+          reverseButtons: true
+        }).then((result) => {
+          if (result.isConfirmed) {
+            document.getElementById('reset-password-form').submit();
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire({
+              title: "Cancelado",
+              text: "La contraseña no ha sido reseteada",
+              icon: "error",
+              customClass: {
+                confirmButton: "swal2-confirm"
+              },
+              buttonsStyling: false
+            });
+          }
+        });
+      }
+    </script>
+
+    <!-- Script para confirmar la eliminación de usuario -->
+    <script>
+      function confirmDeleteUser(userId) {
+        const swalWithBootstrapButtons = Swal.mixin({
+          customClass: {
+            confirmButton: "swal2-confirm",
+            cancelButton: "swal2-cancel"
+          },
+          buttonsStyling: false
+        });
+
+        swalWithBootstrapButtons.fire({
+          title: "¿Está seguro de eliminar este usuario?",
+          text: "¡No podrá revertir esto!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "SÍ, ELIMINAR",
+          cancelButtonText: "NO, CANCELAR",
+          reverseButtons: true
+        }).then((result) => {
+          if (result.isConfirmed) {
+            document.getElementById('delete-user-form-' + userId).submit();
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire({
+              title: "Cancelado",
+              text: "El usuario no ha sido eliminado",
+              icon: "error",
+              customClass: {
+                confirmButton: "swal2-confirm"
+              },
+              buttonsStyling: false
+            });
+          }
+        });
+      }
+    </script>
 
     {% block js %} {% endblock %}
   </body>

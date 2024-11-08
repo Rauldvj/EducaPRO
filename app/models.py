@@ -1,82 +1,96 @@
 from django.db import models
+from estudiantes.models import Estudiante
 from django.db.models.signals import pre_save
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.validators import MinValueValidator, MaxValueValidator
-
+from django.utils import timezone #Importamos la zona horaria
+from datetime import timedelta #Importamos la zona horaria
 from django.dispatch import receiver
 from django.contrib.auth.models import Group #Importamos los Groups de Autenticación
-from accounts.models import *
+from accounts.models import User, Profile
 from estudiantes.models import *
 from .opciones import *
 
 #AQUÍ CREAREMOS LOS MODELOS PARA NUESTRA APLICACIÓN
 
+#MODELO DE ASIGNATURA
+class Asignatura(models.Model):
+    asignatura = models.CharField(max_length=100, verbose_name='Asignatura:')
+
+    def __str__(self):
+        return self.asignatura
+
+
+
+
 
 #Modelo para Bitacora
+class BitacoraEstudiante(models.Model):
+    #IDENTIFICACIÓN DEL PROFESIONAL Y DEL ESTUDIANTE
+    profesional = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name='Profesional:', related_name='bitácoras_profesional')
+    estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE, verbose_name='Estudiante:', related_name='bitácoras_estudiante')
 
-class Bitacora(models.Model):
-    #BITACORA ESTUDIANTE
-    fecha = models.DateField(verbose_name='Fecha')
-    hora_entrada = models.TimeField(auto_now=False)
-    hora_salida = models.TimeField(auto_now=False)
-    
-    estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE, verbose_name='Estudiante')
-    
-    #PRIMER BLOQUE
-    bloque1 = models.CharField(max_length=20, choices=opcionesBloque,default='Primer bloque', verbose_name='Bloque')
-    objetivoClase1 = models.CharField(max_length=350, verbose_name='Objetivo de la Clase')  
-    objetivoPaci1 = models.CharField(max_length=350, verbose_name='Objetivo del Paci')
-    desarrolloActividad1 = models.TextField(verbose_name='Desarrollo de la actividad')
-    material1= models.TextField(verbose_name='Material utilizado')
-    personaMaterial1 = models.CharField(max_length=100, verbose_name='Persona que entrega el material')
-    reaccion1 = models.CharField(max_length=350, verbose_name='Reacción del alumno frente a la actividad')
-    estadoAprendizaje1 = models.CharField(max_length=20, default='Seleccione', choices=opciones_aprendizaje, verbose_name='Estado aprendizaje')
-    apoyoDocente1 = models.CharField(max_length=20, default='Seleccione', choices=opciones_si_no, verbose_name='Apoyo del Docente durante la actividad')
-    obervacionesGenerales1 = models.TextField(verbose_name='Observaciones generales', blank=True)
-    
-    #SEGUNDO BLOQUE
-    bloque2b = models.CharField(max_length=20, choices=opcionesBloque,default='Segundo bloque', verbose_name='Bloque')
-    objetivoClase2b = models.CharField(max_length=350, verbose_name='Objetivo de la Clase')  
-    objetivoPaci2b = models.CharField(max_length=350, verbose_name='Objetivo del Paci')
-    desarrolloActividad2b = models.TextField(verbose_name='Desarrollo de la actividad')
-    material2b = models.TextField(verbose_name='Material utilizado')
-    personaMaterial2b = models.CharField(max_length=100, verbose_name='Persona que entrega el material')
-    reaccion2b = models.CharField(max_length=350, verbose_name='Reacción del alumno frente a la actividad')
-    estadoAprendizaje2b = models.CharField(max_length=20, default='Seleccione', choices=opciones_aprendizaje, verbose_name='Estado aprendizaje')
-    apoyoDocente2b = models.CharField(max_length=20, default='Seleccione', choices=opciones_si_no, verbose_name='Apoyo del Docente durante la actividad')
-    obervacionesGenerales2b = models.TextField(verbose_name='Observaciones generales')
-    
-    #TERCER BLOQUE
-    bloque3c = models.CharField(max_length=20, choices=opcionesBloque,default='Tercer bloque', verbose_name='Bloque')
-    objetivoClase3c = models.CharField(max_length=350, verbose_name='Objetivo de la Clase')  
-    objetivoPaci3c = models.CharField(max_length=350, verbose_name='Objetivo del Paci')
-    desarrolloActividad3c = models.TextField(verbose_name='Desarrollo de la actividad')
-    material3c = models.TextField(verbose_name='Material utilizado')
-    personaMaterial3c = models.CharField(max_length=100, verbose_name='Persona que entrega el material')
-    reaccion3c = models.CharField(max_length=350, verbose_name='Reaccion del alumno frente a la actividad')
-    estadoAprendizaje3c = models.CharField(max_length=20, default='Seleccione', choices=opciones_aprendizaje, verbose_name='Estado aprendizaje')
-    apoyoDocente3c = models.CharField(max_length=20, default='Seleccione', choices=opciones_si_no, verbose_name='Apoyo del Docente durante la actividad')
-    obervacionesGenerales3c = models.TextField(verbose_name='Observaciones generales')
+    #FECHA ACTUAL DE REGISTRO
+    fecha = models.DateField(auto_now_add=True, verbose_name='Fecha:')
 
-    #CUARTO BLOQUE
-    bloque4d = models.CharField(max_length=20, choices=opcionesBloque,default='Cuarto bloque', verbose_name='Bloque')
-    objetivoClase4d = models.CharField(max_length=350, verbose_name='Objetivo de la Clase')  
-    objetivoPaci4d = models.CharField(max_length=350, verbose_name='Objetivo del Paci')
-    desarrolloActividad4d = models.TextField(verbose_name='Desarrollo de la actividad')
-    material4d = models.TextField(verbose_name='Material utilizado')
-    personaMaterial4d= models.CharField(max_length=100, verbose_name='Persona que entrega el material')
-    reaccion4d = models.CharField(max_length=350, verbose_name='Reaccion del alumno frente a la actividad')
-    estadoAprendizaje4d = models.CharField(max_length=20, default='Seleccione', choices=opciones_aprendizaje, verbose_name='Estado aprendizaje')
-    apoyoDocente4d = models.CharField(max_length=20, default='Seleccione', choices=opciones_si_no, verbose_name='Apoyo del Docente durante la actividad')
-    obervacionesGenerales4d= models.TextField(verbose_name='Observaciones generales')
+    #ACTIVIDADES
+    asignatura = models.ForeignKey(Asignatura, on_delete=models.CASCADE, verbose_name='Asignatura:', related_name='bitácoras_asignatura')
+    actividad = models.TextField(verbose_name='Actividad:', blank=True)
+    observaciones = models.TextField(verbose_name='Observaciones:', blank=True)
+   
 
-    def __str__(self):  
-        return f'{self.fecha}, {self.hora_entrada}, {self.hora_salida} {self.estudiante}'
+    def __str__(self):
+        return f'{self.estudiante}, {self.fecha}'
     
-    class Meta: 
-        verbose_name = 'Bitácora'
-        verbose_name_plural = 'Bitácoras'
 
+#_____________________________________________________________________________________________________________________________________
+
+#MODELO OBJETIVO DE APRENDIZAJE
+class ObjetivoAprendizaje(models.Model):
+    opciones_aprendizaje = (
+        ('logrado', 'logrado'),
+        ('Medianamente logrado', 'Mediatamente logrado'),
+        ('Logrado', 'Logrado')
+    )
+
+    bitacora_estudiante = models.ForeignKey(BitacoraEstudiante, on_delete=models.CASCADE, verbose_name='Bitácora Estudiante:', related_name='objetivos_aprendizaje')
+    objetivo_aprendizaje = models.CharField(max_length=300, choices=opciones_aprendizaje, verbose_name='Objetivo de Aprendizaje:', blank=True)
+    promedio_objetivo = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Promedio Objetivo:', blank=True, null=True)
+    semana = models.DateField(verbose_name='Semana:', blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        # Asignar puntajes iguales a las opciones de aprendizaje
+        puntajes = {
+            'No logrado': 1,
+            'Via de logro': 1,
+            'Logrado': 1
+        }
+
+        # Obtener la fecha actual y calcular el inicio de la semana (lunes)
+        hoy = timezone.now().date()
+        inicio_semana = hoy - timedelta(days=hoy.weekday())
+
+        # Asignar la semana actual
+        self.semana = inicio_semana
+
+        # Calcular el porcentaje de cada opción lograda durante la semana
+        objetivos_semana = ObjetivoAprendizaje.objects.filter(semana=inicio_semana)
+        total_objetivos = objetivos_semana.count() + 1  # +1 para incluir el objetivo actual
+        if total_objetivos > 0:
+            logrados = sum(1 for obj in objetivos_semana if obj.objetivo_aprendizaje == 'Logrado') + (1 if self.objetivo_aprendizaje == 'Logrado' else 0)
+            vias_de_logro = sum(1 for obj in objetivos_semana if obj.objetivo_aprendizaje == 'Via de logro') + (1 if self.objetivo_aprendizaje == 'Via de logro' else 0)
+            no_logrados = sum(1 for obj in objetivos_semana if obj.objetivo_aprendizaje == 'No logrado') + (1 if self.objetivo_aprendizaje == 'No logrado' else 0)
+
+            porcentaje_logrados = (logrados / total_objetivos) * 100
+            porcentaje_vias_de_logro = (vias_de_logro / total_objetivos) * 100
+            porcentaje_no_logrados = (no_logrados / total_objetivos) * 100
+
+            self.promedio_objetivo = porcentaje_logrados  # Puedes ajustar esto para mostrar el porcentaje que prefieras
+        else:
+            self.promedio_objetivo = 0
+
+        super().save(*args, **kwargs)
+    
 #___________________________________________________________________________________________________________________
 #MODELOS ABSTRACTOS PARA REGISTRO DE ANAMNESIS
 
@@ -105,11 +119,11 @@ class LenguaUso(models.Model):
 
 class Anamnesis(LenguaMaterna, LenguaUso):
     #1. IDENTIFICACIÓN DEL ESTUDIANTE 
-    nombre = models.CharField(max_length=150, verbose_name='Nombre:')
+    estudiante = models.OneToOneField(Estudiante, on_delete=models.CASCADE, verbose_name='Estudiante')
     sexo = models.CharField(max_length=10, choices=opcionesSexo, default='masculino', verbose_name='Sexo:')
-    fecha_nacimiento = models.DateField(verbose_name='Fecha de Nacimiento:')
+    fecha_nacimiento = models.DateField(verbose_name='Fecha de Nacimiento:', blank=True, null=True)
     #EDAD ACTUAL
-    años = models.PositiveIntegerField(verbose_name='Años:')
+    años = models.PositiveIntegerField(verbose_name='Años:', blank=True, null=True)
 
 
     meses = models.PositiveSmallIntegerField(
@@ -125,15 +139,14 @@ class Anamnesis(LenguaMaterna, LenguaUso):
 
     pais = models.CharField(max_length=50, verbose_name='País de natal:', blank=True)
     domicilio = models.CharField(max_length=100, verbose_name='Domicilio actual:', blank=True)
-    telefono = models.CharField(max_length=8, verbose_name='Teléfono:', blank=True)
+    telefono = models.CharField(max_length=8, verbose_name='Teléfono:', blank=True, null=True)
     escolaridad_actual = models.CharField(max_length=100, verbose_name='Escolaridad Actual:', blank=True)
     establecimiento = models.CharField(max_length=100, verbose_name='Establecimiento:', blank=True)
 
     #2. IDENTIFICACIÓN DEL O LOS INFORMANTES
     #ENTREVISTA 1
-    # ENTREVISTA 1
-    fecha_entrevista_1 = models.DateField(verbose_name='Fecha de la Entrevista 1:')
-    nombres_entrevista_1 = models.CharField(max_length=150, verbose_name='Nombre:')
+    fecha_entrevista_1 = models.DateField(verbose_name='Fecha de la Entrevista 1:', blank=True, null=True)
+    nombres_entrevista_1 = models.CharField(max_length=150, verbose_name='Nombre:', blank=True, null=True)
     relacion_estudiante_1 = models.CharField(max_length=100, choices=opcion_relacion, default='Seleccione', verbose_name='Relación del Estudiante:')
     en_presencia_de_1 = models.CharField(max_length=100, choices=opcion_presencia, default='Seleccione', verbose_name='En presencia de:')
 
@@ -156,9 +169,9 @@ class Anamnesis(LenguaMaterna, LenguaUso):
     en_presencia_de_4 = models.CharField(blank=True, max_length=100, choices=opcion_presencia, default='', verbose_name='En presencia de:')
 
     # ENTREVISTADOR 1
-    fecha_entrevistador = models.DateField(verbose_name='Fecha de la Entrevista:')
-    nombreApellidos = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Entrevistador:', related_name='entrevistador')
-    rol = models.ForeignKey(Group, on_delete=models.CASCADE, verbose_name='Rol/Cargo:')
+    fecha_entrevistador = models.DateField(null=True, blank=True, verbose_name='Fecha de la Entrevista:')
+    nombreApellidos = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Entrevistador:', related_name='entrevistador', null=True, blank=True,)
+    rol = models.ForeignKey(Group, on_delete=models.CASCADE, verbose_name='Rol/Cargo:', null=True, blank=True,)
 
     # ENTREVISTADOR 2
     fecha_entrevistador_2 = models.DateField(null=True, blank=True, verbose_name='Fecha de la Entrevista 2')
@@ -196,9 +209,9 @@ class Anamnesis(LenguaMaterna, LenguaUso):
     tipo_parto = models.CharField(max_length=100, choices=opcion_parto, default='', verbose_name='Tipo de Parto:')
     cesarea = models.CharField(max_length=300, verbose_name='Cesárea (Señalar Motivo)', blank=True)
     asistencia_medica_parto = models.CharField(max_length=10, choices=opciones_si_no, default='', verbose_name='Tuvo asistencia médica durante el parto?:')
-    peso = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Peso:')
-    talla = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Talla:')
-    antecedentes_embarazo_parto = models.TextField(verbose_name='Antecedentes de Embarazo:', blank=True)
+    peso = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Peso:', null=True, blank=True,)
+    talla = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Talla:',null=True, blank=True,)
+    antecedentes_embarazo_parto = models.TextField(verbose_name='Antecedentes de Embarazo:', null=True, blank=True,)
 
     #Señale si durante los doce primeros meses de vida el niño o niña presentó
     desnutricion = models.CharField(max_length=10, choices=opciones_si_no, default='', verbose_name='Desnutrición:')
@@ -358,15 +371,15 @@ class Anamnesis(LenguaMaterna, LenguaUso):
     verbose_name='Horas de sueño'
 )
 
-    insomnio = models.BooleanField(max_length=10, default='', verbose_name='Insomnio', blank=True)
-    pesadillas = models.BooleanField(max_length=10, default='', verbose_name='Pesadillas', blank=True)
-    terrores_nocturnos = models.BooleanField(max_length=10, default='', verbose_name='Terrores nocturnos', blank=True)
-    sonambulismo = models.BooleanField(max_length=10, default='', verbose_name='Sonambulismo', blank=True)
-    despierta_buen_humor = models.BooleanField(max_length=10, default='', verbose_name='Despierta de buen humor', blank=True)
-    duerme = models.CharField(max_length=20, choices=opcion_como_duerme, default='', verbose_name='')
+    insomnio = models.BooleanField(max_length=10, default=False, verbose_name='Insomnio', blank=True)
+    pesadillas = models.BooleanField(max_length=10, default=False, verbose_name='Pesadillas', blank=True)
+    terrores_nocturnos = models.BooleanField(max_length=10, default=False, verbose_name='Terrores nocturnos', blank=True)
+    sonambulismo = models.BooleanField(max_length=10, default=False, verbose_name='Sonambulismo', blank=True)
+    despierta_buen_humor = models.BooleanField(max_length=10, default=False, verbose_name='Despierta de buen humor', blank=True)
+    duerme = models.CharField(max_length=20, choices=opcion_como_duerme, default='', verbose_name='Duerme:', blank=True)
     especifique_2 = models.CharField(max_length=20, choices=opcion_relacion, default='Seleccione', verbose_name='Especifique:', blank=True)
     observaciones_7 = models.TextField(verbose_name='Observaciones', blank=True)
 
 
     def __str__(self):  
-        return f'{self.nombre}, {self.fecha_nacimiento}, {self.domicilio}, {self.telefono}, {self.establecimiento}'
+        return f'{self.estudiante}, {self.fecha_nacimiento}, {self.domicilio}, {self.telefono}, {self.establecimiento}'

@@ -1,90 +1,106 @@
 {% extends 'base.html' %}
 
-{% block title %}Añadir usuario{% endblock %}
+{% block title %}Añadir usuario{% endblock %}
 
 {% block content %}
-  <body class="bg-gradient-to-r from-amber-900 to-yellow-600">
+  <body class="">
 
-    {% include 'componentes/navbar.html' %}
-    
     <div class="ml-72 px-2 mx-auto">
 
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-        {% endfor %}
-      {% endif %}
+    
 
-      <div class="flex flex-col md:flex-row">
 
-        <div class="overflow-hidden md:w-2/3 flex items-center justify-center mt-12">
-          <div class="bg-white w-full md:w-4/5 lg:w-3/5 xl:w-2/3 shadow-3xl rounded-xl mx-auto my-auto">
-            <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/3 rounded-full">
-            </div>
-            <form action="{% url 'add_user' %}" method="post" class="p-6 md:p-6 bg-gradient-to-r from-sky-900 to-cyan-700">
-              <h2 class="text-white text-2xl font-bold mb-4">Registro Nuevo Usuario</h2>
+      <!-- Modal centrado verticalmente -->
+      <dialog id="add_user_modal" class="max-w-2xl p-3 rounded-sm bg-gradient-to-r from-sky-900 to-sky-700">
+        <div class="flex flex-col w-full h-auto">
+          <!-- Header -->
+          <h2 class="flex w-full justify-center items-center text-lg font-semibold font-sans text-white">
+            Registro Nuevo Usuario
+          </h2>
+          <hr>
+
+          <!-- Modal Content-->
+          <div class="flex max-w-lg py-0 px-2 mt-5 justify-center items-center rounded-sm text-center text-gray-500">
+            <form action="{% url 'add_user' %}" method="post" id="add_user_form" class="" enctype="multipart/form-data">
               {% csrf_token %}
 
-                <!-- ---------FILA 1--------- -->
-
-              <div class="flex items-center text-lg mb-4 md:mb-4">
-                <div class="w-1/2 mr-2">
-                  <label for="username" class="form-label text-white text-sm font-bold italic mb-0">Username</label>
-                  <input type="text" name="username" id="username" class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full" placeholder="Nombre de Usuario" />
-                </div>
-
-                <!-- ---------FILA 2--------- -->
-
-              </div>
-              <div class="flex items-center text-lg mb-4 md:mb-4">
-                <div class="w-1/2 mr-2">
-                  <label for="first_name" class="form-label text-white text-sm font-bold italic mb-0">Nombres</label>
-                  <input type="text" name="first_name" id="first_name" class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full" placeholder="Nombres" />
-                </div>
-                <div class="w-1/2 ml-2">
-                  <label for="last_name" class="form-label text-white text-sm font-bold italic mb-0">Apellidos</label>
-                  <input type="text" name="last_name" id="last_name" class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full" placeholder="Apellidos" />
+              <!-- ---------FILA 1--------- -->
+              <div class="mb-2 flex space-x-2">
+                <div class="w-1/2 text-start">
+                  <label for="username" class="form-label text-white text-sm italic mb-0">Username</label>
+                  <input type="text" name="username" id="username" 
+                  class="bg-white text-gray-900 rounded-sm pl-2 py-1 md:py-2 text-sm focus:outline-none w-full" placeholder="Nombre de Usuario" required/>
                 </div>
               </div>
+
+              <!-- ---------FILA 2--------- -->
+              <div class="mb-2 flex space-x-2">
+                <div class="w-1/2 text-start">
+                  <label for="first_name" class="form-label text-white text-sm italic mb-0">Nombres</label>
+                  <input type="text" name="first_name" id="first_name" 
+                  class="bg-white text-gray-900 rounded-sm pl-2 py-1 md:py-2 text-sm focus:outline-none w-full" placeholder="Nombres" required/>
+                </div>
+                <div class="w-1/2 text-start">
+                  <label for="last_name" class="form-label text-white text-sm italic mb-0">Apellidos</label>
+                  <input type="text" name="last_name" id="last_name" 
+                  class="bg-white text-gray-900 rounded-sm pl-2 py-1 md:py-2 text-sm focus:outline-none w-full" placeholder="Apellidos" required/>
+                </div>
+              </div>
+
               <!-- ---------FILA 3--------- -->
-              <div class="flex items-center text-lg mb-6 md:mb-6">
-                <div class="w-1/2 mr-2">
-                  <label for="email" class="form-label text-white text-sm font-bold italic mb-0">Correo</label>
-                  <input type="email" name="email" id="email" class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full" placeholder="Ejemplo: 7Kqeh@example.com" />
+              <div class="mb-2 flex space-x-2">
+                <div class="w-1/2 text-start">
+                  <label for="email" class="form-label text-white text-sm italic mb-0">Correo</label>
+                  <input type="email" name="email" id="email" 
+                  class="bg-white text-gray-900 rounded-sm pl-2 py-1 md:py-2 text-sm focus:outline-none w-full" placeholder="Ejemplo: 7Kqeh@example.com" required/>
                 </div>
-                <div class="w-1/2 ml-2">
-                  <label for="group" class="form-label text-white text-sm font-bold italic mb-0">Cargo</label>
-                  <select name="group" id="group" class="bg-gray-200 rounded pl-2 py-1 md:py-2 text-sm focus:outline-none w-full">
+                <div class="w-1/2 text-start">
+                  <label for="group" class="form-label text-white text-sm italic mb-0">Cargo</label>
+                  <select name="group" id="group" class="bg-white text-gray-900 rounded-sm pl-2 py-1 md:py-2 text-sm focus:outline-none w-full">
                     <option disabled selected>Seleccione el Cargo</option>
-
-                    <!-- #AQUÍ SE ITERAN LOS CARGOS -->
                     {% for group, singular_group in groups %}
-                                    <option value="{{ group.id }}">{{ singular_group }}</option>
-                                    {% endfor %}
+                      <option value="{{ group.id }}">{{ singular_group }}</option>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
-              
-              <!-- ---------FILA 5--------- -->
-            <div class="flex justify-center">
-                <button class="bg-amber-900 hover:bg-amber-600  font-medium p-2 md:p-3 
-                text-white uppercase w-full rounded mx-auto mb-6" type="submit"
-                >Guardar Nuevo Usuario</button>
+
+              <!-- Modal Footer -->
+              <div class="modal-footer flex flex-col justify-end mt-6 w-full">
+                <button type="submit" class="bg-gradient-to-b from-red-800 to-red-700 
+                hover:from-red-600 hover:to-red-500 text-md p-2 md:p-2 text-white uppercase w-full rounded-sm mx-auto mb-2">GUARDAR NUEVO USUARIO</button>
+
+                <button type="button" class="bg-gradient-to-b from-lime-800 to-lime-700
+                hover:from-lime-600 hover:to-lime-500 text-white py-2 px-4 rounded-sm w-full" 
+                onclick="document.getElementById('add_user_modal').close()">CERRAR</button>
             </div>
 
-            <div class="flex justify-center">
-              <a class="bg-rose-900 hover:bg-rose-600  font-medium p-2 md:p-3 
-              text-white uppercase text-center w-full rounded mx-auto" href="{% url 'profile' %}">
-              REGRESAR A PERFILES</a>
-            </div>
             </form>
-            
           </div>
+          <!-- End of Modal Content-->
         </div>
-      </div>
+      </dialog>
+
+      <!-- Estilos personalizados del Modal -->
+      <style>
+        dialog[open] {
+          animation: appear 0.3s cubic-bezier(0, 1.8, 1, 1);
+        }
+        dialog::backdrop {
+          background: linear-gradient(45deg, rgba(0, 0, 0, 0.5), rgba(54, 54, 54, 0.5));
+          backdrop-filter: blur(3px);
+        }
+        @keyframes appear {
+          from {
+            opacity: 0;
+            transform: scale(0.5);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+      </style>
     </div>
   </body>
 {% endblock %}

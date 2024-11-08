@@ -11,15 +11,14 @@
 
 <!-- Navegación lateral -->
 <aside
-  class="bg-gradient animate-gradient p-3 mb-3 text-white w-60 h-full border-r-2 fixed"
->
+  class="bg-gradient-to-r from-sky-700 to-sky-600 p-3 mb-3 text-white w-60 h-full fixed">
   <!-- <img class="w-14 h-14 rounded-full mt-1" src="{{ user.profile.image.url }}" alt="{{ user.username }}">
       <span class="text-md italic text-amber-300">En línea:  </span>{{ user.username }} -->
   <nav>
     <ul class="space-y-2 mt-4">
       <li class="opcion-con-desplegable">
-        <div class="flex items-center justify-between p-2 hover:bg-gray-700">
-          <div class="flex items-center">
+        <div class="flex items-center justify-between p-2 hover:bg-sky-700">
+          <div class="flex items-center uppercase text-sm hover:bg-sky-700">
             <i class="fas fa-user mr-2"></i>
             <span>Gestión funcionarios</span>
           </div>
@@ -27,34 +26,27 @@
         </div>
         <ul class="desplegable ml-4 hidden">
           <li>
-            <a href="{% url 'profile' %}" class="block p-2 hover:bg-gray-700 items-center">
-              <i class="fas fa-chevron-right mr-2 text-xs"></i>
+            <a href="{% url 'profile' %}" class="block p-2 hover:bg-sky-600 items-center">
+              <i class="fas fa-chevron-right mr-2"></i>
               Perfiles
             </a>
           </li>
         </ul>
       </li>
       <li class="opcion-con-desplegable">
-        <div class="flex items-center justify-between p-2 hover:bg-gray-700">
-          <div class="flex items-center">
-            <i class="fas fa-graduation-cap mr-2"></i>
+        <div class="flex items-center justify-between p-2 hover:bg-sky-700">
+          <div class="flex items-center uppercase text-md ">
+            <i class="fas fa-graduation-cap mr-2 "></i>
             <span>PIE</span>
           </div>
-          <i class="fas fa-chevron-down text-xs"></i>
+          <i class="fas fa-chevron-down text-sm"></i>
         </div>
 
         <ul class="desplegable ml-4 hidden">
           <li>
-            <a href="{% url 'pie' %}" class="block p-2 hover:bg-gray-700 items-center">
+            <a href="{% url 'pie' %}" class="block p-2 hover:bg-sky-600 items-center">
               <i class="fas fa-chevron-right mr-2 text-xs"></i>
-              Listado Estudiantes
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="block p-2 hover:bg-gray-700 items-center">
-              <i class="fas fa-chevron-right mr-2 text-xs"></i>
-              Asistencia
+              Estudiantes
             </a>
           </li>
 
@@ -62,9 +54,9 @@
         
       </li>
 
-      <li class="opcion-con-desplegable">
-        <div class="flex items-center justify-between p-2 hover:bg-gray-700">
-          <div class="flex items-center">
+      <!-- <li class="opcion-con-desplegable">
+        <div class="flex items-center justify-between p-2 hover:bg-sky-700">
+          <div class="flex items-center uppercase text-sm">
             <i class="fas fa-file mr-2"></i>
             <span>Informes</span>
           </div>
@@ -72,47 +64,46 @@
         </div>
         <ul class="desplegable ml-4 hidden">
           <li>
-            <a href="{% url 'anamnesis' %}" class="block p-2 hover:bg-gray-700 items-center">
+            <a href="{% url 'anamnesis' %}" class="block p-2 hover:bg-sky-600 items-center">
               <i class="fas fa-chevron-right mr-2 text-xs"></i>
               Anamnesis
             </a>
           </li>
 
           <li>
-            <a href="#" class="block p-2 hover:bg-gray-700 items-center">
+            <a href="#" class="block p-2 hover:bg-sky-600 items-center">
               <i class="fas fa-chevron-right mr-2 text-xs"></i>
               Paci
             </a>
           </li>
           <li>
-            <a href="" class="block p-2 hover:bg-gray-700 items-center">
+            <a href="" class="block p-2 items-center hover:bg-sky-600">
               <i class="fas fa-chevron-right mr-2 text-xs"></i>
               Bitacora
             </a>
           </li>
         </ul>
-      </li>
+      </li> -->
     </ul>
   </nav>
 
   <div class="mt-72">
-    <a href="{% url 'home' %}" class="block p-2 hover:bg-gray-700 items-center">
-      <i class="fas fa-home mr-2"></i>
-      home
+    <a href="" class="block p-2 items-center uppercase text-sm">
+      
     </a>
   </div>
 
   <!-- Logout al final de la barra lateral -->
   {% if request.user.is_authenticated %}
-  <div class="">
-    <a
-      href="{% url 'logout' %}"
-      class="block p-2 hover:bg-gray-700 items-center"
-    >
-      <i class="fas fa-sign-out-alt mr-2"></i>
-      Logout
-    </a>
-  </div>
+  <div>
+    <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="block p-2 items-center uppercase text-sm">
+          <i class="fas fa-sign-out-alt mr-2"></i>
+          Logout
+        </button>
+    </form>
+</div>
   {% endif %}
 </aside>
 

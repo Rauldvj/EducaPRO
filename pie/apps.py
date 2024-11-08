@@ -6,3 +6,5 @@ class PieConfig(AppConfig):
     name = 'pie'
 
     verbose_name = 'PIE'
+
+    

@@ -24,6 +24,7 @@ urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")), # RECARGA LA PAGINA EN TIEMPO REAL CUANDO SE REALIZAN CAMBIOS
     path("accounts/", include("django.contrib.auth.urls")), # RUTAS DE AUTENTICACIÓN
     path('', include('app.urls')),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
 
 # Configuración para servir archivos de medios en entornos de desarrollo

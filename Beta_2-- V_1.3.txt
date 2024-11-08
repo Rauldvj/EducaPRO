@@ -1,0 +1,4 @@
+Cambios v1.3 Beta 2
+
+- Al crear un Estudiante este debera impactar directamente en el registro del PIE
+para despues agregar los apoderados

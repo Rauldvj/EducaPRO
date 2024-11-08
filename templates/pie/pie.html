@@ -4,66 +4,114 @@
 
 {% block content %}
 
-<body class="bg-gradient-to-r from-amber-900 to-yellow-600">
-
+<body class="">
+    <img src="/static/Imagenes/foto_politecnico.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-80 z-[-1]">
     {% include 'componentes/navbar.html' %}
 
     {% include 'componentes/sidebar.html' %}
 
     <div class="flex flex-col ml-64 mt-2 w-4/5"> <!-- Cambié w-3/5 a w-4/5 para hacer la tabla un poco más ancha -->
+        
+    <!-- FILTRO PARA VISUALIZAR SOLO UN CURSO -->
+    <form method="get" action="" class="flex space-x-4 mb-4">
+        <div>
+            <label class="text-sky-900 font-bold text-sm" for="course-filter">Filtrar por Curso:</label>
+            <select class=" rounded-sm pl-2 py-1 px-5 text-sm md:py-1 w-40" name="curso_filtro" id="course-filter">
+                <option value="">Todos</option>
+                {% for curso in all_cursos %}
+                    <option value="{{ curso }}">{{ curso }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="flex items-end">
+            <button class="bg-gradient-to-r from-sky-700 to-sky-600 
+            hover:from-sky-700 hover:to-sky-900 hover:text-white text-white text-sm py-1 px-2 rounded-sm" 
+            type="submit">Filtrar</button>
+        </div>
+    </form>
+
+
         <div class="overflow-x-auto">
-            <table class="w-full text-center text-sm font-light">
-                <thead class="border-b font-medium bg-gradient-to-r from-sky-900 to-cyan-700">
+            <table class="w-full text-center">
+                <thead class="border-b bg-gradient-to-b from-sky-900 to-sky-700">
                     <tr>
-                        <th scope="col" class="text-start text-white px-2 py-2">CURSO</th>
-                        <th scope="col" class="text-start text-white px-2 py-2">LETRA</th>
-                        <th scope="col" class="text-start text-white px-2 py-2 min-w-1/6">ESTUDIANTE</th>
-                        <th scope="col" class="text-start text-white px-2 py-2 min-w-1/4">APODERADO TITULAR</th>
-                        <th scope="col" class="text-start text-white px-2 py-2 min-w-1/4">APODERADO SUPLENTE 1</th>
-                        <th scope="col" class="text-start text-white px-2 py-2 w-8">ACCIONES</th>
+                        <th scope="col" class="font-semibold font-sans text-sm text-start text-white px-2 py-1">CURSO</th>
+                        <th scope="col" class="font-semibold font-sans text-sm text-start text-white px-2 py-1 min-w-1/6">ESTUDIANTE</th>
+                        <th scope="col" class="font-semibold font-sans text-sm text-start text-white px-2 py-1 min-w-1/4">APODERADO TITULAR</th>
+                        <th scope="col" class="font-semibold font-sans text-sm text-start text-white px-2 py-1 min-w-1/4">APODERADO SUPLENTE UNO</th>
+                        <th scope="col" class="font-semibold font-sans text-sm text-start text-white px-2 py-1 min-w-1/4">APODERADO SUPLENTE DOS</th>
+                        <th scope="col" class="font-semibold font-sans text-sm text-start text-white px-2 py-1">INFO</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for pie in pies %}
-                    <tr class="border-b border-neutral-100 bg-gradient-to-b from-sky-500 to-sky-700">
-                        <td class="text-start text-white px-2 py-2 font-medium whitespace-no-wrap">{{ pie.curso }}</td>
-                        <td class="text-start text-white px-2 py-2 whitespace-no-wrap">{{ pie.letra_curso }}</td>
-                        <td class="text-start text-white px-2 py-2 whitespace-no-wrap">{{ pie.estudiante|capfirst }}</td>
-                        <td class="text-start text-white px-2 py-2 whitespace-no-wrap">{{ pie.apoderado|capfirst }}</td>
-                        <td class="text-start text-white px-2 py-2 whitespace-no-wrap">{{ pie.ApoderadoSuplente1|capfirst }}</td>
-                        <td class="text-start text-white px-2 py-2 whitespace-no-wrap">
-                            <div class="flex">
-                                <a href="" class="bg-yellow-700 hover:bg-yellow-500 border px-3 py-1 w-20 mr-2">INFO</a>
-                                <button type="button" class="bg-green-700 hover:bg-green-500 border px-1 py-1 w-20">EDITAR</button>
-                            </div>
+                    <tr class="border-b border-neutral-400 bg-white">
+                        <td class="text-start text-gray-900 px-2 py-1 text-sm font-sans whitespace-no-wrap">{{ pie.curso }}</td>
+                        <td class="text-start text-gray-900 px-2 py-1 text-sm font-sans whitespace-no-wrap">
+                            <a href=""></a>{{ pie.estudiante|capfirst }}</td>
+
+
+                            <td class="text-start text-gray-900 px-2 py-1 text-sm font-sans whitespace-no-wrap"> {{ pie.apoderado_titular| capfirst}}</td>
+                            
+                            
+                            
+
+                        
+                        <td class="text-start text-gray-900 px-2 py-1 text-sm font-sans whitespace-no-wrap">{{ pie.apoderado_suplente_uno| capfirst}}</td>
+                        <td class="text-start text-gray-900 px-2 py-1 text-sm font-sans whitespace-no-wrap">{{ pie.apoderado_suplente_dos | capfirst}}</td>
+                        <td class="text-start text-sky-900 px-2 py-1 text-sm font-sans font-bold whitespace-no-wrap">
+                            <a href="{% url 'estudiante' pie.estudiante.id %}" class="hover:bg-gray-300 px-6 py-1">VER</a>
                         </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
+
+        <!-- Enlaces de paginación -->
+    <div class="flex justify-center mt-4">
+        <ul class="flex space-x-2">
+            {% if pies.has_previous %}
+                <li><a href="?page=1{% if request.GET.curso_filtro %}&curso_filtro={{ request.GET.curso_filtro }}{% endif %}" 
+                    class="bg-gradient-to-r from-sky-900 to-sky-700 
+                    hover:from-sky-600 hover:to-sky-600
+                    font-sans text-white text-sm px-2 py-1 rounded-sm">
+                    PRIMERA PÁGINA</a></li>
+                <li><a href="?page={{ pies.previous_page_number }}{% if request.GET.curso_filtro %}&curso_filtro={{ request.GET.curso_filtro }}{% endif %}" 
+                    class="bg-gradient-to-r from-sky-900 to-sky-700 
+                    hover:from-sky-600 hover:to-sky-600 
+                    font-sans text-white text-sm px-2 py-1 rounde-sm">
+                    ANTERIOR</a></li>
+            {% endif %}
+            
+            <li class="bg-gradient-to-r from-sky-900 to-sky-700 
+            hover:from-sky-600 hover:to-sky-600
+            font-sans text-white text-sm px-3 py-1 -my-1 rounded-sm">
+            {{ pies.number }}</li>
+            
+            {% if pies.has_next %}
+                <li><a href="?page={{ pies.next_page_number }}{% if request.GET.curso_filtro %}&curso_filtro={{ request.GET.curso_filtro }}{% endif %}" 
+                    class="bg-gradsky-600 hover:to-sky-600
+                    font-sans text-white text-sm px-2 py-1 rounded-sm">
+                    SIGUIENTE</a></li>
+                <li><a href="?page={{ pies.paginator.num_pages }}{% if request.GET.curso_filtro %}&curso_filtro={{ request.GET.curso_filtro }}{% endif %}" 
+                    class="bg-gradient-to-r from-sky-900 to-sky-700 
+                    hover:from-sky-600 hover:to-sky-600  
+                    font-sans text-white text-sm px-2 py-1 rounded-sm">
+                    ÚLTIMA</a></li>
+            {% endif %}
+        </ul>
     </div>
-    <div class="flex flex-col ml-72 mt-2">
-        <a href="{% url 'add_estudiante' %}" 
-        class="rounded-lg text-white text-sm text-center font-bold bg-gradient-to-br from-red-600 to-red-900 px-3 py-2 w-24"
-        >Agregar Estudiante</a>
     </div>
-    <div class="flex flex-col ml-72 mt-2">
-        <a href="{% url 'add_apoderado_titular' %}" 
-        class="rounded-lg text-white text-sm text-center font-bold bg-gradient-to-br from-red-600 to-red-900 px-3 py-2 w-24"
-        >Agregar Apoderado Titular</a>
-    </div>
-    <div class="flex flex-col ml-72 mt-2">
-        <a href="{% url 'add_apoderado_suplente_uno' %}" 
-        class="rounded-lg text-white text-sm text-center font-bold bg-gradient-to-br from-red-600 to-red-900 px-3 py-2 w-24"
-        >Agregar Apoderado Suplente Uno</a>
-    </div>
-    <div class="flex flex-col ml-72 mt-2">
-        <a href="{% url 'add_apoderado_suplente_dos' %}" 
-        class="rounded-lg text-white text-sm text-center font-bold bg-gradient-to-br from-red-600 to-red-900 px-3 py-2 w-24"
-        >Agregar Apoderado Suplente Dos</a>
+    <div class="flex flex-col ml-64 mt-2">
+        <button onclick="document.getElementById('add_estudiante_modal').showModal()" id="btn"
+                    class="py-2 px-4 mt-1 mb-1 bg-gradient-to-b from-red-800 to-red-700 
+                    hover:from-red-600 hover:to-red-500 text-white rounded-sm text shadow-xl block w-1/6">
+                        AGREGAR ESTUDIANTE
+        </button> 
     </div>
 
+    {% include 'pie/add_estudiante.html' %}
 </body>
 
 {% endblock content %}

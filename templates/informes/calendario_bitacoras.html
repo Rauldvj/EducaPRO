@@ -1,0 +1,161 @@
+<!-- component -->
+<div class="h-4/5 w-full bg-gradient-to-r from-sky-900 to-sky-700 flex flex-col overflow-hidden">
+    <!-- Header principal -->
+    <header class="px-4 py-2 flex items-center justify-between border-b border-white">
+      <h1 class="text-xl font-semibold text-white">
+        <time id="current-month-display">Enero 2024</time>
+      </h1>
+      <div class="flex items-center gap-2">
+        <div class="flex items-center space-x-1">
+          <button onclick="navegarMes(-1)" class="p-1.5 hover:bg-sky-800/50 rounded-full">
+            <svg class="w-5 h-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"/>
+            </svg>
+          </button>
+          <button onclick="irAHoy()" class="px-2 py-1.5 text-sm text-white hover:bg-sky-800/50 rounded">
+            Hoy
+          </button>
+          <button onclick="navegarMes(1)" class="p-1.5 hover:bg-sky-800/50 rounded-full">
+            <svg class="w-5 h-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"/>
+            </svg>
+          </button>
+        </div>
+
+        <a href="{% url 'add_bitacora_estudiante' estudiante.id %}"
+            class="bg-gradient-to-b from-yellow-800 to-yellow-700
+                hover:from-yellow-600 hover:to-yellow-500 text-white text-sm py-2 px-4 rounded-sm block w-full">
+                    AGREGAR BITÁCORA
+        </a>
+    </header>
+
+    <!-- Contenedor de vistas -->
+    <div class="flex-1 flex flex-col h-full min-h-0">
+      <!-- Vista mensual -->
+      <div class="flex-1 flex flex-col min-h-0">
+        <div class="grid grid-cols-7 border-b border-white/20 text-sm text-white">
+          <div class="py-1 text-center">Lun</div>
+          <div class="py-1 text-center">Mar</div>
+          <div class="py-1 text-center">Mié</div>
+          <div class="py-1 text-center">Jue</div>
+          <div class="py-1 text-center">Vie</div>
+          <div class="py-1 text-center">Sáb</div>
+          <div class="py-1 text-center">Dom</div>
+        </div>
+
+        <div class="flex-1 grid grid-cols-7 grid-rows-6">
+          <!-- Los días se generarán dinámicamente -->
+        </div>
+      </div>
+    </div>
+</div>
+
+<script>
+// Variables globales
+let currentDate = new Date();
+const monthNames = [
+  'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+  'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+];
+
+// Función para navegar entre meses
+function navegarMes(delta) {
+  currentDate.setMonth(currentDate.getMonth() + delta);
+  actualizarCalendario();
+}
+
+// Función para ir al día actual
+function irAHoy() {
+  currentDate = new Date();
+  actualizarCalendario();
+}
+
+// Función para actualizar el calendario
+function actualizarCalendario() {
+  actualizarTituloMes();
+  generarDiasDelMes();
+}
+
+// Función para actualizar el título del mes
+function actualizarTituloMes() {
+  const titleElement = document.getElementById('current-month-display');
+  titleElement.textContent = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+}
+
+// Función para generar los días del mes
+function generarDiasDelMes() {
+  const monthView = document.querySelector('.grid-rows-6');
+  monthView.innerHTML = '';
+
+  const primerDia = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+  const ultimoDia = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+  const diasEnMes = ultimoDia.getDate();
+  
+  let diaInicial = primerDia.getDay() - 1;
+  if (diaInicial === -1) diaInicial = 6;
+
+  // Días del mes anterior
+  const diasMesAnterior = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0).getDate();
+  for (let i = diaInicial - 1; i >= 0; i--) {
+    const dia = document.createElement('div');
+    dia.className = 'border-r border-b border-white/20 p-1 text-white/50 text-sm h-full';
+    dia.textContent = diasMesAnterior - i;
+    monthView.appendChild(dia);
+  }
+
+  // Días del mes actual
+  for (let i = 1; i <= diasEnMes; i++) {
+    const dia = document.createElement('div');
+    dia.className = 'border-r border-b border-white/20 p-1 relative h-full text-white';
+    
+    // Número del día
+    const numero = document.createElement('span');
+    numero.textContent = i;
+    if (esHoy(i)) {
+      numero.className = 'flex items-center justify-center w-6 h-6 rounded-full bg-amber-00 text-white font-bold text-sm';
+    } else {
+      numero.className = 'text-sm';
+    }
+    dia.appendChild(numero);
+    
+    // Link a bitácoras
+    const fechaFormateada = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}`;
+    const eventoElement = document.createElement('div');
+    eventoElement.className = 'mt-1 truncate text-xs';
+    eventoElement.innerHTML = `
+      
+    `;
+    dia.appendChild(eventoElement);
+
+    monthView.appendChild(dia);
+  }
+
+  // Completar los días del mes siguiente
+  const diasRestantes = 42 - (diaInicial + diasEnMes);
+  for (let i = 1; i <= diasRestantes; i++) {
+    const dia = document.createElement('div');
+    dia.className = 'border-r border-b border-white/20 p-1 text-yellow-400 font-bold text-sm h-full';
+    dia.textContent = i;
+    monthView.appendChild(dia);
+  }
+}
+
+// Función para verificar si un día es hoy
+function esHoy(dia) {
+  const hoy = new Date();
+  return currentDate.getMonth() === hoy.getMonth() &&
+         currentDate.getFullYear() === hoy.getFullYear() &&
+         dia === hoy.getDate();
+}
+
+// Función para agregar evento
+function agregarEvento() {
+  // Redirigir a la página de crear bitácora
+  window.location.href = 'pie/estudiante';
+}
+
+// Inicializar el calendario
+document.addEventListener('DOMContentLoaded', function() {
+  actualizarCalendario();
+});
+</script>

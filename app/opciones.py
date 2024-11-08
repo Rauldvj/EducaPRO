@@ -3,7 +3,6 @@
 #Estos módulos de opciones serán llamados en el archivo modelos.py
 
 opciones_aprendizaje = (
-    ('Seleccione', 'Seleccione'),
     ('No logrado', 'No logrado'),
     ('Via de logro', 'Via de logro'),
     ('Logrado', 'Logrado')

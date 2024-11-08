@@ -4,11 +4,11 @@ from .models import RegistroPie
 class ListPieForm(forms.ModelForm):
     class Meta:
         model = RegistroPie
-        fields = ['estudiante', 'apoderado', 'ApoderadoSuplenteUno', 'ApoderadoSuplenteDos', 'enable']
+        fields = ['estudiante', 'apoderado_titular', 'apoderado_suplente_uno', 'apoderado_suplente_dos', 'enable']
 
 class AddRegistroPieForm(forms.ModelForm):
     class Meta:
         model = RegistroPie
-        fields = ['nivel_academico', 'curso', 'letra_curso', 'estudiante', 'apoderado', 'ApoderadoSuplenteUno', 'ApoderadoSuplenteDos', 'enable']
+        fields = ['estudiante', 'apoderado_titular', 'apoderado_suplente_uno', 'apoderado_suplente_dos', 'enable']
 
 

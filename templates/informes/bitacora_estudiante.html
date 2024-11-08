@@ -1,0 +1,75 @@
+<!-- #PAGINA PARA VER EL PERFIL DE CADA USUARIO POR EL COORDINADOR O ADMINISTRADOR -->
+{% extends 'base.html' %}
+
+{% block title %} Bitácora Detail Estudiante {% endblock %}
+
+{% block content %}
+
+{% load tailwind_filters %}
+{% load static %}
+
+<body class="bg-gradient-to-r from-amber-900 to-yellow-500"></body>
+
+<div class="h-12 items-center justify-between flex-wrap fixed w-full">{% include 'componentes/navbar.html' %}</div>
+
+
+<!-- Contenedor principal -->
+<div class="container py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 ">
+        <!-- Tarjeta de datos de perfil -->
+        <!-- Navegación lateral -->
+        <aside class="bg-gradient-to-r from-sky-700 to-sky-600 p-3 text-white w-64 h-full fixed">
+            <div class="mt-10">
+       
+                <!-- Nombre y apellido del usuario -->
+                <h2 class="text-lg font-sans font-semibold text-white uppercase">{{ estudiante.nombres }}</h2>
+                <h2 class="text-md font-sans font-semibold text-white uppercase">{{ estudiante.apellido_paterno }} {{ estudiante.apellido_materno }}</h2>
+                <h2 class="mt-2 text-sm font-sans font-semibold italic text-white ">{{ estudiante.cursos }} </h2>
+                <!-- Curso que pertenece el estudiante -->
+                <!-- <h4 class="mt-0">
+                    <span class="{{ color_user }} text-white text-sm font-bold italic me-2 py-1 px-2 rounded">{{ group_name_singular_user | capfirst }}</span>
+                </h4> -->
+            </div>
+
+            
+                <div class="space-y-1 mt-24">
+                    <hr>
+                    <p class="text-white text-sm italic py-2 px-3 uppercase">Aquí puedes revisar todas las bitácoras</p>
+                    <hr class="mt-4">
+                </div>
+
+
+                <div class="flex flex-col items-stretch text-center mt-24">               
+                <!-- Botón Regresar a Estudiante -->
+                <hr>
+                <a href="{% url 'bitacora_estudiante_edit' bitacora.id %}"
+                    class="bg-gradient-to-b from-red-800 to-red-700  
+                    hover:from-red-600 hover:to-red-500 text-white mt-4 py-2 px-4 rounded-sm block w-full mb-4">
+                    EDITAR BITÁCORA
+                </a>
+                <hr>
+            </div>
+
+            <div class="flex flex-col items-stretch text-center">
+                        
+                <!-- Botón Regresar a Estudiante -->
+                <a href="{% url 'bitacora_estudiante_list' estudiante.id %}"
+                    class="bg-gradient-to-b from-lime-800 to-lime-700
+                    hover:from-lime-600 hover:to-lime-500 text-white mt-4 py-2 px-4 rounded-sm block w-full mb-4">
+                    REGRESAR
+                </a>
+                <hr>
+            </div>
+        </aside>
+
+        <div class="mx-auto w-full col-span-2">
+                        <!-- Contenido de la bitácora -->
+                         <!-- INCLUIR LA BITACORA DETAIL DE bitacora_estudiante_detail.html -->
+
+                         {% include 'informes/bitacora_estudiante_detail.html' %}
+        </div>
+    </div>
+
+    
+</div>
+{% endblock %}

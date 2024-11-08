@@ -1,0 +1,250 @@
+<!-- #PAGINA PARA VER EL PERFIL DE CADA USUARIO POR EL COORDINADOR O ADMINISTRADOR -->
+{% extends 'base.html' %}
+
+{% block title %} Estudiante {% endblock %}
+
+
+{% block content %}
+
+{% load tailwind_filters %}
+
+{% load static %}
+
+
+
+
+<body class="bg-gradient-to-r from-amber-900 to-yellow-500"></body>
+
+{% include 'componentes/navbar.html' %}
+
+
+<h2 class="text-lg font-bold text-white italic py-2 px-3">Consulta de Datos del Estudiante</h2>
+<hr>
+
+<!-- Contenedor principal -->
+<div class="container h-full">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 h-full">
+        <!-- Tarjeta de datos de perfil -->
+        <!-- Navegación lateral -->
+<aside class="bg-gradient-to-r from-sky-700 to-sky-600 p-3  text-white w-72 h-full fixed">
+    <div>
+        <!-- Imagen de perfil -->
+        <!-- <img class="mx-auto w-20 h-20 rounded-full mb-2" src="{{ user.profile.image.url }}" alt="{{ user.username }}"> -->
+        <!-- Nombre y apellido del usuario -->
+        <h2 class="text-lg font-sans font-semibold text-white uppercase">{{ estudiante.nombres }}</h2>
+        <h2 class="text-md font-sans font-semibold text-white uppercase">{{ estudiante.apellido_paterno}} {{ estudiante.apellido_materno}}</h2>
+        <h2 class="mt-2 text-sm font-sans font-semibold italic text-white ">{{ estudiante.cursos}} </h2>
+        <!-- Curso que pertenece el estudiante -->
+            <!-- <h4 class="mt-0">
+                <span class="{{ color_user }} text-white text-sm font-bold italic me-2 py-1 px-2 rounded">{{ group_name_singular_user | capfirst }}</span>
+            </h4> -->
+    </div>
+
+    <hr class="my-5">
+    <!-- Datos personales del usuario -->
+    <div class="space-y-1">
+        <p class="text-white text-sm"><strong>Rut: </strong>{{ estudiante.rut }}</p>
+            <p class="text-white text-sm"><strong>Fecha Nacimiento: </strong>{{ estudiante.fecha_nacimiento }}</p>
+            <p class="text-white text-sm"><strong>Etnia: </strong>{{ estudiante.etnia }}</p>
+            <p class="text-white text-sm"><strong>Dirección: </strong>{{ estudiante.direccion }}</p>
+            <p class="text-white text-sm"><strong>Región: </strong>{{ estudiante.region}} </p>
+            <p class="text-white text-sm"><strong>Comuna: </strong>{{ estudiante.comuna}} </p>
+            <p class="text-white text-sm"><strong>Teléfono: </strong>+569 {{ estudiante.telefono }}</p>
+            <p class="text-white text-sm"><strong>Email: </strong>{{ estudiante.correo }}</p>
+    </div>
+
+    <hr class="mt-2">
+
+    
+    <div class="flex flex-col items-stretch text-center">
+
+        <!-- Botón Bitácora -->
+        <a href="{% url 'add_bitacora_estudiante' estudiante.id %}"
+            class="bg-gradient-to-b from-yellow-800 to-yellow-700
+                hover:from-yellow-600 hover:to-yellow-500 text-white mt-2 py-2 px-4 rounded-sm block w-full">
+                    AGREGAR BITÁCORA
+        </a>
+
+        <!-- Botón Informes -->
+        <a href="{% url 'informes_estudiante' estudiante.id %}"
+            class="bg-gradient-to-b from-fuchsia-800 to-fuchsia-700
+          hover:from-fuchsia-600 hover:to-fuchsia-500  text-white mt-2 py-2 px-4 rounded-sm block w-full"
+            >INFORMES
+        </a>
+
+        <hr class="mt-2"> 
+        <!-- Botón Editar al Estudiante--> 
+        <button onclick="document.getElementById('estudiante_modal').showModal()" id="btn"
+        class="py-2 px-4 mt-2 mb-2 bg-gradient-to-b from-red-800 to-red-700  
+        hover:from-red-600 hover:to-red-500 text-white rounded-sm text shadow-xl block w-full">
+        EDITAR ESTUDIANTE
+        </button>                                 
+          
+        <hr>
+        <!-- Botón Pie -->
+        <a href="{% url 'pie' %}"
+            class="bg-gradient-to-b from-lime-800 to-lime-700
+            hover:from-lime-600 hover:to-lime-500  text-white mt-2 py-2 px-4 rounded-sm block w-full"
+            >REGRESAR A PIE
+        </a>
+    </div>
+</aside>
+
+        <div class="lg:col-span-4 col-span-1 h-full flex flex-col ml-80  ">
+
+            <!-- DIV DE DATOS DEL APODERADO TITULAR -->
+            <div class=" rounded mt-3 ">
+                <div class="block opacity-100" id="perfiles" role="tabpanel">
+                    <h5 class="text-white text-sm text-start -ml-4">Apoderado Titular </h5>
+
+                    <div class="flex flex-col -ml-4 mt-1 "> 
+                        <div class="overflow-x-auto">
+                            <table class="w-3/4 ">
+                                <thead class="border-b bg-gradient-to-b from-sky-900 to-sky-700">
+                                    <tr>
+                                        <th scope="col" class="font-semibold font-sans text-xs text-start text-white px-2 py-1 min-w-1/4">NOMBRES</th>
+                                        <th scope="col" class="font-semibold font-sans text-xs text-start text-white px-2 py-1 min-w-1/4">APELLIDO PATERNO</th>
+                                        <th scope="col" class="font-semibold font-sans text-xs text-start text-white px-2 py-1 min-w-1/4">APELLIDO PATERNO</th>
+                                        <th scope="col" class="font-semibold font-sans text-xs text-start text-white px-2 py-1 min-w-1/4">TELÉFONO</th>
+                                        <th scope="col" class="font-semibold font-sans text-xs text-start text-white px-2 py-1 min-w-1/4">INFO COMPLETA</th>
+                                        <th scope="col" class="font-semibold font-sans text-xs text-start text-white px-4 py-1 min-w-1/4">ACCIÓN</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    <tr class="border-b border-neutral-100 bg-white">
+                                        <td class="text-start text-gray-900 px-2 py-1 text-sm font-sans whitespace-no-wrap">{{apoderado_titular.nombres}}</td>
+                                        <td class="text-start text-gray-900 px-2 py-1 text-sm font-sans whitespace-no-wrap">{{apoderado_titular.apellido_paterno}}</td>
+                                        <td class="text-start text-gray-900 px-2 py-1 text-sm font-sans whitespace-no-wrap">{{apoderado_titular.apellido_materno}}</td>
+                                        <td class="text-start text-gray-900 px-2 py-1 text-sm font-sans whitespace-no-wrap">{{ apoderado_titular.telefono| capfirst}}</td>
+                                        <td class="text-start text-gray-900 px-2 py-1 text-sm font-sans whitespace-no-wrap">                                 
+                                            <button onclick="document.getElementById('apoderado_titular').showModal()"
+                                                 class="px-6 py-1 text-sky-900 font-bold hover:bg-gray-300 rounded-sm shadow-xl ">
+                                                 VER
+                                            </button>
+                                        </td>
+                                        <td class="text-start text-gray-900 px-2 text-sm font-sans whitespace-no-wrap">                                 
+                                            <button onclick="document.getElementById('apoderado_titular_modal').showModal()"
+                                                 class="text-red-900 font-bold hover:bg-gray-300 rounded-sm shadow-x text-start px-2 py-1 text-sm font-sans whitespace-no-wrap">
+                                                 EDITAR
+                                            </button>
+                                        </td>
+                                    </tr>
+                             
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <!-- DIV DE DATOS DEL APODERADO SUPLENTE 1 -->
+            <div class=" rounded mt-3 ">
+                <div class="block opacity-100" id="perfiles" role="tabpanel">
+                    <h5 class="text-white text-sm text-start -ml-4">Apoderado Suplente Uno </h5>
+
+                    <div class="flex flex-col -ml-4 mt-1 "> 
+                        <div class="overflow-x-auto">
+                            <table class="w-3/4 ">
+                                <thead class="border-b bg-gradient-to-b from-sky-900 to-sky-700">
+                                    <tr>
+                                        <th scope="col" class="font-semibold font-sans text-xs text-start text-white px-2 py-1 min-w-1/4">NOMBRES</th>
+                                        <th scope="col" class="font-semibold font-sans text-xs text-start text-white px-2 py-1 min-w-1/4">APELLIDO PATERNO</th>
+                                        <th scope="col" class="font-semibold font-sans text-xs text-start text-white px-2 py-1 min-w-1/4">APELLIDO PATERNO</th>
+                                        <th scope="col" class="font-semibold font-sans text-xs text-start text-white px-2 py-1 min-w-1/4">TELÉFONO</th>
+                                        <th scope="col" class="font-semibold font-sans text-xs text-start text-white px-2 py-1 min-w-1/4">INFO COMPLETA</th>
+                                        <th scope="col" class="font-semibold font-sans text-xs text-start text-white px-4 py-1 min-w-1/4">ACCIÓN</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    <tr class="border-b border-neutral-100 bg-white">
+                                        <td class="text-start text-gray-900 px-2 py-1 text-sm font-sans whitespace-no-wrap">{{ apoderado_suplente_uno.nombres }}</td>
+                                        <td class="text-start text-gray-900 px-2 py-1 text-sm font-sans whitespace-no-wrap">{{ apoderado_suplente_uno.apellido_paterno }}</td>
+                                        <td class="text-start text-gray-900 px-2 py-1 text-sm font-sans whitespace-no-wrap">{{ apoderado_suplente_uno.apellido_materno }}</td>
+                                        <td class="text-start text-gray-900 px-2 py-1 text-sm font-sans whitespace-no-wrap">{{ apoderado_suplente_uno.telefono| capfirst}}</td>
+                                        <td class="text-start text-gray-900 px-2 py-1 text-sm font-sans whitespace-no-wrap">                                 
+                                            <button onclick="document.getElementById('apoderado_suplente_uno').showModal()"
+                                                 class="px-6 py-1 text-sky-900 font-bold hover:bg-gray-300 rounded-sm shadow-xl ">
+                                                 VER
+                                            </button>
+                                        </td>
+                                        <td class="text-start text-gray-900 px-2 text-sm font-sans whitespace-no-wrap">                                 
+                                            <button onclick="document.getElementById('apoderado_suplente_uno_edit_modal').showModal()"
+                                                 class="text-red-900 font-bold hover:bg-gray-300 rounded-sm shadow-x text-start px-2 py-1 text-sm font-sans whitespace-no-wrap">
+                                                 EDITAR
+                                            </button>
+                                        </td>
+                                    </tr>
+                             
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>   
+            </div>
+
+             <!-- DIV DE LOS DATOS DEL APODERADO SUPLENTE UNO-->
+             <div class=" rounded mt-3 ">
+                <div class="block opacity-100" id="perfiles" role="tabpanel">
+                    <h5 class="text-white text-sm text-start -ml-4">Apoderado Suplente Dos </h5>
+
+                    <div class="flex flex-col -ml-4 mt-1 "> 
+                        <div class="overflow-x-auto">
+                            <table class="w-3/4 ">
+                                <thead class="border-b bg-gradient-to-r from-sky-900 to-cyan-700">
+                                    <tr>
+                                        <th scope="col" class="font-semibold font-sans text-xs text-start text-white px-2 py-1 min-w-1/4">NOMBRES</th>
+                                        <th scope="col" class="font-semibold font-sans text-xs text-start text-white px-2 py-1 min-w-1/4">APELLIDO PATERNO</th>
+                                        <th scope="col" class="font-semibold font-sans text-xs text-start text-white px-2 py-1 min-w-1/4">APELLIDO PATERNO</th>
+                                        <th scope="col" class="font-semibold font-sans text-xs text-start text-white px-2 py-1 min-w-1/4">TELÉFONO</th>
+                                        <th scope="col" class="font-semibold font-sans text-xs text-start text-white px-2 py-1 min-w-1/4">INFO COMPLETA</th>
+                                        <th scope="col" class="font-semibold font-sans text-xs text-start text-white px-4 py-1 min-w-1/4">ACCIÓN</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    <tr class="border-b border-neutral-100 bg-white">
+                                        <td class="text-start text-gray-900 px-2 py-1 text-sm font-sans whitespace-no-wrap">{{ apoderado_suplente_dos.nombres }}</td>
+                                        <td class="text-start text-gray-900 px-2 py-1 text-sm font-sans whitespace-no-wrap">{{ apoderado_suplente_dos.apellido_paterno }}</td>
+                                        <td class="text-start text-gray-900 px-2 py-1 text-sm font-sans whitespace-no-wrap">{{ apoderado_suplente_dos.apellido_materno }}</td>
+                                        <td class="text-start text-gray-900 px-2 py-1 text-sm font-sans whitespace-no-wrap">{{ apoderado_suplente_dos.telefono| capfirst }}</td>
+                                        <td class="text-start text-gray-900 px-2 py-1 text-sm font-sans whitespace-no-wrap">                                 
+                                            <button onclick="document.getElementById('apoderado_suplente_dos').showModal()"
+                                                 class="px-6 py-1 text-sky-900 font-bold hover:bg-gray-300 rounded-sm shadow-xl ">
+                                                 VER
+                                            </button>
+                                        </td>
+                                        <td class="text-start text-gray-900 px-2 text-sm font-sans whitespace-no-wrap">                                 
+                                            <button onclick="document.getElementById('apoderado_suplente_dos_edit_modal').showModal()"
+                                                 class="text-red-900 font-bold hover:bg-gray-300 rounded-sm shadow-x text-start px-2 py-1 text-sm font-sans whitespace-no-wrap">
+                                                 EDITAR
+                                            </button>
+                                        </td>
+                                    </tr>
+                             
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>   
+            </div>
+        </div>
+        
+   
+<!-- Incluir los modales de los apoderados         -->
+{% include 'pie/apoderado_titular.html' %}
+{% include 'pie/apoderado_suplente_uno.html' %}
+{% include 'pie/apoderado_suplente_dos.html' %}
+
+{% include 'pie/apoderado_titular_edit.html' %}
+{% include 'pie/apoderado_suplente_uno_edit.html' %}
+{% include 'pie/apoderado_suplente_dos_edit.html' %}
+{% include 'pie/estudiante_edit.html' %}
+
+<body/>
+{% endblock %}

@@ -46,7 +46,7 @@ input[type="radio"]:focus + .radio-label {
   
   .animate-gradient {
     animation: gradientAnimation 4s infinite;
-    background: linear-gradient(45deg, #c91a20, #df8806, #037192, #bb0cbb);
+    background: linear-gradient(45deg, #4441e7, #145bf5, #151d64, #004ff8);
     background-size: 400% 400%;
     position: relative;
     overflow: hidden;
@@ -58,8 +58,9 @@ input[type="radio"]:focus + .radio-label {
     left: 0;
     width: 100%;
     height: 15px;
-    background: linear-gradient(90deg, rgba(235, 6, 44, 0), rgba(231, 235, 8, 0.5), rgba(233, 10, 147, 0));
+    background: linear-gradient(90deg, rgba(235, 6, 44, 0), rgba(8, 235, 178, 0.5), rgba(233, 10, 147, 0));
     animation: waveAnimation 3s infinite;
   }
   
+
 

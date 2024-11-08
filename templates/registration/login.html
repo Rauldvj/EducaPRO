@@ -4,67 +4,66 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Agregar el enlace al archivo de estilos de Tailwind CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
     />
-    <!-- Agregar el enlace al archivo de la biblioteca FontAwesome -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-      rel="stylesheet"
-    />
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- //Borrar esta linea cuando se realice la producción// -->
-    {% tailwind_css %}
-    <style>
-      input[type="text"]:focus,
-      input[type="password"]:focus {
-        border: 0px solid #8b5cf6;
-        outline: none;
-        border-color: #8b5cf6;
-        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.5);
-      }
-    </style>
-    
     <title>Login</title>
+    {% tailwind_css %}
   </head>
-  <body class="">
-    {% load tailwind_filters %}
-    <!-- source:https://codepen.io/owaiswiz/pen/jOPvEPB -->
-    <form action="" method="post">
+  <body class="bg-gradient animate-gradient">
+    <form action="" method="post" class="flex items-center justify-center min-h-screen">
       {% csrf_token %}
+      <div class="bg-gradient-to-t from-sky-600 to-sky-900 shadow-lg rounded-sm w-1/2 p-8 sm:p-10 md:flex md:space-x-10">
+        <!-- Imagen para pantallas grandes -->
+        <div class="hidden lg:block w-1/2">
+          <img
+            src="/static/Imagenes/Imagen Login.png"
+            alt="Login image"
+            class="w-full h-full object-cover rounded-sm"
+          />
+        </div>
 
-      <div class="min-h-screen bg-gradient animate-gradient flex justify-center">
-        <div
-          class="max-w-screen-xl m-0 sm:m-5 bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-amber-900 to-yellow-300 shadow sm:rounded-lg flex justify-center flex-1"
-        >
-          <div class="text-white lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
-            <div class="mt-12 flex flex-col items-center">
-              <h1 class="text-2xl xl:text-3xl font-extrabold">
-                Sistema EDUCA PRO
-              </h1>
-              <div class="w-full flex-1 mt-8 ">
-                <div class="mx-auto max-w-xs text-white">
-                  {{ form|crispy }}
-      
-                  <button
-                    type="submit"
-                    value="Ingresar"
-                    class="mt-5 tracking-wide font-semibold bg-purple-900 text-gray-100 w-full py-4 rounded-full\
-                     hover:bg-purple-700 transition-all duration-300 ease-in-out flex items-center justify-center\
-                      focus:shadow-outline focus:outline-none"
-                  >
-        
-                    <span class="ml-20"> Ingresar al Sistema </span>
-                  </button>
-       
-                </div>
-              </div>
+        <!-- Formulario de Login -->
+        <div class="w-full lg:w-1/2">
+          <h1 class="text-3xl font-semibold text-center text-white mb-6 -ml-10">LOGIN DE USUARIO</h1>
+
+          <div class="space-y-4">
+            <!-- Campo de Usuario -->
+            <div>
+              <label for="username" class="block text-sm text-white">Usuario</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                class="w-5/6 p-2 mt-1 border border-amber-500 rounded-sm"
+                placeholder="Ingresa tu usuario"
+                required
+              />
             </div>
-          </div>
-          <div class="flex-1 bg-indigo-100 text-center hidden lg:flex">
-            <img src="https://educapro-bucket.s3.amazonaws.com/static/imagenes/Imagen+Login.png" alt="" />
+
+            <!-- Campo de Contraseña -->
+            <div>
+              <label for="password" class="block text-sm text-white">Contraseña</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="w-5/6 p-2 mt-1 border border-amber-500 rounded-sm"
+                placeholder="Ingresa tu contraseña"
+                required
+              />
+            </div>
+
+            <!-- Botón de Ingreso -->
+            <button
+              type="submit"
+              class="w-5/6 text-center px-6 py-3 mb-10 text-white no-underline bg-gradient-to-r from-amber-700 to-amber-500 rounded-sm 
+                     font-semibold hover:bg-amber-500 hover:bg-none"
+            >
+              INGRESAR
+            </button>
           </div>
         </div>
       </div>
